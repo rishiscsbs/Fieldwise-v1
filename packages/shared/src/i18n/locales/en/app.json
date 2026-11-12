@@ -397,5 +397,118 @@
     "ctaBody": "Farmers ask, officers answer and alert, and the advice keeps working when the network does not.",
     "footer": "Smart India Hackathon prototype. Agronomic figures are indicative. Mandi prices are simulated unless an Agmarknet key is configured.",
     "stillNote": "Showing still images: reduced motion or Lite mode is on."
+  },
+  "pitch": {
+    "title": "Fieldwise pitch",
+    "controls": "Arrow keys, space or a clicker to move. F for full screen. P opens presenter notes.",
+    "slideOf": "Slide {{n}} of {{total}}",
+    "next": "Next slide",
+    "prev": "Previous slide",
+    "presenter": "Presenter view",
+    "openPresenter": "Open presenter notes",
+    "fullscreen": "Full screen",
+    "live": "Live from the running platform",
+    "simulated": "Mandi prices in the demo are simulated.",
+    "slides": {
+      "problem": {
+        "kicker": "The problem",
+        "title": "86% of India’s farms are under 2 hectares. Advice reaches few of them.",
+        "points": [
+          "One extension officer for roughly a thousand farm families",
+          "Soil Health Cards are issued, but rarely turned into a fertiliser plan",
+          "Weather and mandi prices arrive late, in the wrong language, or not at all"
+        ],
+        "notes": "Open with the farmer, not the tech. A smallholder in Nagpur has a Soil Health Card in a drawer, a phone in her pocket, and no one to turn the two into a decision. Keep this under a minute."
+      },
+      "solution": {
+        "kicker": "Fieldwise",
+        "title": "Your soil, your sky, your mandi, in one clear plan",
+        "points": [
+          "Crops scored for this field and this season, with reasons",
+          "Urea, DAP and potash in bags and rupees, adjusted to the Soil Health Card",
+          "Irrigation days from a live forecast, and sell-or-hold advice from nearby mandis"
+        ],
+        "notes": "Three inputs the farmer already has, one plan she can act on today. Everything works in Hindi and English, and the advice engine reproduces the field-tested formulas exactly."
+      },
+      "demo": {
+        "kicker": "Live demo",
+        "title": "Ask a question on the phone. Watch it land on the officer’s desk.",
+        "points": [
+          "Sign in as the farmer, choose a crop, check a leaf photo",
+          "Ask the extension officer; the answer arrives in real time",
+          "The officer sends a district alert to every farmer growing that crop"
+        ],
+        "notes": "Switch to the app (Alt+Tab). Farmer: planner, choose a crop, health photo check. Ask a question. Officer window: it appears live, reply. Back to the farmer: the answer and a celebration. The counters on this slide update as you go."
+      },
+      "impact": {
+        "kicker": "Impact",
+        "title": "Less guesswork on every acre",
+        "points": [
+          "Fertiliser matched to the soil instead of a blanket dose",
+          "Water only on the days the soil needs it",
+          "Better prices by choosing the mandi and the moment"
+        ],
+        "notes": "Be honest: these are the levers, not measured outcomes yet. A pilot with one Krishi Vigyan Kendra would measure input cost per acre and price realised. Point at the live numbers."
+      },
+      "architecture": {
+        "kicker": "How it works",
+        "title": "Built to run on a ₹8,000 phone and a free-tier server",
+        "points": [
+          "React app, installable and readable offline; 3D only where the device can take it",
+          "Fastify API with the shared advisory engine, Prisma on SQLite or Postgres",
+          "Live forecast from Open-Meteo, Agmarknet prices with a key, Socket.IO for alerts"
+        ],
+        "notes": "Follow a packet: the phone asks the API, the engine scores crops, weather comes from Open-Meteo and is cached for an hour, alerts go out over sockets. If any outside service fails, the app says so and keeps working with labelled simulated data."
+      },
+      "roadmap": {
+        "kicker": "Roadmap",
+        "title": "From ten districts to a state",
+        "points": [
+          "Next 3 months: pilot with one KVK, Marathi, Tamil and Odia, SMS and IVR alerts",
+          "Next 6 months: a trained PlantVillage leaf model running on the phone",
+          "Next 12 months: state rollout through the agriculture department’s extension staff"
+        ],
+        "notes": "Each step is already designed in: new languages are one folder of strings, the leaf analyser is a plug-in interface, and districts and crops are edited in the admin screen."
+      },
+      "team": {
+        "kicker": "Team",
+        "title": "Thank you",
+        "points": [
+          "Add team member names and roles here before the demo"
+        ],
+        "notes": "Introduce the team in one line each, then invite questions. Leave this slide up during Q&A."
+      }
+    },
+    "numbers": {
+      "farmers": "farmers",
+      "districts": "districts",
+      "answered": "questions answered",
+      "reply": "median reply (hours)",
+      "alerts": "alerts sent",
+      "pests": "pest sightings mapped"
+    },
+    "arch": {
+      "phone": "Farmer and officer phones",
+      "app": "Web app (PWA)",
+      "api": "Fastify API",
+      "engine": "Advisory engine",
+      "db": "Database",
+      "weather": "Open-Meteo",
+      "mandi": "Agmarknet",
+      "sockets": "Live alerts",
+      "label": "Architecture: phones talk to the web app, which calls the API. The API runs the advisory engine, stores data in the database, fetches weather from Open-Meteo and prices from Agmarknet, and pushes live alerts back to phones."
+    },
+    "p": {
+      "now": "Now",
+      "upNext": "Up next",
+      "end": "End of deck",
+      "notes": "Speaker notes",
+      "timer": "Timer",
+      "start": "Start",
+      "pause": "Pause",
+      "reset": "Reset",
+      "waiting": "Open the deck at /pitch in another window. They stay in step automatically.",
+      "connected": "Connected to the deck"
+    }
   }
 }

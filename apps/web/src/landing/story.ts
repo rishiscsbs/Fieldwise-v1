@@ -1,6 +1,7 @@
 // Shared, mutable story state. GSAP ScrollTrigger writes it on scroll; the 3D scene reads it every frame.
 // It is deliberately not React state, so scrolling never re-renders the page.
-export type SceneName = 'farm' | 'soil';
+/** lab = the data-centre scene used by the pitch deck */
+export type SceneName = 'farm' | 'soil' | 'lab';
 
 export const story = {
   /** Camera flight over the farm: 0 = hero, 1 = end of the seasons section */

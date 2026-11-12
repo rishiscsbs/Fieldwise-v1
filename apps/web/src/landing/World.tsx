@@ -270,7 +270,7 @@ function Clouds() {
 }
 
 /** Light rain near the camera during the monsoon. */
-function Rain({ count }: { count: number }) {
+export function Rain({ count }: { count: number }) {
   const pts = useRef<THREE.Points>(null);
   const geo = useMemo(() => {
     const r = rand(5);
@@ -306,7 +306,7 @@ function Rain({ count }: { count: number }) {
 }
 
 /** Sun that drifts towards the pointer. Bright enough to bloom. */
-function Sun() {
+export function Sun() {
   const mesh = useRef<THREE.Mesh>(null);
   const light = useRef<THREE.DirectionalLight>(null);
   useFrame(() => {
@@ -331,7 +331,7 @@ function Sun() {
   );
 }
 
-function SkyAndFog() {
+export function SkyAndFog() {
   const { scene } = useThree();
   const c = useMemo(() => new THREE.Color(), []);
   useMemo(() => {
@@ -339,7 +339,7 @@ function SkyAndFog() {
     scene.fog = new THREE.Fog('#a9cfe6', 35, 95);
   }, [scene]);
   useFrame(() => {
-    if (story.scene === 'soil') {
+    if (story.scene !== 'farm') {
       (scene.background as THREE.Color).set('#1e1813');
       scene.fog!.color.set('#1e1813');
       return;
@@ -351,7 +351,7 @@ function SkyAndFog() {
   return null;
 }
 
-function Farm() {
+export function Farm() {
   const ref = useRef<THREE.Group>(null);
   useFrame(() => ref.current && (ref.current.visible = story.scene === 'farm'));
   return (
@@ -383,7 +383,7 @@ const NPK_COLORS = [
   new THREE.Color(0.6, 1.4, 2.6),
   new THREE.Color(2.6, 1.9, 0.4),
 ];
-const SOIL_Y = -100;
+export const SOIL_Y = -100;
 
 /** Glowing nutrient particles filling one layer's volume. */
 function LayerNutrients({
@@ -436,7 +436,7 @@ function LayerNutrients({
  * An exploded view of the soil profile: as you scroll, the layers separate vertically and turn slightly,
  * so each one, and the nutrients inside it, can be seen on its own.
  */
-function Soil({ particleScale }: { particleScale: number }) {
+export function Soil({ particleScale }: { particleScale: number }) {
   const ref = useRef<THREE.Group>(null);
   const layers = useRef<(THREE.Group | null)[]>([]);
   useFrame(({ clock }) => {
@@ -511,7 +511,7 @@ function CameraRig({ still }: { still: boolean }) {
   const look = useMemo(() => new THREE.Vector3(), []);
   const cur = useRef(new THREE.Vector3(0, 0, 0));
   useFrame(({ clock }) => {
-    if (story.scene === 'soil') {
+    if (story.scene !== 'farm') {
       const a = 0.6 + story.peel * 0.5 + (still ? 0 : Math.sin(clock.elapsedTime * 0.15) * 0.05);
       pos.set(Math.sin(a) * 14, SOIL_Y + 3 - story.peel * 1.2, Math.cos(a) * 14);
       look.set(0, SOIL_Y - 2.4 - story.peel * 1.3, 0);
@@ -576,7 +576,7 @@ export default function World({ quality, still, paused = false }: WorldProps) {
   );
 }
 
-function PointerTracker({ disabled }: { disabled: boolean }) {
+export function PointerTracker({ disabled }: { disabled: boolean }) {
   useEffect(() => {
     if (disabled) return;
     const on = (e: PointerEvent) => {
