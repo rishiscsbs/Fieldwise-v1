@@ -1,4 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { REFERENCE } from '@fieldwise/shared';
 import { buildApp, type App } from '../src/app.js';
 import { prisma } from '../src/db.js';
 import { DEMO_ACCOUNTS } from '../src/demo.js';
@@ -17,6 +18,17 @@ beforeAll(async () => {
   admin = await login(app, DEMO_ACCOUNTS[2].phone);
 });
 afterAll(async () => {
+  // Put back the reference data these tests edit; other test files share the database.
+  const wheat = REFERENCE.crops.find((c) => c.id === 'wheat')!;
+  await prisma.crop.update({ where: { id: 'wheat' }, data: { msp: wheat.msp, price: wheat.p } });
+  await prisma.crop.deleteMany({ where: { id: 'sesame' } });
+  const jodhpur = REFERENCE.districts.jodhpur!;
+  await prisma.market.deleteMany({ where: { districtId: 'jodhpur' } });
+  await prisma.market.createMany({
+    data: jodhpur.mk.map((name, sortOrder) => ({ districtId: 'jodhpur', name, sortOrder })),
+  });
+  await prisma.district.update({ where: { id: 'jodhpur' }, data: { ph: jodhpur.ph } });
+  invalidateReference();
   await app.close();
 });
 
@@ -197,5 +209,18 @@ describe('admin', () => {
       payload: { markets: ['Jodhpur', 'Pipar', 'Bilara', 'Phalodi', 'Osian'], ph: 8.1 },
     });
     expect(r.json()).toMatchObject({ ph: 8.1, markets: ['Jodhpur', 'Pipar', 'Bilara', 'Phalodi', 'Osian'] });
+  });
+});
+
+describe('public metrics', () => {
+  it('serves aggregate counts without signing in', async () => {
+    const r = await app.inject({ method: 'GET', url: '/api/public/metrics' });
+    expect(r.statusCode).toBe(200);
+    const m = r.json();
+    expect(m.districts).toBe(10);
+    expect(m.farmers).toBeGreaterThan(40);
+    expect(m.questionsAnswered).toBeGreaterThan(0);
+    expect(m.medianResponseHours).toBeGreaterThan(0);
+    expect(JSON.stringify(m)).not.toMatch(/\+91|phone|name/i);
   });
 });

@@ -23,6 +23,7 @@ export function IndiaMap({
   maxHeight = 520,
   compact = false,
   label,
+  fill = 'var(--surface-2)',
 }: {
   pins: Pin[];
   onSelect?: (id: string) => void;
@@ -30,6 +31,8 @@ export function IndiaMap({
   /** Small locator: no labels, no tooltips */
   compact?: boolean;
   label: string;
+  /** Land colour; pick one that contrasts with the section behind the map */
+  fill?: string;
 }) {
   const [ref, width] = useWidth<HTMLDivElement>();
   const [hover, setHover] = useState<string | null>(null);
@@ -42,7 +45,7 @@ export function IndiaMap({
         <svg width={width} height={p.height} role="img" aria-label={label}>
           <path
             d={ringsPath(INDIA_OUTLINE as LonLat[][], p)}
-            fill="var(--surface-2)"
+            fill={fill}
             stroke="var(--text-muted)"
             strokeWidth={compact ? 0.6 : 0.8}
             strokeLinejoin="round"

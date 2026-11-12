@@ -151,7 +151,10 @@
     "soilsLine": "Soils: {{list}}",
     "legume": "Pulse crop: fixes nitrogen",
     "incomeNote": "Indicative: average yield × indicative price × your area.",
-    "outOfSeason": "Not this season"
+    "outOfSeason": "Not this season",
+    "view3d": "Show 3D view",
+    "hide3d": "Hide 3D view",
+    "hint3d": "Drag or use the left and right arrow keys to turn it. The bars show the same scores as the list."
   },
   "nutrients": {
     "perHa": "kg per hectare",
@@ -335,5 +338,64 @@
     "none": "No users match.",
     "openDashboard": "Open district dashboard",
     "noMsp": "No MSP"
+  },
+  "landing": {
+    "signIn": "Sign in",
+    "open": "Open the app",
+    "how": "See how it works",
+    "scroll": "Scroll to explore",
+    "heroKicker": "Crop advisory for India’s small farms",
+    "heroTitle": "Advice that knows your soil, your sky and your mandi",
+    "heroLead": "Fieldwise turns a Soil Health Card, the week’s weather and nearby mandi prices into clear, local advice in Hindi and English.",
+    "seasonsKicker": "Three seasons, one field",
+    "seasons": {
+      "kharif": {
+        "name": "Kharif",
+        "months": "June to October",
+        "body": "Monsoon rain sets the plan. Fieldwise scores each crop against your soil and the water you will actually get, and warns when humid spells bring fungus."
+      },
+      "rabi": {
+        "name": "Rabi",
+        "months": "October to March",
+        "body": "Mustard and wheat on stored moisture. Irrigation is planned day by day from crop water use, so every watering counts."
+      },
+      "zaid": {
+        "name": "Zaid",
+        "months": "March to June",
+        "body": "Short, hot and dry. Quick crops, careful water and spray days picked for calm, rain-free mornings."
+      }
+    },
+    "soilKicker": "Under the surface",
+    "soilTitle": "Your Soil Health Card, read layer by layer",
+    "soilBody": "Nitrogen, phosphorus and potassium decide how much urea, DAP and potash a field needs. Fieldwise adjusts every dose to your card: more where a nutrient is low, less where it is high.",
+    "soilN": "Nitrogen (N): low",
+    "soilP": "Phosphorus (P): medium",
+    "soilK": "Potassium (K): high",
+    "soilNote": "Particle density shows an example card: sparse is low, dense is high.",
+    "waterKicker": "Water",
+    "waterTitle": "Irrigate on the right day, not every day",
+    "waterBody": "A daily soil-water balance from the live forecast tells farmers when the soil has used up its safe store, and how many millimetres to give.",
+    "mandiKicker": "Market",
+    "mandiTitle": "From field to the best mandi",
+    "mandiBody": "Prices in four nearby mandis, the week’s trend and MSP side by side, with plain sell-or-hold advice.",
+    "field": "Field",
+    "mandi": "Mandi",
+    "numbersKicker": "Live from the platform",
+    "numbers": {
+      "districts": "districts",
+      "farmers": "farmers",
+      "acres": "acres advised",
+      "answered": "questions answered",
+      "crops": "crops scored",
+      "pests": "pests and diseases"
+    },
+    "numbersNote": "Counts come from the running demo database.",
+    "mapKicker": "Where we start",
+    "mapTitle": "Ten districts, every major soil and climate",
+    "mapBody": "From the arid west to the delta east, black regur to red laterite: the pilot covers the conditions most Indian smallholders farm in.",
+    "ctaTitle": "Bring the extension officer to every phone",
+    "ctaBody": "Farmers ask, officers answer and alert, and the advice keeps working when the network does not.",
+    "footer": "Smart India Hackathon prototype. Agronomic figures are indicative. Mandi prices are simulated unless an Agmarknet key is configured.",
+    "stillNote": "Showing still images: reduced motion or Lite mode is on."
   }
 }

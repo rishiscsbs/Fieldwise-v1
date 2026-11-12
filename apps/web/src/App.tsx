@@ -11,7 +11,7 @@ import { CursorGlow } from './app/CursorGlow';
 
 // Every page is its own chunk; only the shell ships up front.
 const AppShell = lazy(() => import('./app/AppShell').then((m) => ({ default: m.AppShell })));
-const Home = lazy(() => import('./routes/Home').then((m) => ({ default: m.Home })));
+const Landing = lazy(() => import('./routes/Landing').then((m) => ({ default: m.Landing })));
 const DesignSystem = lazy(() => import('./routes/DesignSystem').then((m) => ({ default: m.DesignSystem })));
 const Login = lazy(() => import('./routes/Login').then((m) => ({ default: m.Login })));
 const Welcome = lazy(() => import('./routes/Welcome').then((m) => ({ default: m.Welcome })));
@@ -74,7 +74,7 @@ export function App() {
       <CursorGlow />
       <Suspense fallback={<Splash />}>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Landing />} />
           <Route path="/design" element={<DesignSystem />} />
           <Route path="/login" element={<Login />} />
           <Route

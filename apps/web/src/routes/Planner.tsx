@@ -1,3 +1,4 @@
+import { lazy, Suspense, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { m } from 'framer-motion';
 import { useSay } from '../stores/page';
@@ -5,9 +6,22 @@ import { useActiveFarm } from '../lib/farm';
 import { useFmt } from '../lib/format';
 import { useChooseCrop } from '../lib/choose';
 import { useRecommendations, useReference } from '../lib/queries';
+import { useMotionMode } from '../lib/motion-mode';
 import { Button } from '../components/Button';
 import { Icon } from '../components/Icon';
-import { Badge, Callout, Card, ErrorState, PageHeader, PageSkeleton, ScoreBar } from '../components/ui';
+import {
+  Badge,
+  Callout,
+  Card,
+  ErrorState,
+  PageHeader,
+  PageSkeleton,
+  ScoreBar,
+  Skeleton,
+} from '../components/ui';
+
+// three.js only loads if someone opens the 3D view.
+const Suitability3D = lazy(() => import('../landing/Suitability3D'));
 
 export function Planner() {
   const { t, label, short, money, num, reason } = useFmt();
@@ -19,6 +33,8 @@ export function Planner() {
   const season = ref.data?.seasons.find((s) => s.id === farm?.season);
   const first = recs.data?.list[0];
   const firstCrop = ref.data?.crops.find((c) => c.id === first?.cropId);
+  const mode = useMotionMode();
+  const [show3d, setShow3d] = useState(false);
 
   useSay(
     firstCrop
@@ -37,8 +53,30 @@ export function Planner() {
       <PageHeader
         title={t('crops_lead', { ns: 'common', c: label(firstCrop.n), s: short(season?.labels) })}
         sub={t('crops_sub', { ns: 'common' })}
+        actions={
+          mode === 'full' && (
+            <Button variant="secondary" aria-expanded={show3d} onClick={() => setShow3d((v) => !v)}>
+              <Icon name="chart" size={18} />
+              {show3d ? t('planner.hide3d') : t('planner.view3d')}
+            </Button>
+          )
+        }
       />
       {recs.data.usingDefaults && <Callout tone="info" title={t('defaults')} />}
+      {show3d && mode === 'full' && (
+        <Suspense fallback={<Skeleton className="h-80 w-full" />}>
+          <Suitability3D
+            hint={t('planner.hint3d')}
+            bars={recs.data.list.map((x) => ({
+              id: x.cropId,
+              label: label(crop(x.cropId).n),
+              emoji: crop(x.cropId).e,
+              score: x.score,
+              active: x.cropId === chosen,
+            }))}
+          />
+        </Suspense>
+      )}
 
       <ol className="grid gap-4 md:grid-cols-2">
         {recs.data.list.map((x, i) => {

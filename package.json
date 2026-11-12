@@ -43,7 +43,8 @@
     "esbuild@0.21.5": true
   },
   "overrides": {
-    "rollup": "npm:@rollup/wasm-node@^4.68.2"
+    "rollup": "npm:@rollup/wasm-node@^4.68.2",
+    "@types/three": "0.169.0"
   },
-  "//overrides": "rollup -> @rollup/wasm-node: same Rollup, WebAssembly build. Windows Application Control blocks the native rollup .node binary on some machines."
+  "//overrides": "rollup -> @rollup/wasm-node: same Rollup, WebAssembly build. Windows Application Control blocks the native rollup .node binary on some machines. @types/three is pinned to match three@0.169 (maath otherwise pulls a newer copy and the two clash)."
 }

@@ -24,7 +24,7 @@ export default tseslint.config(
   },
   {
     // Playwright scripts run code inside the page via evaluate().
-    files: ['scripts/screenshots.mjs', 'e2e/**/*.ts'],
+    files: ['scripts/*.mjs', 'e2e/**/*.ts'],
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
   },
   {

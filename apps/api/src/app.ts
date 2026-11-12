@@ -23,6 +23,7 @@ import authRoutes from './routes/auth.js';
 import farmRoutes from './routes/farms.js';
 import meRoutes from './routes/me.js';
 import officerRoutes from './routes/officer.js';
+import publicRoutes from './routes/public.js';
 import referenceRoutes from './routes/reference.js';
 import systemRoutes from './routes/system.js';
 import ticketRoutes from './routes/tickets.js';
@@ -110,6 +111,7 @@ export async function buildApp({ authRateLimit = 10, realtime = true, ...opts }:
     alertRoutes,
     officerRoutes,
     adminRoutes,
+    publicRoutes,
   ]) {
     await app.register(routes, { prefix: '/api' });
   }

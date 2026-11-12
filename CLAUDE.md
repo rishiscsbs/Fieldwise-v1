@@ -37,6 +37,10 @@ v2 is an npm-workspaces monorepo being built in phases from `BUILD_PROMPT.md`. T
 - Text helpers: `useFmt()` gives `t`, `label()` (pick `{en, hi}`), `reason()` (engine reason codes), and number/date formatters for the current locale. Pages set what "Read aloud" speaks with `useSay()`.
 - Charts (`src/charts`) follow the dataviz rules: series tokens in fixed order, every chart wrapped in `ChartFrame` with a table view, hover/focus tooltips, legends for 2+ series. Mustard is below 3:1 on white, so keep the direct labels.
 - Motion: framer-motion `m.*` components only (LazyMotion strict); celebration bursts go through `burst()` in `lib/effects.ts`, which skips reduced motion and Lite mode.
+- Colour tokens are functions in `tailwind.config.ts` so opacity modifiers work (`bg-surface/85` → `color-mix`). Plain classes stay as `var()`; don't switch them to `color-mix` (older WebViews lack it).
+- Hindi text must not be letter-spaced: `[class*='tracking-']` is reset under `html[lang='hi']`.
+- Landing (`/`, `src/routes/Landing.tsx`, `src/landing/*`): one fixed WebGL canvas (`World.tsx`, React Three Fiber, no model files) driven by the mutable `story` object that `useScrollStory` updates from GSAP ScrollTrigger; never put scroll progress in React state. `useMotionMode()` decides full (3D + Lenis), lite (still JPEGs in `public/lite`) or reduced (stacked page, fades only). After changing the 3D world, regenerate the stills with `node scripts/capture-stills.mjs` and check the story with `node scripts/landing-tour.mjs [--reduced|--lite] [--phone] [--hi]`.
+- three.js types are pinned to `@types/three@0.169.0` via root `overrides` to match `three@0.169`.
 - E2E: `npm run e2e` (Playwright) against a running stack; `BASE_URL` overrides the web address. The suite signs each role in once because the API limits OTP requests per number.
 
 ## Conventions

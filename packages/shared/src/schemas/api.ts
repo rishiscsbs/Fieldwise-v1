@@ -527,3 +527,21 @@ export const AdminCropCreate = AdminCropPatch.required({
 }).extend({
   id: z.string().regex(/^[a-z][a-z0-9-]{1,30}$/, 'Use lowercase letters, numbers and dashes'),
 });
+
+// ---------- public ----------
+
+/** Headline numbers for the landing page and pitch deck. Public, no personal data. */
+export const PublicMetricsDto = z.object({
+  districts: z.number(),
+  crops: z.number(),
+  pests: z.number(),
+  farmers: z.number(),
+  farms: z.number(),
+  areaAcres: z.number(),
+  questionsAnswered: z.number(),
+  medianResponseHours: z.number().nullable(),
+  alertsSent: z.number(),
+  pestReports: z.number(),
+  generatedAt: IsoDate,
+});
+export type PublicMetricsDto = z.infer<typeof PublicMetricsDto>;

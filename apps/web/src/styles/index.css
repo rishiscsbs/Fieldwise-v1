@@ -31,6 +31,10 @@
     background: var(--accent-soft);
     color: var(--text);
   }
+  /* Letter-spacing breaks up Devanagari conjuncts and matras, so tracked labels are untracked in Hindi. */
+  html[lang='hi'] [class*='tracking-'] {
+    letter-spacing: normal;
+  }
 }
 
 @layer components {
