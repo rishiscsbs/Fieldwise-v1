@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "description": "Types, zod schemas, reference data, the agronomy engine and UI strings shared by web and API",
+  "sideEffects": false,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {

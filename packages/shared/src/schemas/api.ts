@@ -333,6 +333,7 @@ export const NotificationDto = z.object({
 export type NotificationDto = z.infer<typeof NotificationDto>;
 
 export const NotificationListDto = z.object({ unread: z.number(), items: z.array(NotificationDto) });
+export type NotificationListDto = z.infer<typeof NotificationListDto>;
 
 // ---------- realtime events (Socket.IO) ----------
 

@@ -8,8 +8,14 @@ interface UiState {
   lang: LangCode;
   /** null = follow the system setting */
   theme: Theme | null;
+  /** The field being viewed; null = the first one */
+  farmId: string | null;
+  /** Lite mode: no 3D, fewer particles. Set automatically on low-end devices in phase 7, or by hand. */
+  lite: boolean;
   setLang: (lang: LangCode) => void;
   setTheme: (theme: Theme) => void;
+  setFarmId: (id: string | null) => void;
+  setLite: (lite: boolean) => void;
 }
 
 // localStorage can be missing or blocked (private mode, some WebViews). Fall back to memory.
@@ -34,8 +40,12 @@ export const useUi = create<UiState>()(
     (set) => ({
       lang: 'en',
       theme: null,
+      farmId: null,
+      lite: false,
       setLang: (lang) => set({ lang }),
       setTheme: (theme) => set({ theme }),
+      setFarmId: (farmId) => set({ farmId }),
+      setLite: (lite) => set({ lite }),
     }),
     { name: 'fw-ui', storage: safeStorage },
   ),

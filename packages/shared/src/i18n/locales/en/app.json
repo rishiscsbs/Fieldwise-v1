@@ -1,12 +1,23 @@
 {
   "brand": "Fieldwise",
   "skip": "Skip to content",
-  "theme": { "label": "Theme", "light": "Light", "dark": "Dark" },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "toggle": "Dark mode"
+  },
   "language": "Language",
   "simulated": "Simulated",
+  "live": "Live",
+  "loading": "Loading",
+  "retry": "Try again",
+  "loadError": "This could not be loaded. Check your connection and try again.",
+  "offline": "You are offline. Showing the last advice you viewed.",
   "home": {
     "title": "Crop advice that knows your field",
-    "lead": "Fieldwise v2 is being built in phases. The design system is ready; the farmer app arrives in phase 3.",
+    "lead": "Fieldwise turns your Soil Health Card, the weather and mandi prices into clear advice in English and Hindi.",
+    "open": "Open the app",
     "design": "Open the design system"
   },
   "design": {
@@ -27,5 +38,206 @@
     "warn": "Pest watch",
     "bad": "Do not spray",
     "info": "Irrigate"
+  },
+  "login": {
+    "title": "Sign in",
+    "lead": "Use your mobile number. We send a 6-digit code.",
+    "phone": "Mobile number",
+    "phoneHint": "10 digits, for example 98765 43210",
+    "send": "Send code",
+    "code": "6-digit code",
+    "codeHint": "Sent to {{phone}}",
+    "verify": "Sign in",
+    "change": "Change number",
+    "resend": "Send a new code",
+    "devCode": "Development code: {{code}}",
+    "demo": "Demo accounts",
+    "demoNote": "Shown in development only. The code appears in the API console and below.",
+    "useDemo": "Use {{role}} account",
+    "role": {
+      "farmer": "Farmer",
+      "officer": "Extension officer",
+      "admin": "Admin"
+    }
+  },
+  "onboard": {
+    "title": "Welcome to Fieldwise",
+    "lead": "Tell us your name and add your first field. You can change these later.",
+    "name": "Your name",
+    "farmName": "Field name",
+    "farmNameDefault": "Main field",
+    "village": "Village",
+    "save": "Start using Fieldwise"
+  },
+  "shell": {
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "farm": "Field",
+    "addFarm": "Add a field",
+    "signOut": "Sign out",
+    "notifications": "Notifications",
+    "search": "Search",
+    "searchHint": "Ctrl K",
+    "officerSoon": "Officer dashboard",
+    "adminSoon": "Admin"
+  },
+  "notif": {
+    "title": "Notifications",
+    "empty": "Nothing new. Alerts and replies will appear here.",
+    "markAll": "Mark all read",
+    "close": "Close notifications",
+    "unread": "{{count}} unread",
+    "new": "New"
+  },
+  "cmd": {
+    "label": "Command palette",
+    "placeholder": "Go to a page or crop…",
+    "pages": "Pages",
+    "crops": "Crops",
+    "actions": "Actions",
+    "none": "Nothing matches",
+    "toggleTheme": "Switch light or dark",
+    "toggleLang": "हिन्दी में बदलें",
+    "ask": "Ask an expert"
+  },
+  "view": {
+    "chart": "Chart",
+    "table": "Table",
+    "label": "Show as"
+  },
+  "source": {
+    "openMeteo": "Live forecast from Open-Meteo",
+    "simWeather": "Simulated forecast. Open-Meteo could not be reached.",
+    "agmarknet": "Live prices from Agmarknet",
+    "simMandi": "Simulated prices for the demo. Connect Agmarknet with an API key for live prices.",
+    "updated": "Updated {{time}}",
+    "todayOnly": "Agmarknet gives today’s price only, so trends are not shown."
+  },
+  "defaults": "No Soil Health Card yet, so medium nutrient levels are assumed. Add your card for better advice.",
+  "addCard": "Add Soil Health Card",
+  "overview": {
+    "hello": "Namaste, {{name}}",
+    "chosen": "Crop you are growing"
+  },
+  "farm": {
+    "title": "Field details",
+    "new": "New field",
+    "create": "Add field",
+    "saved": "Field saved",
+    "history": "Soil Health Card history",
+    "historySub": "Each line is one nutrient across your past cards",
+    "addTest": "Add a card reading",
+    "testedAt": "Date tested",
+    "testSaved": "Card reading saved",
+    "source": "From",
+    "sourceShc": "Soil Health Card lab",
+    "sourceSelf": "Own test kit",
+    "water": "Water available this season: about {{mm}} mm",
+    "delete": "Delete field",
+    "deleteConfirm": "Delete this field and its history? This cannot be undone.",
+    "deleted": "Field deleted"
+  },
+  "planner": {
+    "details": "See details",
+    "back": "All crops",
+    "picked": "{{crop}} is now your crop",
+    "why": "Why this score",
+    "needs": "What it needs",
+    "phRange": "Soil pH {{lo}}–{{hi}}",
+    "waterRange": "Water {{lo}}–{{hi}} mm",
+    "tempRange": "Temperature {{lo}}–{{hi}} °C",
+    "npkLine": "N {{n}} · P₂O₅ {{p}} · K₂O {{k}} kg/ha",
+    "seasonsLine": "Seasons: {{list}}",
+    "soilsLine": "Soils: {{list}}",
+    "legume": "Pulse crop: fixes nitrogen",
+    "incomeNote": "Indicative: average yield × indicative price × your area.",
+    "outOfSeason": "Not this season"
+  },
+  "nutrients": {
+    "perHa": "kg per hectare",
+    "levels": "Your soil",
+    "bagsOf": "{{count}} bags of {{kg}} kg",
+    "priceNote": "Prices are indicative subsidised rates per bag."
+  },
+  "health": {
+    "upload": "Upload leaf photo",
+    "take": "Take or choose a photo",
+    "scanning": "Checking the colours on your leaf…",
+    "found": "Areas outlined on the photo look off-colour.",
+    "notModel": "Colour check, not a disease model",
+    "suggested": "Signs suggested by the photo",
+    "logged": "Saved to the district pest map",
+    "pick": "Pick the signs you see"
+  },
+  "weather": {
+    "moisture": "Soil water left",
+    "moistureSub": "Before irrigation is needed on {{soil}} soil",
+    "nextIrr": "Next irrigation",
+    "cond": {
+      "heavy": "Heavy rain",
+      "showers": "Showers",
+      "cloudy": "Cloudy",
+      "clear": "Clear"
+    },
+    "today": "Today",
+    "noSpray": "No good spray days this week",
+    "conditions": "Conditions",
+    "noRain": "No rain expected this week"
+  },
+  "market": {
+    "best": "Best price",
+    "mspLine": "MSP",
+    "changeWk": "{{ch}}% this week"
+  },
+  "desk": {
+    "ask": "Ask a question",
+    "category": "Topic",
+    "cat": {
+      "pest": "Pest",
+      "disease": "Disease",
+      "nutrient": "Fertiliser",
+      "water": "Water",
+      "market": "Market",
+      "other": "Other"
+    },
+    "status": {
+      "open": "Waiting",
+      "answered": "Answered",
+      "closed": "Closed"
+    },
+    "attach": "Add photos",
+    "attached": "{{count}} photo(s) added",
+    "removePhoto": "Remove photo",
+    "conversation": "Conversation",
+    "you": "You",
+    "close": "Mark as solved",
+    "reopen": "Reopen",
+    "closed": "Question closed",
+    "back": "All questions",
+    "newReply": "New reply on your question",
+    "empty": "Pick a question to read the conversation.",
+    "alertsFor": "Alerts for your district",
+    "level": {
+      "label": "Alert level",
+      "info": "Information",
+      "warn": "Warning",
+      "bad": "Urgent"
+    }
+  },
+  "toast": {
+    "newAlert": "New alert",
+    "error": "Something went wrong. Try again."
+  },
+  "role": {
+    "farmer": "Farmer",
+    "officer": "Extension officer",
+    "admin": "Admin"
+  },
+  "officer": {
+    "soon": "The officer dashboard with the district map arrives in the next phase. For now, answer questions and send alerts from the advisory desk."
+  },
+  "chart": {
+    "min": "Min",
+    "max": "Max"
   }
 }

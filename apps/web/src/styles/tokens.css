@@ -47,10 +47,13 @@
   --info: #3d6e8a;
   --info-soft: #e3eef3;
 
-  --series-1: var(--leaf-500);
-  --series-2: var(--monsoon-500);
-  --series-3: var(--mustard-500);
-  --series-4: var(--soil-500);
+  /* Chart series: leaf, monsoon, mustard, laterite rose. Validated with the dataviz palette checker
+     (lightness band, chroma, colour-blind separation); mustard is under 3:1 on white, so charts carry
+     direct labels and a table view. */
+  --series-1: #3e9b55;
+  --series-2: #2e78b0;
+  --series-3: #d9a21b;
+  --series-4: #ae4976;
 
   /* Shape and depth */
   --r-sm: 6px;
@@ -99,10 +102,10 @@
   --info: #8db3c7;
   --info-soft: #182730;
 
-  --series-1: #7cc487;
-  --series-2: #8db3c7;
-  --series-3: #e8b93a;
-  --series-4: #c9a487;
+  --series-1: #409d48;
+  --series-2: #4e90d2;
+  --series-3: #b68b16;
+  --series-4: #bf5884;
 
   --shadow-1: 0 1px 2px rgb(0 0 0 / 0.3), 0 2px 8px rgb(0 0 0 / 0.25);
   --shadow-2: 0 4px 12px rgb(0 0 0 / 0.35), 0 12px 32px rgb(0 0 0 / 0.3);

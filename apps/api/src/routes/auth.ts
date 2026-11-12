@@ -115,19 +115,23 @@ const authRoutes: FastifyPluginAsyncZod<{ authRateLimit: number }> = async (app,
       schema: {
         ...tag,
         summary: 'Rotate the refresh-token cookie and get a new access token',
-        response: { 200: AuthSession, 401: Err },
+        description:
+          'Returns 204 with no body when there is no valid session (no cookie, expired, revoked or reused). ' +
+          'Being signed out is a normal state, not an error, so it does not produce a 401.',
+        response: { 200: AuthSession, 204: z.null() },
       },
     },
     async (req, reply) => {
       const token = req.cookies[REFRESH_COOKIE];
-      if (!token) return reply.code(401).send({ error: 'refresh_missing', message: 'Sign in again' });
+      if (!token) return reply.code(204).send(null);
       try {
         const r = await rotateRefreshToken(token);
         setRefresh(reply, r.token);
         return session(r.user);
       } catch (e) {
+        if (!(e instanceof AuthError)) throw e;
         clearRefresh(reply);
-        return fail(reply, e);
+        return reply.code(204).send(null);
       }
     },
   );

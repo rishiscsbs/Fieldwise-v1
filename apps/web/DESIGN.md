@@ -45,7 +45,16 @@ A live reference is at `/design` in the running app.
 
 Each has a `-soft` background (`--good-soft` …) for callouts.
 
-**Chart series** use `--series-1..4` in order: leaf, monsoon, mustard, soil. Charts always have a table view.
+**Chart series** use `--series-1..4` in this fixed order, never cycled:
+
+| Series | Light | Dark |
+|---|---|---|
+| 1 leaf | `#3e9b55` | `#409d48` |
+| 2 monsoon | `#2e78b0` | `#4e90d2` |
+| 3 mustard | `#d9a21b` | `#b68b16` |
+| 4 laterite rose | `#ae4976` | `#bf5884` |
+
+These are more saturated than the palette steps because chart marks must not read as grey. Both sets pass the dataviz validator (lightness band, chroma floor, colour-blind and normal-vision separation of adjacent series) on their own surface. Mustard is 2.3:1 on white, so every chart has direct labels and a table view. Series 4 is a rose rather than a brick red so it is never mistaken for `--bad`. Text never takes a series colour.
 
 ### Contrast (WCAG AA)
 

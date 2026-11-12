@@ -30,6 +30,15 @@ v2 is an npm-workspaces monorepo being built in phases from `BUILD_PROMPT.md`. T
 - External data never blocks a screen: weather falls back to the simulator, mandi falls back from Agmarknet to the simulator, and both report `source` / `simulated` so the UI can label them. Tests inject `fetchImpl`; no test touches the network.
 - Uploads are JPEG/PNG only (checked by magic bytes), decoded with pure-JS `jpeg-js`/`pngjs`, and served by signed URLs. Leaf analysers implement `LeafAnalyser` in `apps/api/src/services/analysers`.
 
+## Web app
+
+- Routes live under `/app` (lazy-loaded pages in `apps/web/src/routes`); `/` is the public front page. Keep the first-load JS under 200 KB gzipped: import shared *types* via `lib/api-types.ts`, and never import zod or reference data into the shell.
+- Data comes through TanStack Query hooks in `lib/queries.ts` (keys in `qk`). Live socket events in `lib/socket.ts` invalidate those keys. Every async view shows a skeleton, and errors show `ErrorState` with a retry.
+- Text helpers: `useFmt()` gives `t`, `label()` (pick `{en, hi}`), `reason()` (engine reason codes), and number/date formatters for the current locale. Pages set what "Read aloud" speaks with `useSay()`.
+- Charts (`src/charts`) follow the dataviz rules: series tokens in fixed order, every chart wrapped in `ChartFrame` with a table view, hover/focus tooltips, legends for 2+ series. Mustard is below 3:1 on white, so keep the direct labels.
+- Motion: framer-motion `m.*` components only (LazyMotion strict); celebration bursts go through `burst()` in `lib/effects.ts`, which skips reduced motion and Lite mode.
+- E2E: `npm run e2e` (Playwright) against a running stack; `BASE_URL` overrides the web address. The suite signs each role in once because the API limits OTP requests per number.
+
 ## Conventions
 
 - **Every user-facing string needs English and Hindi.** `common` and `advice` namespaces are converted from `legacy/js/i18n.js` by `npm run i18n:convert` — don't hand-edit them; add new strings to `app.json` in every `locales/<lang>/` folder. Data labels are `{ en, hi }` objects read with `pick()`.

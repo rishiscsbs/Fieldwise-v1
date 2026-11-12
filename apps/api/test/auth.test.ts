@@ -106,12 +106,21 @@ describe('auth', () => {
     expect(r1.statusCode).toBe(200);
     const c2 = cookieFrom(r1);
     expect(c2).not.toBe(c1);
-    // Replaying the old token is treated as theft: it fails and the new one is revoked too.
+    // Replaying the old token is treated as theft: no session, and every session for the user is revoked.
     const replay = await app.inject({ method: 'POST', url: '/api/auth/refresh', headers: { cookie: c1 } });
-    expect(replay.statusCode).toBe(401);
-    expect(replay.json().error).toBe('refresh_reused');
+    expect(replay.statusCode).toBe(204);
+    const live = await prisma.refreshToken.count({
+      where: { userId: first.json().user.id, revokedAt: null },
+    });
+    expect(live).toBe(0);
     const after = await app.inject({ method: 'POST', url: '/api/auth/refresh', headers: { cookie: c2 } });
-    expect(after.statusCode).toBe(401);
+    expect(after.statusCode).toBe(204);
+  });
+
+  it('answers 204, not an error, when there is no session to refresh', async () => {
+    const r = await app.inject({ method: 'POST', url: '/api/auth/refresh' });
+    expect(r.statusCode).toBe(204);
+    expect(r.body).toBe('');
   });
 
   it('logs out by revoking the refresh token', async () => {
@@ -120,7 +129,7 @@ describe('auth', () => {
     const out = await app.inject({ method: 'POST', url: '/api/auth/logout', headers: { cookie: c } });
     expect(out.statusCode).toBe(204);
     const r = await app.inject({ method: 'POST', url: '/api/auth/refresh', headers: { cookie: c } });
-    expect(r.statusCode).toBe(401);
+    expect(r.statusCode).toBe(204);
   });
 
   it('rejects requests without a token', async () => {

@@ -1,13 +1,15 @@
+import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LANGUAGES } from '@fieldwise/shared';
 import { resolvedTheme, useUi } from '../stores/ui';
+import { Toggle } from './Toggle';
 
-export function Header() {
+/** Header for pages outside the app shell: brand, language and theme. */
+export function PublicHeader({ children }: { children?: ReactNode }) {
   const { t } = useTranslation();
   const { lang, setLang, theme, setTheme } = useUi();
-  const current = resolvedTheme(theme);
-
+  const dark = resolvedTheme(theme) === 'dark';
   return (
     <header className="border-b border-line bg-surface/80 backdrop-blur">
       <a
@@ -21,7 +23,8 @@ export function Header() {
           <img src="/favicon.svg" alt="" width={28} height={28} />
           {t('brand')}
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {children}
           <label className="sr-only" htmlFor="lang">
             {t('language')}
           </label>
@@ -37,14 +40,7 @@ export function Header() {
               </option>
             ))}
           </select>
-          <button
-            type="button"
-            className="btn-secondary"
-            aria-pressed={current === 'dark'}
-            onClick={() => setTheme(current === 'dark' ? 'light' : 'dark')}
-          >
-            {current === 'dark' ? t('theme.light') : t('theme.dark')}
-          </button>
+          <Toggle checked={dark} onChange={(v) => setTheme(v ? 'dark' : 'light')} label={t('theme.toggle')} />
         </div>
       </div>
     </header>
