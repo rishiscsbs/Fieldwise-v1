@@ -79,7 +79,9 @@
     "search": "Search",
     "searchHint": "Ctrl K",
     "officer": "District dashboard",
-    "admin": "Administration"
+    "admin": "Administration",
+    "lite": "Lite mode",
+    "liteHint": "Less animation, no 3D. Turns on by itself on slow phones."
   },
   "notif": {
     "title": "Notifications",

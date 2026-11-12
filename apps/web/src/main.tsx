@@ -32,3 +32,11 @@ createRoot(document.getElementById('root')!).render(
     </QueryClientProvider>
   </StrictMode>,
 );
+
+// Installable and readable offline in production builds (a service worker in dev would cache stale modules).
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener(
+    'load',
+    () => void navigator.serviceWorker.register('/sw.js').catch(() => undefined),
+  );
+}

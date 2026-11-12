@@ -30,7 +30,17 @@ function FrozenOutlet() {
 export function AppShell() {
   const { t, label, lang } = useFmt();
   const user = useAuth((s) => s.user);
-  const { setLang, theme, setTheme, setFarmId } = useUi();
+  const { setLang, theme, setTheme, setFarmId, lite, setLite } = useUi();
+  const [online, setOnline] = useState(() => navigator.onLine);
+  useEffect(() => {
+    const on = () => setOnline(navigator.onLine);
+    window.addEventListener('online', on);
+    window.addEventListener('offline', on);
+    return () => {
+      window.removeEventListener('online', on);
+      window.removeEventListener('offline', on);
+    };
+  }, []);
   const { farm, farms } = useActiveFarm();
   const ref = useReference();
   const notes = useNotifications();
@@ -155,6 +165,10 @@ export function AppShell() {
       <div className="mb-3 flex items-center justify-between gap-2 text-sm">
         <span>{t('theme.toggle')}</span>
         <Toggle checked={dark} onChange={(v) => setTheme(v ? 'dark' : 'light')} label={t('theme.toggle')} />
+      </div>
+      <div className="mb-3 flex items-center justify-between gap-2 text-sm" title={t('shell.liteHint')}>
+        <span>{t('shell.lite')}</span>
+        <Toggle checked={lite} onChange={setLite} label={t('shell.lite')} />
       </div>
       <button type="button" className="btn-secondary w-full" onClick={signOut}>
         <Icon name="logout" size={18} />
@@ -326,6 +340,11 @@ export function AppShell() {
           </div>
         </header>
 
+        {!online && (
+          <div role="status" className="bg-warn-soft px-4 py-2 text-center text-sm font-semibold text-fg">
+            {t('offline')}
+          </div>
+        )}
         <main id="main" className="mx-auto w-full max-w-6xl px-4 pb-24 pt-6 sm:px-6">
           <AnimatePresence mode="popLayout" initial={false}>
             <m.div

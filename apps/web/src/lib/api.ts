@@ -1,7 +1,7 @@
 // Fetch wrapper for the Fieldwise API. Adds the access token, refreshes it once on 401, and turns
 // error bodies into ApiError so screens can show the server's (already user-friendly) message.
 import type { AuthSession } from '@fieldwise/shared';
-import { useAuth } from '../stores/auth';
+import { lastUser, useAuth } from '../stores/auth';
 
 export class ApiError extends Error {
   constructor(
@@ -27,7 +27,13 @@ export function refreshSession(): Promise<boolean> {
       useAuth.getState().setSession((await r.json()) as AuthSession);
       return true;
     })
-    .catch(() => false)
+    .catch(() => {
+      // Network error (offline), not a rejected session: keep the last user so cached advice still shows.
+      const u = lastUser.get();
+      if (u) useAuth.setState({ status: 'signedIn', token: null, user: u });
+      else useAuth.getState().clear();
+      return false;
+    })
     .finally(() => {
       refreshing = null;
     });

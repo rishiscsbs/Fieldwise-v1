@@ -23,6 +23,10 @@ export default tseslint.config(
     },
   },
   {
+    files: ['apps/web/public/sw.js'],
+    languageOptions: { globals: { ...globals.serviceworker } },
+  },
+  {
     // Playwright scripts run code inside the page via evaluate().
     files: ['scripts/*.mjs', 'e2e/**/*.ts'],
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
