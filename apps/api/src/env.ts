@@ -11,6 +11,8 @@ const Env = z.object({
   DATABASE_URL: z.string().default('file:./dev.db'),
   JWT_SECRET: z.string().min(32, 'JWT_SECRET must be at least 32 characters'),
   WEB_ORIGIN: z.string().default('http://localhost:5173'),
+  /** Upload folder, relative to apps/api */
+  UPLOAD_DIR: z.string().default('uploads'),
   AGMARKNET_API_KEY: z
     .string()
     .optional()

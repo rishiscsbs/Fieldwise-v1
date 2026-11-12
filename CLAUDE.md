@@ -25,6 +25,10 @@ v2 is an npm-workspaces monorepo being built in phases from `BUILD_PROMPT.md`. T
 - Reference data (crops, pests, districts…) is seeded from `packages/shared/src/data` into the database, and the API loads it back with `loadReference()` so admin edits reach the engine. Lists and labels are JSON strings in the DB, parsed with zod in `apps/api/src/lib/json.ts`.
 - `packages/shared` is consumed from `dist/`; rebuild it (`npm run build -w @fieldwise/shared`) after changing it.
 - The web app calls the API through the Vite proxy at `/api`, so the refresh-token cookie (`fw_rt`, path `/api/auth`) stays same-origin.
+- API routes: request and response shapes are zod schemas in `packages/shared/src/schemas/api.ts`. Throw `HttpError` (`badRequest`, `notFound`, `forbidden` in `apps/api/src/lib/http.ts`) for user-facing errors. Access rules live in `apps/api/src/lib/access.ts`.
+- Live updates: emit through `app.rt.emit(rooms.user(id) | rooms.officers(district), event, payload)`; event types are `ServerToClientEvents` in shared. Use `notify()` to store a notification and push it.
+- External data never blocks a screen: weather falls back to the simulator, mandi falls back from Agmarknet to the simulator, and both report `source` / `simulated` so the UI can label them. Tests inject `fetchImpl`; no test touches the network.
+- Uploads are JPEG/PNG only (checked by magic bytes), decoded with pure-JS `jpeg-js`/`pngjs`, and served by signed URLs. Leaf analysers implement `LeafAnalyser` in `apps/api/src/services/analysers`.
 
 ## Conventions
 

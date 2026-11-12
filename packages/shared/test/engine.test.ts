@@ -132,3 +132,17 @@ describe('schemas', () => {
     expect(FarmInput.safeParse({ name: '', districtId: 'x' }).success).toBe(false);
   });
 });
+
+describe('leafRegions', () => {
+  it('marks the cells where a problem colour dominates', async () => {
+    const { leafRegions } = await import('../src/index.js');
+    // 8x8 image: green everywhere except a brown top-left quarter.
+    const w = 8;
+    const h = 8;
+    const data: number[] = [];
+    for (let y = 0; y < h; y++)
+      for (let x = 0; x < w; x++) data.push(...(x < 4 && y < 4 ? [120, 60, 30] : [40, 160, 50]), 255);
+    const regions = leafRegions(data, w, h, 2);
+    expect(regions).toEqual([{ x: 0, y: 0, w: 0.5, h: 0.5, kind: 'brown' }]);
+  });
+});
