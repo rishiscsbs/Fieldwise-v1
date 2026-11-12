@@ -1,0 +1,119 @@
+/* Fieldwise design tokens. See DESIGN.md. Components use the semantic tokens, never the palette directly. */
+:root {
+  /* Palette */
+  --soil-900: #2b1d14;
+  --soil-700: #5a3a26;
+  --soil-500: #8a5a3b;
+  --soil-300: #c9a487;
+  --soil-100: #f1e6da;
+  --monsoon-900: #14232e;
+  --monsoon-700: #24465a;
+  --monsoon-500: #3d6e8a;
+  --monsoon-300: #8db3c7;
+  --monsoon-100: #e3eef3;
+  --mustard-900: #5c4300;
+  --mustard-700: #8f6a00;
+  --mustard-500: #d9a21b;
+  --mustard-300: #f2cf6b;
+  --mustard-100: #fbf1d3;
+  --leaf-900: #163a20;
+  --leaf-700: #2f7a43;
+  --leaf-500: #3e9b55;
+  --leaf-300: #9bd18f;
+  --leaf-100: #e6f4df;
+  --paper: #fbf8f2;
+  --ink: #1d1a16;
+
+  /* Semantic, light */
+  --bg: var(--paper);
+  --surface: #ffffff;
+  --surface-2: #f4eee4;
+  --border: #e4dacb;
+  --text: var(--ink);
+  --text-muted: #6b5e52;
+  --primary: var(--leaf-700);
+  --primary-hover: #276838;
+  --primary-ink: #ffffff;
+  --accent: var(--mustard-500);
+  --accent-soft: var(--mustard-100);
+  --focus: var(--monsoon-500);
+
+  --good: #2f7a43;
+  --good-soft: #e6f4df;
+  --warn: #a86410;
+  --warn-soft: #fbefd9;
+  --bad: #b3412e;
+  --bad-soft: #f8e3de;
+  --info: #3d6e8a;
+  --info-soft: #e3eef3;
+
+  --series-1: var(--leaf-500);
+  --series-2: var(--monsoon-500);
+  --series-3: var(--mustard-500);
+  --series-4: var(--soil-500);
+
+  /* Shape and depth */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --shadow-1: 0 1px 2px rgb(60 40 20 / 0.06), 0 2px 8px rgb(60 40 20 / 0.05);
+  --shadow-2: 0 4px 12px rgb(60 40 20 / 0.1), 0 12px 32px rgb(60 40 20 / 0.08);
+  --shadow-3: 0 12px 32px rgb(40 25 10 / 0.18), 0 32px 64px rgb(40 25 10 / 0.14);
+
+  /* Motion */
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 320ms;
+  --dur-4: 600ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Type */
+  --font-display: 'Rozha One', 'Mukta', Georgia, serif;
+  --font-text: 'Mukta', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #14100c;
+  --surface: #1e1813;
+  --surface-2: #28201a;
+  --border: #3a3028;
+  --text: #f3ede4;
+  --text-muted: #b8ab9c;
+  --primary: #7cc487;
+  --primary-hover: #93d29c;
+  --primary-ink: #0e2414;
+  --accent: #e8b93a;
+  --accent-soft: #3a2f12;
+  --focus: var(--monsoon-300);
+
+  --good: #7cc487;
+  --good-soft: #1c2e1f;
+  --warn: #e6a44a;
+  --warn-soft: #33260f;
+  --bad: #ee8572;
+  --bad-soft: #3a1d17;
+  --info: #8db3c7;
+  --info-soft: #182730;
+
+  --series-1: #7cc487;
+  --series-2: #8db3c7;
+  --series-3: #e8b93a;
+  --series-4: #c9a487;
+
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.3), 0 2px 8px rgb(0 0 0 / 0.25);
+  --shadow-2: 0 4px 12px rgb(0 0 0 / 0.35), 0 12px 32px rgb(0 0 0 / 0.3);
+  --shadow-3: 0 12px 32px rgb(0 0 0 / 0.45), 0 32px 64px rgb(0 0 0 / 0.4);
+
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-3: 1ms;
+    --dur-4: 1ms;
+  }
+}

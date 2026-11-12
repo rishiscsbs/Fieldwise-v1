@@ -1,0 +1,48 @@
+{
+  "name": "fieldwise",
+  "private": true,
+  "type": "module",
+  "version": "2.0.0",
+  "description": "Crop advisory platform for Indian smallholder farmers",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "predev": "npm run build -w @fieldwise/shared && npm run db:setup -w @fieldwise/api",
+    "dev": "concurrently -k -n api,web -c green,yellow \"npm run dev -w @fieldwise/api\" \"npm run dev -w @fieldwise/web\"",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run build -w @fieldwise/shared && npm run typecheck --workspaces --if-present",
+    "lint": "eslint .",
+    "test": "npm run test --workspaces --if-present",
+    "format": "prettier --write .",
+    "golden": "node scripts/capture-legacy-golden.mjs",
+    "i18n:convert": "node scripts/convert-legacy-i18n.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@playwright/test": "^1.48.2",
+    "@types/node": "^20.19.43",
+    "concurrently": "^9.2.5",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^15.15.0",
+    "prettier": "^3.3.3",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.72.2"
+  },
+  "allowScripts": {
+    "@prisma/client@5.22.0": true,
+    "@prisma/engines@5.22.0": true,
+    "prisma@5.22.0": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.21.5": true
+  },
+  "overrides": {
+    "rollup": "npm:@rollup/wasm-node@^4.68.2"
+  },
+  "//overrides": "rollup -> @rollup/wasm-node: same Rollup, WebAssembly build. Windows Application Control blocks the native rollup .node binary on some machines."
+}

@@ -1,0 +1,3382 @@
+[
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "tag",
+  "args": {},
+  "expected": "Crop advisory platform"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav.farm",
+  "args": {},
+  "expected": "My farm"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav.crops",
+  "args": {},
+  "expected": "What to grow"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav.fertiliser",
+  "args": {},
+  "expected": "Fertiliser"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav.pest",
+  "args": {},
+  "expected": "Pest doctor"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav.weather",
+  "args": {},
+  "expected": "Weather & water"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav.mandi",
+  "args": {},
+  "expected": "Mandi prices"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav.expert",
+  "args": {},
+  "expected": "Ask an expert"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "listen",
+  "args": {},
+  "expected": "Listen"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "stop",
+  "args": {},
+  "expected": "Stop"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "farm_lead",
+  "args": {
+   "d": "«d0»"
+  },
+  "expected": "Your field in «d0», this week"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "farm_sub",
+  "args": {},
+  "expected": "Fill in your farm and Soil Health Card once. Every other screen uses it."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "profile",
+  "args": {},
+  "expected": "Farm details"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "district",
+  "args": {},
+  "expected": "District"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "season",
+  "args": {},
+  "expected": "Season"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "soil",
+  "args": {},
+  "expected": "Soil type"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "area",
+  "args": {},
+  "expected": "Land (acres)"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "irrigation",
+  "args": {},
+  "expected": "Water for irrigation"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "shc",
+  "args": {},
+  "expected": "Soil Health Card values"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ph",
+  "args": {},
+  "expected": "pH"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "N",
+  "args": {},
+  "expected": "Available N (kg/ha)"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "P",
+  "args": {},
+  "expected": "Available P (kg/ha)"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "K",
+  "args": {},
+  "expected": "Available K (kg/ha)"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "low",
+  "args": {},
+  "expected": "Low"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "med",
+  "args": {},
+  "expected": "Medium"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "high",
+  "args": {},
+  "expected": "High"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "saveGo",
+  "args": {},
+  "expected": "Show what to grow"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "saved",
+  "args": {},
+  "expected": "Farm details saved"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "t_crop",
+  "args": {},
+  "expected": "Best crop this season"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "t_water",
+  "args": {},
+  "expected": "Water"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "t_pest",
+  "args": {},
+  "expected": "Pest watch"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "t_money",
+  "args": {},
+  "expected": "Mandi"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "crops_lead",
+  "args": {
+   "c": "«c0»",
+   "s": "«s1»"
+  },
+  "expected": "«c0» suits your field best this «s1»"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "crops_sub",
+  "args": {},
+  "expected": "Scores weigh your soil, pH, water, temperature and nutrients against what each crop needs."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "choose",
+  "args": {},
+  "expected": "Grow this"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "chosen",
+  "args": {},
+  "expected": "Chosen"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "top",
+  "args": {},
+  "expected": "Best match"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "duration",
+  "args": {},
+  "expected": "Duration"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "days",
+  "args": {},
+  "expected": "days"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "yield",
+  "args": {},
+  "expected": "Avg yield"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "qpa",
+  "args": {},
+  "expected": "q/acre"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "income",
+  "args": {},
+  "expected": "Gross income"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "notSeason",
+  "args": {
+   "n": "«n0»"
+  },
+  "expected": "Not for this season: «n0»."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "r_soil",
+  "args": {
+   "s": "«s0»"
+  },
+  "expected": "Grows well in «s0» soil"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "r_soilx",
+  "args": {
+   "s": "«s0»"
+  },
+  "expected": "«s0» soil is not ideal"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "r_ph",
+  "args": {},
+  "expected": "Soil pH is in the right range"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "r_phx",
+  "args": {
+   "lo": "«lo0»",
+   "hi": "«hi1»"
+  },
+  "expected": "pH is outside «lo0»–«hi1»; correct with lime or gypsum"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "r_w",
+  "args": {
+   "mm": "«mm0»"
+  },
+  "expected": "Water available (~«mm0» mm) meets the need"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "r_wlow",
+  "args": {
+   "mm": "«mm0»",
+   "need": "«need1»"
+  },
+  "expected": "Water short: ~«mm0» mm available, needs «need1» mm"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "r_whigh",
+  "args": {},
+  "expected": "Risk of waterlogging; make drainage channels"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "r_t",
+  "args": {},
+  "expected": "Temperature suits the crop"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "r_tx",
+  "args": {
+   "tt": "«tt0»"
+  },
+  "expected": "Average «tt0»°C is outside its comfort range"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "r_leg",
+  "args": {},
+  "expected": "Pulse crop: fixes its own nitrogen and improves soil"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "r_nlow",
+  "args": {},
+  "expected": "Soil nitrogen is low for this heavy feeder"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "fert_lead",
+  "args": {
+   "c": "«c0»",
+   "a": "«a1»"
+  },
+  "expected": "Fertiliser for «a1» acres of «c0»"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "fert_sub",
+  "args": {},
+  "expected": "Doses are adjusted to your Soil Health Card: 25% more where a nutrient is low, 25% less where it is high."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "crop",
+  "args": {},
+  "expected": "Crop"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nutrient",
+  "args": {},
+  "expected": "Nutrient"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "rec",
+  "args": {},
+  "expected": "Recommended (kg/ha)"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "adj",
+  "args": {},
+  "expected": "For your soil (kg/ha)"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "total",
+  "args": {},
+  "expected": "Total"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "buy",
+  "args": {},
+  "expected": "What to buy"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "bags",
+  "args": {},
+  "expected": "bags"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "bag1",
+  "args": {},
+  "expected": "bag"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "kg",
+  "args": {},
+  "expected": "kg"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "cost",
+  "args": {},
+  "expected": "Approx. cost"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "when",
+  "args": {},
+  "expected": "When to apply"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "basal",
+  "args": {
+   "u": "«u0»",
+   "d": "«d1»",
+   "m": "«m2»"
+  },
+  "expected": "At sowing: all DAP («d1» kg) and MOP («m2» kg), plus «u0» kg urea, mixed into the furrow."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "basalLeg",
+  "args": {
+   "d": 40,
+   "m": 25,
+   "u": 12
+  },
+  "expected": "At sowing: all DAP (40 kg), MOP (25 kg) and urea (12 kg). Pulses need no top-dressing."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "basalLeg_noUrea",
+  "args": {
+   "d": 40,
+   "m": 25,
+   "u": 0
+  },
+  "expected": "At sowing: all DAP (40 kg), MOP (25 kg). Pulses need no top-dressing."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "top1",
+  "args": {
+   "u": "«u0»"
+  },
+  "expected": "25–30 days after sowing: «u0» kg urea, when soil is moist."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "top2",
+  "args": {
+   "u": "«u0»"
+  },
+  "expected": "45–60 days after sowing: «u0» kg urea, before flowering."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "organic",
+  "args": {},
+  "expected": "Also add 2 tonnes of well-rotted farmyard manure per acre before ploughing. It improves water holding and can cut chemical use by about 10–15%."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "fertSay",
+  "args": {
+   "c": "«c0»",
+   "u": "«u1»",
+   "d": "«d2»",
+   "m": "«m3»",
+   "cost": "«cost4»"
+  },
+  "expected": "For «c0», buy «u1» bags of urea, «d2» bags of DAP and «m3» bags of potash. Approximate cost «cost4» rupees."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "pest_lead",
+  "args": {},
+  "expected": "What is wrong with my crop?"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "pest_sub",
+  "args": {},
+  "expected": "Pick your crop and the signs you see in the field. A leaf photo can tick some signs for you."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "signs",
+  "args": {},
+  "expected": "Signs you see"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "diagnose",
+  "args": {},
+  "expected": "Check my crop"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "clear",
+  "args": {},
+  "expected": "Clear"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "likely",
+  "args": {},
+  "expected": "Most likely"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "alsoP",
+  "args": {},
+  "expected": "Also possible"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "match",
+  "args": {},
+  "expected": "match"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "organicT",
+  "args": {},
+  "expected": "Natural remedy"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "chemT",
+  "args": {},
+  "expected": "Chemical (if needed)"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "prevT",
+  "args": {},
+  "expected": "Prevention"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "noSigns",
+  "args": {},
+  "expected": "Tick at least one sign to check your crop."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "noMatch",
+  "args": {},
+  "expected": "No close match for this crop. Send a photo to an expert."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "safety",
+  "args": {},
+  "expected": "Wear gloves and a mask while spraying. Follow the dose on the product label and check with your nearest Krishi Vigyan Kendra."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "photo",
+  "args": {},
+  "expected": "Leaf photo check"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "photoHint",
+  "args": {},
+  "expected": "Choose a clear photo of one leaf against a plain background"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "green",
+  "args": {},
+  "expected": "Healthy green"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "yellowC",
+  "args": {},
+  "expected": "Yellowing"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "brown",
+  "args": {},
+  "expected": "Brown / dark"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "white",
+  "args": {},
+  "expected": "White patches"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "ph_ok",
+  "args": {},
+  "expected": "Leaf looks mostly healthy."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "ph_y",
+  "args": {},
+  "expected": "Large yellow area: possible nutrient shortage or sucking pests. Check the underside."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "ph_b",
+  "args": {},
+  "expected": "Brown or dark lesions: possible leaf spot or blight."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "ph_w",
+  "args": {},
+  "expected": "Whitish patches: possible powdery mildew."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "photoNote",
+  "args": {},
+  "expected": "This is a colour screen, not a trained disease model. It adds the matching signs above so you can confirm them."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "addSigns",
+  "args": {},
+  "expected": "Add these signs"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "askExpert",
+  "args": {},
+  "expected": "Ask an expert about this"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "weather_lead",
+  "args": {
+   "x": "«x0»"
+  },
+  "expected": "«x0»"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "weather_sub",
+  "args": {
+   "c": "«c0»"
+  },
+  "expected": "7-day outlook with a water plan for «c0», worked out from crop water use and expected rain."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "irrNow",
+  "args": {
+   "d": "«d0»",
+   "mm": "«mm1»"
+  },
+  "expected": "Irrigate on «d0», about «mm1» mm"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "irrNone",
+  "args": {},
+  "expected": "No irrigation needed this week"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "irr",
+  "args": {},
+  "expected": "Irrigate"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "noirr",
+  "args": {},
+  "expected": "No water"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "sprayOk",
+  "args": {},
+  "expected": "Spray OK"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "sprayNo",
+  "args": {},
+  "expected": "Do not spray"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "soilWater",
+  "args": {},
+  "expected": "Soil water used up"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "fungal",
+  "args": {},
+  "expected": "Humid, mild days ahead: high risk of fungal disease. Check leaves and keep a fungicide ready."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "rainmm",
+  "args": {},
+  "expected": "mm rain"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "wind",
+  "args": {},
+  "expected": "wind"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "hum",
+  "args": {},
+  "expected": "humidity"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "howCalc",
+  "args": {},
+  "expected": "How this works: daily crop water use = crop factor × reference evaporation (Hargreaves). We subtract 80% of rain and suggest watering when the soil has lost its safe limit for your soil type."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "simW",
+  "args": {},
+  "expected": "Simulated forecast for the demo. In production this connects to the IMD district forecast."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "mandi_lead",
+  "args": {
+   "c": "«c0»",
+   "m": "«m1»",
+   "p": "«p2»"
+  },
+  "expected": "«c0» is fetching the best price at «m1»: ₹«p2»/quintal"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "mandi_sub",
+  "args": {},
+  "expected": "Prices across nearby markets for the last 30 days."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "market",
+  "args": {},
+  "expected": "Market"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "today",
+  "args": {},
+  "expected": "Today (₹/q)"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "wk",
+  "args": {},
+  "expected": "7-day change"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "trend",
+  "args": {},
+  "expected": "30 days"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "msp",
+  "args": {},
+  "expected": "MSP"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "noMsp",
+  "args": {},
+  "expected": "No MSP for this crop"
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "belowMsp",
+  "args": {},
+  "expected": "The market is below MSP. Sell at a government procurement centre to get MSP."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "rising",
+  "args": {},
+  "expected": "Prices are rising. If you have dry, safe storage, holding 1–2 weeks may pay."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "falling",
+  "args": {},
+  "expected": "Prices are falling. Sell soon at the best market."
+ },
+ {
+  "lang": "en",
+  "ns": "advice",
+  "key": "stable",
+  "args": {},
+  "expected": "Prices are stable. Sell where the price is highest after transport."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "simM",
+  "args": {},
+  "expected": "Sample prices for the demo. In production these come from Agmarknet / eNAM."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "expert_lead",
+  "args": {},
+  "expected": "Ask an agriculture officer"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "expert_sub",
+  "args": {},
+  "expected": "Questions go to the block extension officer, who can reply and send alerts to all farmers in the district."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "farmer",
+  "args": {},
+  "expected": "Farmer"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "officer",
+  "args": {},
+  "expected": "Officer"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "name",
+  "args": {},
+  "expected": "Your name"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "village",
+  "args": {},
+  "expected": "Village"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "question",
+  "args": {},
+  "expected": "Your question"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "send",
+  "args": {},
+  "expected": "Send question"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "sent",
+  "args": {},
+  "expected": "Question sent"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "myQ",
+  "args": {},
+  "expected": "Questions"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "open",
+  "args": {},
+  "expected": "Waiting"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ans",
+  "args": {},
+  "expected": "Answered"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "replyPh",
+  "args": {},
+  "expected": "Write a reply"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "replyB",
+  "args": {},
+  "expected": "Send reply"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "replied",
+  "args": {},
+  "expected": "Reply sent"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "pending",
+  "args": {},
+  "expected": "Waiting"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "answered",
+  "args": {},
+  "expected": "Answered"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "broadcast",
+  "args": {},
+  "expected": "Send alert to farmers"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "alertPh",
+  "args": {},
+  "expected": "e.g. Fall armyworm seen in maize near Katol. Check whorls this week."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "sendAlert",
+  "args": {},
+  "expected": "Send alert"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "alertSent",
+  "args": {},
+  "expected": "Alert sent to farmers"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "alertWord",
+  "args": {},
+  "expected": "Alert"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "fillAll",
+  "args": {},
+  "expected": "Fill in your name and question."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "noQ",
+  "args": {},
+  "expected": "No questions yet. Ask the first one."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "seasonNow",
+  "args": {},
+  "expected": "this season"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav2.overview",
+  "args": {},
+  "expected": "Overview"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav2.profile",
+  "args": {},
+  "expected": "Farm profile"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav2.planner",
+  "args": {},
+  "expected": "Crop planner"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav2.nutrients",
+  "args": {},
+  "expected": "Nutrient plan"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav2.health",
+  "args": {},
+  "expected": "Crop health"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav2.weather",
+  "args": {},
+  "expected": "Weather & irrigation"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav2.market",
+  "args": {},
+  "expected": "Market prices"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "nav2.desk",
+  "args": {},
+  "expected": "Advisory desk"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "navGroup1",
+  "args": {},
+  "expected": "Farm"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "navGroup2",
+  "args": {},
+  "expected": "Advisory"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "navGroup3",
+  "args": {},
+  "expected": "Support"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ctx",
+  "args": {
+   "d": "«d0»",
+   "s": "«s1»",
+   "a": "«a2»"
+  },
+  "expected": "«d0». «s1» season, «a2» acres."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "pt_overview",
+  "args": {},
+  "expected": "Overview"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ps_overview",
+  "args": {},
+  "expected": "Recommendations for this week, based on your farm profile."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "pt_profile",
+  "args": {},
+  "expected": "Farm profile"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ps_profile",
+  "args": {},
+  "expected": "Location, soil and water details. Every recommendation is calculated from these values."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "pt_planner",
+  "args": {},
+  "expected": "Crop planner"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ps_planner",
+  "args": {},
+  "expected": "Crops that fit this season, ranked by how well they suit your field."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "pt_nutrients",
+  "args": {},
+  "expected": "Nutrient plan"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ps_nutrients",
+  "args": {},
+  "expected": "Fertiliser quantities and timing, adjusted to your Soil Health Card."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "pt_health",
+  "args": {},
+  "expected": "Crop health"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ps_health",
+  "args": {},
+  "expected": "Identify likely pests and diseases from field symptoms or a leaf photo."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "pt_weather",
+  "args": {},
+  "expected": "Weather & irrigation"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ps_weather",
+  "args": {},
+  "expected": "Seven-day outlook with an irrigation and spraying schedule."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "pt_market",
+  "args": {},
+  "expected": "Market prices"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ps_market",
+  "args": {},
+  "expected": "Prices across nearby mandis, compared with MSP."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "pt_desk",
+  "args": {},
+  "expected": "Advisory desk"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ps_desk",
+  "args": {},
+  "expected": "Questions from farmers and alerts from extension officers."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "kpi_crop",
+  "args": {},
+  "expected": "Recommended crop"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "kpi_irr",
+  "args": {},
+  "expected": "Next irrigation"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "kpi_cost",
+  "args": {},
+  "expected": "Fertiliser cost"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "kpi_price",
+  "args": {},
+  "expected": "Best market price"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "kpi_score",
+  "args": {
+   "s": "«s0»"
+  },
+  "expected": "Suitability «s0» / 100"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "kpi_none",
+  "args": {},
+  "expected": "Not needed"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "kpi_none_m",
+  "args": {},
+  "expected": "Soil moisture is adequate for 7 days"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "kpi_field",
+  "args": {
+   "a": "«a0»"
+  },
+  "expected": "Urea, DAP and MOP for «a0» acres"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "kpi_wk",
+  "args": {
+   "ch": "+2.3",
+   "m": "Katol"
+  },
+  "expected": "+2.3% this week at Katol"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "kpi_wk",
+  "args": {
+   "ch": "-1.3",
+   "m": "Katol"
+  },
+  "expected": "-1.3% this week at Katol"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ch_suit",
+  "args": {},
+  "expected": "Crop suitability"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ch_suit_sub",
+  "args": {},
+  "expected": "Score out of 100 for crops that fit this season"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ch_rain",
+  "args": {},
+  "expected": "Rainfall forecast"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ch_rain_sub",
+  "args": {},
+  "expected": "mm per day, next 7 days"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ch_temp",
+  "args": {},
+  "expected": "Temperature"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ch_temp_sub",
+  "args": {},
+  "expected": "Daily minimum to maximum, °C"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ch_mandi",
+  "args": {
+   "c": "«c0»"
+  },
+  "expected": "«c0» price trend"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ch_mandi_sub",
+  "args": {},
+  "expected": "₹ per quintal, last 30 days"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ch_et",
+  "args": {},
+  "expected": "Crop water use"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "ch_et_sub",
+  "args": {},
+  "expected": "mm per day (ETc)"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "alertsT",
+  "args": {},
+  "expected": "Alerts"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "queriesT",
+  "args": {},
+  "expected": "Open queries"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "viewAll",
+  "args": {},
+  "expected": "View all"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "readAloud",
+  "args": {},
+  "expected": "Read aloud"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "noAlerts",
+  "args": {},
+  "expected": "No active alerts for this district."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "noOpen",
+  "args": {},
+  "expected": "No open queries."
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "score",
+  "args": {},
+  "expected": "Score"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "reasons",
+  "args": {},
+  "expected": "Why"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "status",
+  "args": {},
+  "expected": "Status"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "action",
+  "args": {},
+  "expected": "Action"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "saveProfile",
+  "args": {},
+  "expected": "Save profile"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "viewPlan",
+  "args": {},
+  "expected": "View crop plan"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "irrPlan",
+  "args": {},
+  "expected": "Irrigation plan"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "sprayWin",
+  "args": {},
+  "expected": "Spray window"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "day",
+  "args": {},
+  "expected": "Day"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "rain",
+  "args": {},
+  "expected": "Rain"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "rainP",
+  "args": {},
+  "expected": "Rain chance"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "windT",
+  "args": {},
+  "expected": "Wind"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "humT",
+  "args": {},
+  "expected": "Humidity"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "tempT",
+  "args": {},
+  "expected": "Temp"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "breakdown",
+  "args": {},
+  "expected": "Nutrient breakdown"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "products",
+  "args": {},
+  "expected": "Products to buy"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "schedule",
+  "args": {},
+  "expected": "Application schedule"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "symptoms",
+  "args": {},
+  "expected": "Symptoms"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "results",
+  "args": {},
+  "expected": "Likely causes"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "advice",
+  "args": {},
+  "expected": "Advice"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "officerMode",
+  "args": {},
+  "expected": "Officer view"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "farmerMode",
+  "args": {},
+  "expected": "Farmer view"
+ },
+ {
+  "lang": "en",
+  "ns": "common",
+  "key": "asOf",
+  "args": {},
+  "expected": "As of today"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "tag",
+  "args": {},
+  "expected": "फसल सलाह प्लेटफ़ॉर्म"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav.farm",
+  "args": {},
+  "expected": "मेरा खेत"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav.crops",
+  "args": {},
+  "expected": "क्या उगाएँ"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav.fertiliser",
+  "args": {},
+  "expected": "खाद"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav.pest",
+  "args": {},
+  "expected": "कीट-रोग डॉक्टर"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav.weather",
+  "args": {},
+  "expected": "मौसम और पानी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav.mandi",
+  "args": {},
+  "expected": "मंडी भाव"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav.expert",
+  "args": {},
+  "expected": "विशेषज्ञ से पूछें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "listen",
+  "args": {},
+  "expected": "सुनें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "stop",
+  "args": {},
+  "expected": "रोकें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "farm_lead",
+  "args": {
+   "d": "«d0»"
+  },
+  "expected": "«d0» में आपका खेत, इस सप्ताह"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "farm_sub",
+  "args": {},
+  "expected": "अपने खेत और मृदा स्वास्थ्य कार्ड की जानकारी एक बार भरें। बाकी सभी स्क्रीन इसी का उपयोग करती हैं।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "profile",
+  "args": {},
+  "expected": "खेत की जानकारी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "district",
+  "args": {},
+  "expected": "ज़िला"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "season",
+  "args": {},
+  "expected": "मौसम"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "soil",
+  "args": {},
+  "expected": "मिट्टी का प्रकार"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "area",
+  "args": {},
+  "expected": "ज़मीन (एकड़)"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "irrigation",
+  "args": {},
+  "expected": "सिंचाई के लिए पानी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "shc",
+  "args": {},
+  "expected": "मृदा स्वास्थ्य कार्ड के मान"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ph",
+  "args": {},
+  "expected": "पीएच"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "N",
+  "args": {},
+  "expected": "उपलब्ध N (किग्रा/हे)"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "P",
+  "args": {},
+  "expected": "उपलब्ध P (किग्रा/हे)"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "K",
+  "args": {},
+  "expected": "उपलब्ध K (किग्रा/हे)"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "low",
+  "args": {},
+  "expected": "कम"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "med",
+  "args": {},
+  "expected": "मध्यम"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "high",
+  "args": {},
+  "expected": "अधिक"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "saveGo",
+  "args": {},
+  "expected": "क्या उगाएँ, देखें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "saved",
+  "args": {},
+  "expected": "खेत की जानकारी सहेजी गई"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "t_crop",
+  "args": {},
+  "expected": "इस मौसम की सबसे अच्छी फसल"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "t_water",
+  "args": {},
+  "expected": "पानी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "t_pest",
+  "args": {},
+  "expected": "कीट निगरानी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "t_money",
+  "args": {},
+  "expected": "मंडी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "crops_lead",
+  "args": {
+   "c": "«c0»",
+   "s": "«s1»"
+  },
+  "expected": "इस «s1» आपके खेत के लिए «c0» सबसे उपयुक्त है"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "crops_sub",
+  "args": {},
+  "expected": "अंक आपकी मिट्टी, पीएच, पानी, तापमान और पोषक तत्वों की तुलना हर फसल की ज़रूरत से करते हैं।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "choose",
+  "args": {},
+  "expected": "यह उगाएँ"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "chosen",
+  "args": {},
+  "expected": "चुनी गई"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "top",
+  "args": {},
+  "expected": "सबसे उपयुक्त"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "duration",
+  "args": {},
+  "expected": "अवधि"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "days",
+  "args": {},
+  "expected": "दिन"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "yield",
+  "args": {},
+  "expected": "औसत उपज"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "qpa",
+  "args": {},
+  "expected": "क्विं/एकड़"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "income",
+  "args": {},
+  "expected": "कुल आय"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "notSeason",
+  "args": {
+   "n": "«n0»"
+  },
+  "expected": "इस मौसम के लिए नहीं: «n0»।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "r_soil",
+  "args": {
+   "s": "«s0»"
+  },
+  "expected": "«s0» मिट्टी में अच्छी होती है"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "r_soilx",
+  "args": {
+   "s": "«s0»"
+  },
+  "expected": "«s0» मिट्टी आदर्श नहीं है"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "r_ph",
+  "args": {},
+  "expected": "मिट्टी का पीएच सही सीमा में है"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "r_phx",
+  "args": {
+   "lo": "«lo0»",
+   "hi": "«hi1»"
+  },
+  "expected": "पीएच «lo0»–«hi1» से बाहर है; चूना या जिप्सम से सुधारें"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "r_w",
+  "args": {
+   "mm": "«mm0»"
+  },
+  "expected": "उपलब्ध पानी (~«mm0» मिमी) पर्याप्त है"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "r_wlow",
+  "args": {
+   "mm": "«mm0»",
+   "need": "«need1»"
+  },
+  "expected": "पानी कम: ~«mm0» मिमी उपलब्ध, ज़रूरत «need1» मिमी"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "r_whigh",
+  "args": {},
+  "expected": "जलभराव का खतरा; जल निकासी नालियाँ बनाएँ"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "r_t",
+  "args": {},
+  "expected": "तापमान फसल के अनुकूल है"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "r_tx",
+  "args": {
+   "tt": "«tt0»"
+  },
+  "expected": "औसत «tt0»°C अनुकूल सीमा से बाहर है"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "r_leg",
+  "args": {},
+  "expected": "दलहन फसल: स्वयं नाइट्रोजन बनाती है, मिट्टी सुधारती है"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "r_nlow",
+  "args": {},
+  "expected": "इस फसल के लिए मिट्टी में नाइट्रोजन कम है"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "fert_lead",
+  "args": {
+   "c": "«c0»",
+   "a": "«a1»"
+  },
+  "expected": "«a1» एकड़ «c0» के लिए खाद"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "fert_sub",
+  "args": {},
+  "expected": "मात्रा आपके मृदा स्वास्थ्य कार्ड के अनुसार है: जो पोषक तत्व कम है वहाँ 25% अधिक, जो अधिक है वहाँ 25% कम।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "crop",
+  "args": {},
+  "expected": "फसल"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nutrient",
+  "args": {},
+  "expected": "पोषक तत्व"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "rec",
+  "args": {},
+  "expected": "अनुशंसित (किग्रा/हे)"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "adj",
+  "args": {},
+  "expected": "आपकी मिट्टी के लिए (किग्रा/हे)"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "total",
+  "args": {},
+  "expected": "कुल"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "buy",
+  "args": {},
+  "expected": "क्या खरीदें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "bags",
+  "args": {},
+  "expected": "बोरी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "bag1",
+  "args": {},
+  "expected": "बोरी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "kg",
+  "args": {},
+  "expected": "किग्रा"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "cost",
+  "args": {},
+  "expected": "अनुमानित लागत"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "when",
+  "args": {},
+  "expected": "कब डालें"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "basal",
+  "args": {
+   "u": "«u0»",
+   "d": "«d1»",
+   "m": "«m2»"
+  },
+  "expected": "बुवाई के समय: पूरा डीएपी («d1» किग्रा) और एमओपी («m2» किग्रा), साथ में «u0» किग्रा यूरिया, कूँड़ में।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "basalLeg",
+  "args": {
+   "d": 40,
+   "m": 25,
+   "u": 12
+  },
+  "expected": "बुवाई के समय: पूरा डीएपी (40 किग्रा), एमओपी (25 किग्रा) और यूरिया (12 किग्रा)। दलहन में ऊपर से खाद की ज़रूरत नहीं।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "basalLeg_noUrea",
+  "args": {
+   "d": 40,
+   "m": 25,
+   "u": 0
+  },
+  "expected": "बुवाई के समय: पूरा डीएपी (40 किग्रा), एमओपी (25 किग्रा)। दलहन में ऊपर से खाद की ज़रूरत नहीं।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "top1",
+  "args": {
+   "u": "«u0»"
+  },
+  "expected": "बुवाई के 25–30 दिन बाद: «u0» किग्रा यूरिया, नमी होने पर।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "top2",
+  "args": {
+   "u": "«u0»"
+  },
+  "expected": "बुवाई के 45–60 दिन बाद: «u0» किग्रा यूरिया, फूल आने से पहले।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "organic",
+  "args": {},
+  "expected": "जुताई से पहले प्रति एकड़ 2 टन सड़ी गोबर खाद भी डालें। इससे पानी रोकने की क्षमता बढ़ती है और रासायनिक खाद लगभग 10–15% कम लगती है।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "fertSay",
+  "args": {
+   "c": "«c0»",
+   "u": "«u1»",
+   "d": "«d2»",
+   "m": "«m3»",
+   "cost": "«cost4»"
+  },
+  "expected": "«c0» के लिए «u1» बोरी यूरिया, «d2» बोरी डीएपी और «m3» बोरी पोटाश खरीदें। अनुमानित लागत «cost4» रुपये।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "pest_lead",
+  "args": {},
+  "expected": "मेरी फसल को क्या हुआ है?"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "pest_sub",
+  "args": {},
+  "expected": "अपनी फसल और खेत में दिख रहे लक्षण चुनें। पत्ती की फोटो से कुछ लक्षण अपने आप चुने जा सकते हैं।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "signs",
+  "args": {},
+  "expected": "दिख रहे लक्षण"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "diagnose",
+  "args": {},
+  "expected": "फसल जाँचें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "clear",
+  "args": {},
+  "expected": "साफ़ करें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "likely",
+  "args": {},
+  "expected": "सबसे संभावित"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "alsoP",
+  "args": {},
+  "expected": "यह भी हो सकता है"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "match",
+  "args": {},
+  "expected": "मेल"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "organicT",
+  "args": {},
+  "expected": "प्राकृतिक उपाय"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "chemT",
+  "args": {},
+  "expected": "रासायनिक (ज़रूरत हो तो)"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "prevT",
+  "args": {},
+  "expected": "बचाव"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "noSigns",
+  "args": {},
+  "expected": "फसल जाँचने के लिए कम से कम एक लक्षण चुनें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "noMatch",
+  "args": {},
+  "expected": "इस फसल के लिए करीबी मेल नहीं मिला। विशेषज्ञ को फोटो भेजें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "safety",
+  "args": {},
+  "expected": "छिड़काव करते समय दस्ताने और मास्क पहनें। उत्पाद के लेबल पर लिखी मात्रा का पालन करें और नज़दीकी कृषि विज्ञान केंद्र से पुष्टि करें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "photo",
+  "args": {},
+  "expected": "पत्ती की फोटो जाँच"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "photoHint",
+  "args": {},
+  "expected": "सादे पृष्ठभूमि पर एक पत्ती की साफ़ फोटो चुनें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "green",
+  "args": {},
+  "expected": "स्वस्थ हरा"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "yellowC",
+  "args": {},
+  "expected": "पीलापन"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "brown",
+  "args": {},
+  "expected": "भूरा / गहरा"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "white",
+  "args": {},
+  "expected": "सफेद धब्बे"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "ph_ok",
+  "args": {},
+  "expected": "पत्ती ज़्यादातर स्वस्थ दिखती है।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "ph_y",
+  "args": {},
+  "expected": "बड़ा पीला भाग: पोषक तत्व की कमी या रस चूसने वाले कीट हो सकते हैं। पत्ती के नीचे देखें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "ph_b",
+  "args": {},
+  "expected": "भूरे या गहरे धब्बे: पत्ती धब्बा या झुलसा रोग हो सकता है।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "ph_w",
+  "args": {},
+  "expected": "सफेद धब्बे: चूर्णिल आसिता हो सकती है।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "photoNote",
+  "args": {},
+  "expected": "यह रंग आधारित जाँच है, प्रशिक्षित रोग मॉडल नहीं। यह ऊपर मेल खाते लक्षण जोड़ देती है ताकि आप पुष्टि कर सकें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "addSigns",
+  "args": {},
+  "expected": "ये लक्षण जोड़ें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "askExpert",
+  "args": {},
+  "expected": "इस बारे में विशेषज्ञ से पूछें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "weather_lead",
+  "args": {
+   "x": "«x0»"
+  },
+  "expected": "«x0»"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "weather_sub",
+  "args": {
+   "c": "«c0»"
+  },
+  "expected": "«c0» के लिए 7 दिन का मौसम और पानी की योजना, फसल की पानी खपत और संभावित बारिश से निकाली गई।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "irrNow",
+  "args": {
+   "d": "«d0»",
+   "mm": "«mm1»"
+  },
+  "expected": "«d0» को लगभग «mm1» मिमी सिंचाई करें"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "irrNone",
+  "args": {},
+  "expected": "इस सप्ताह सिंचाई की ज़रूरत नहीं"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "irr",
+  "args": {},
+  "expected": "सिंचाई करें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "noirr",
+  "args": {},
+  "expected": "पानी नहीं"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "sprayOk",
+  "args": {},
+  "expected": "छिड़काव ठीक"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "sprayNo",
+  "args": {},
+  "expected": "छिड़काव न करें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "soilWater",
+  "args": {},
+  "expected": "मिट्टी का पानी खर्च हुआ"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "fungal",
+  "args": {},
+  "expected": "आगे नम और हल्के गर्म दिन: फफूंद रोग का अधिक खतरा। पत्तियाँ जाँचें और फफूंदनाशक तैयार रखें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "rainmm",
+  "args": {},
+  "expected": "मिमी वर्षा"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "wind",
+  "args": {},
+  "expected": "हवा"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "hum",
+  "args": {},
+  "expected": "नमी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "howCalc",
+  "args": {},
+  "expected": "गणना कैसे होती है: फसल की दैनिक पानी खपत = फसल गुणांक × संदर्भ वाष्पीकरण (हारग्रीव्स)। वर्षा का 80% घटाकर, जब मिट्टी अपनी सुरक्षित सीमा तक पानी खो दे तब सिंचाई सुझाई जाती है।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "simW",
+  "args": {},
+  "expected": "डेमो के लिए अनुमानित पूर्वानुमान। असली संस्करण में यह IMD के ज़िला पूर्वानुमान से जुड़ेगा।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "mandi_lead",
+  "args": {
+   "c": "«c0»",
+   "m": "«m1»",
+   "p": "«p2»"
+  },
+  "expected": "«c0» का सबसे अच्छा भाव «m1» में है: ₹«p2»/क्विंटल"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "mandi_sub",
+  "args": {},
+  "expected": "पिछले 30 दिनों में आसपास की मंडियों के भाव।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "market",
+  "args": {},
+  "expected": "मंडी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "today",
+  "args": {},
+  "expected": "आज (₹/क्विं)"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "wk",
+  "args": {},
+  "expected": "7 दिन का बदलाव"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "trend",
+  "args": {},
+  "expected": "30 दिन"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "msp",
+  "args": {},
+  "expected": "एमएसपी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "noMsp",
+  "args": {},
+  "expected": "इस फसल का एमएसपी नहीं है"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "belowMsp",
+  "args": {},
+  "expected": "मंडी भाव एमएसपी से कम है। एमएसपी पाने के लिए सरकारी खरीद केंद्र पर बेचें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "rising",
+  "args": {},
+  "expected": "भाव बढ़ रहे हैं। अगर सूखा, सुरक्षित भंडारण है तो 1–2 सप्ताह रुकना फायदेमंद हो सकता है।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "falling",
+  "args": {},
+  "expected": "भाव गिर रहे हैं। जल्द ही सबसे अच्छी मंडी में बेचें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "advice",
+  "key": "stable",
+  "args": {},
+  "expected": "भाव स्थिर हैं। ढुलाई जोड़कर जहाँ भाव सबसे अधिक हो वहाँ बेचें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "simM",
+  "args": {},
+  "expected": "डेमो के लिए नमूना भाव। असली संस्करण में ये एगमार्कनेट / ई-नाम से आएँगे।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "expert_lead",
+  "args": {},
+  "expected": "कृषि अधिकारी से पूछें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "expert_sub",
+  "args": {},
+  "expected": "प्रश्न प्रखंड कृषि अधिकारी तक जाते हैं, जो जवाब दे सकते हैं और ज़िले के सभी किसानों को चेतावनी भेज सकते हैं।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "farmer",
+  "args": {},
+  "expected": "किसान"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "officer",
+  "args": {},
+  "expected": "अधिकारी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "name",
+  "args": {},
+  "expected": "आपका नाम"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "village",
+  "args": {},
+  "expected": "गाँव"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "question",
+  "args": {},
+  "expected": "आपका प्रश्न"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "send",
+  "args": {},
+  "expected": "प्रश्न भेजें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "sent",
+  "args": {},
+  "expected": "प्रश्न भेजा गया"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "myQ",
+  "args": {},
+  "expected": "प्रश्न"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "open",
+  "args": {},
+  "expected": "प्रतीक्षा में"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ans",
+  "args": {},
+  "expected": "उत्तर मिला"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "replyPh",
+  "args": {},
+  "expected": "उत्तर लिखें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "replyB",
+  "args": {},
+  "expected": "उत्तर भेजें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "replied",
+  "args": {},
+  "expected": "उत्तर भेजा गया"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "pending",
+  "args": {},
+  "expected": "प्रतीक्षा में"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "answered",
+  "args": {},
+  "expected": "उत्तर दिए"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "broadcast",
+  "args": {},
+  "expected": "किसानों को चेतावनी भेजें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "alertPh",
+  "args": {},
+  "expected": "जैसे: काटोल के पास मक्का में फॉल आर्मीवर्म दिखा। इस सप्ताह गोभ जाँचें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "sendAlert",
+  "args": {},
+  "expected": "चेतावनी भेजें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "alertSent",
+  "args": {},
+  "expected": "किसानों को चेतावनी भेजी गई"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "alertWord",
+  "args": {},
+  "expected": "चेतावनी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "fillAll",
+  "args": {},
+  "expected": "अपना नाम और प्रश्न भरें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "noQ",
+  "args": {},
+  "expected": "अभी कोई प्रश्न नहीं। पहला प्रश्न पूछें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "seasonNow",
+  "args": {},
+  "expected": "मौसम"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav2.overview",
+  "args": {},
+  "expected": "सारांश"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav2.profile",
+  "args": {},
+  "expected": "खेत प्रोफ़ाइल"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav2.planner",
+  "args": {},
+  "expected": "फसल योजना"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav2.nutrients",
+  "args": {},
+  "expected": "पोषक योजना"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav2.health",
+  "args": {},
+  "expected": "फसल स्वास्थ्य"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav2.weather",
+  "args": {},
+  "expected": "मौसम और सिंचाई"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav2.market",
+  "args": {},
+  "expected": "मंडी भाव"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "nav2.desk",
+  "args": {},
+  "expected": "सलाह डेस्क"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "navGroup1",
+  "args": {},
+  "expected": "खेत"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "navGroup2",
+  "args": {},
+  "expected": "सलाह"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "navGroup3",
+  "args": {},
+  "expected": "सहायता"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ctx",
+  "args": {
+   "d": "«d0»",
+   "s": "«s1»",
+   "a": "«a2»"
+  },
+  "expected": "«d0»। «s1» मौसम, «a2» एकड़।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "pt_overview",
+  "args": {},
+  "expected": "सारांश"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ps_overview",
+  "args": {},
+  "expected": "आपकी खेत प्रोफ़ाइल के आधार पर इस सप्ताह की सिफ़ारिशें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "pt_profile",
+  "args": {},
+  "expected": "खेत प्रोफ़ाइल"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ps_profile",
+  "args": {},
+  "expected": "स्थान, मिट्टी और पानी की जानकारी। हर सिफ़ारिश इन्हीं मानों से निकलती है।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "pt_planner",
+  "args": {},
+  "expected": "फसल योजना"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ps_planner",
+  "args": {},
+  "expected": "इस मौसम की फसलें, आपके खेत के लिए उपयुक्तता के क्रम में।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "pt_nutrients",
+  "args": {},
+  "expected": "पोषक योजना"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ps_nutrients",
+  "args": {},
+  "expected": "मृदा स्वास्थ्य कार्ड के अनुसार खाद की मात्रा और समय।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "pt_health",
+  "args": {},
+  "expected": "फसल स्वास्थ्य"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ps_health",
+  "args": {},
+  "expected": "खेत के लक्षणों या पत्ती की फोटो से संभावित कीट और रोग पहचानें।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "pt_weather",
+  "args": {},
+  "expected": "मौसम और सिंचाई"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ps_weather",
+  "args": {},
+  "expected": "सात दिन का पूर्वानुमान, सिंचाई और छिड़काव समय-सारणी के साथ।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "pt_market",
+  "args": {},
+  "expected": "मंडी भाव"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ps_market",
+  "args": {},
+  "expected": "आसपास की मंडियों के भाव, एमएसपी से तुलना।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "pt_desk",
+  "args": {},
+  "expected": "सलाह डेस्क"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ps_desk",
+  "args": {},
+  "expected": "किसानों के प्रश्न और कृषि अधिकारियों की चेतावनियाँ।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "kpi_crop",
+  "args": {},
+  "expected": "अनुशंसित फसल"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "kpi_irr",
+  "args": {},
+  "expected": "अगली सिंचाई"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "kpi_cost",
+  "args": {},
+  "expected": "खाद की लागत"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "kpi_price",
+  "args": {},
+  "expected": "सबसे अच्छा मंडी भाव"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "kpi_score",
+  "args": {
+   "s": "«s0»"
+  },
+  "expected": "उपयुक्तता «s0» / 100"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "kpi_none",
+  "args": {},
+  "expected": "ज़रूरत नहीं"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "kpi_none_m",
+  "args": {},
+  "expected": "7 दिन तक मिट्टी में पर्याप्त नमी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "kpi_field",
+  "args": {
+   "a": "«a0»"
+  },
+  "expected": "«a0» एकड़ के लिए यूरिया, डीएपी और एमओपी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "kpi_wk",
+  "args": {
+   "ch": "+2.3",
+   "m": "Katol"
+  },
+  "expected": "Katol में इस सप्ताह +2.3%"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "kpi_wk",
+  "args": {
+   "ch": "-1.3",
+   "m": "Katol"
+  },
+  "expected": "Katol में इस सप्ताह -1.3%"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ch_suit",
+  "args": {},
+  "expected": "फसल उपयुक्तता"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ch_suit_sub",
+  "args": {},
+  "expected": "इस मौसम की फसलों के लिए 100 में से अंक"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ch_rain",
+  "args": {},
+  "expected": "वर्षा पूर्वानुमान"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ch_rain_sub",
+  "args": {},
+  "expected": "मिमी प्रति दिन, अगले 7 दिन"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ch_temp",
+  "args": {},
+  "expected": "तापमान"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ch_temp_sub",
+  "args": {},
+  "expected": "दैनिक न्यूनतम से अधिकतम, °C"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ch_mandi",
+  "args": {
+   "c": "«c0»"
+  },
+  "expected": "«c0» भाव रुझान"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ch_mandi_sub",
+  "args": {},
+  "expected": "₹ प्रति क्विंटल, पिछले 30 दिन"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ch_et",
+  "args": {},
+  "expected": "फसल की पानी खपत"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "ch_et_sub",
+  "args": {},
+  "expected": "मिमी प्रति दिन (ETc)"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "alertsT",
+  "args": {},
+  "expected": "चेतावनियाँ"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "queriesT",
+  "args": {},
+  "expected": "लंबित प्रश्न"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "viewAll",
+  "args": {},
+  "expected": "सभी देखें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "readAloud",
+  "args": {},
+  "expected": "सुनें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "noAlerts",
+  "args": {},
+  "expected": "इस ज़िले के लिए कोई सक्रिय चेतावनी नहीं।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "noOpen",
+  "args": {},
+  "expected": "कोई लंबित प्रश्न नहीं।"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "score",
+  "args": {},
+  "expected": "अंक"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "reasons",
+  "args": {},
+  "expected": "कारण"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "status",
+  "args": {},
+  "expected": "स्थिति"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "action",
+  "args": {},
+  "expected": "कार्य"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "saveProfile",
+  "args": {},
+  "expected": "प्रोफ़ाइल सहेजें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "viewPlan",
+  "args": {},
+  "expected": "फसल योजना देखें"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "irrPlan",
+  "args": {},
+  "expected": "सिंचाई योजना"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "sprayWin",
+  "args": {},
+  "expected": "छिड़काव समय"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "day",
+  "args": {},
+  "expected": "दिन"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "rain",
+  "args": {},
+  "expected": "वर्षा"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "rainP",
+  "args": {},
+  "expected": "वर्षा संभावना"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "windT",
+  "args": {},
+  "expected": "हवा"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "humT",
+  "args": {},
+  "expected": "नमी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "tempT",
+  "args": {},
+  "expected": "तापमान"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "breakdown",
+  "args": {},
+  "expected": "पोषक तत्व विवरण"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "products",
+  "args": {},
+  "expected": "खरीदने के उत्पाद"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "schedule",
+  "args": {},
+  "expected": "डालने की समय-सारणी"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "symptoms",
+  "args": {},
+  "expected": "लक्षण"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "results",
+  "args": {},
+  "expected": "संभावित कारण"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "advice",
+  "args": {},
+  "expected": "सलाह"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "officerMode",
+  "args": {},
+  "expected": "अधिकारी दृश्य"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "farmerMode",
+  "args": {},
+  "expected": "किसान दृश्य"
+ },
+ {
+  "lang": "hi",
+  "ns": "common",
+  "key": "asOf",
+  "args": {},
+  "expected": "आज की स्थिति"
+ }
+]

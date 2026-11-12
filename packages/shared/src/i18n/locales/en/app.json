@@ -1,0 +1,31 @@
+{
+  "brand": "Fieldwise",
+  "skip": "Skip to content",
+  "theme": { "label": "Theme", "light": "Light", "dark": "Dark" },
+  "language": "Language",
+  "simulated": "Simulated",
+  "home": {
+    "title": "Crop advice that knows your field",
+    "lead": "Fieldwise v2 is being built in phases. The design system is ready; the farmer app arrives in phase 3.",
+    "design": "Open the design system"
+  },
+  "design": {
+    "title": "Design system",
+    "lead": "Tokens, type and components for every Fieldwise screen. See DESIGN.md for the rules.",
+    "palette": "Palette",
+    "semantic": "Semantic colours",
+    "status": "Status",
+    "series": "Chart series",
+    "type": "Type",
+    "buttons": "Buttons",
+    "radius": "Radius and depth",
+    "sample": "Your wheat field needs 2 bags of urea this week",
+    "primary": "Save farm",
+    "secondary": "View crop plan",
+    "quiet": "Clear",
+    "good": "Spray OK",
+    "warn": "Pest watch",
+    "bad": "Do not spray",
+    "info": "Irrigate"
+  }
+}

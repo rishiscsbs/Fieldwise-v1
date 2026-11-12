@@ -1,0 +1,360 @@
+// Fieldwise data model.
+// Portable between SQLite (dev) and Postgres: no enums, scalar lists or native types.
+// Lists and per-language labels are JSON strings validated with zod in src/lib/json.ts.
+// To use Postgres, change `provider` below to "postgresql" and set DATABASE_URL. Nothing else changes.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------- People and auth ----------
+
+model User {
+  id         String    @id @default(cuid())
+  phone      String    @unique
+  name       String    @default("")
+  /// farmer | officer | admin
+  role       String    @default("farmer")
+  districtId String?
+  district   District? @relation(fields: [districtId], references: [id])
+  lang       String    @default("en")
+  active     Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  refreshTokens  RefreshToken[]
+  farms          Farm[]
+  uploads        Upload[]
+  ticketsOpened  Ticket[]        @relation("TicketFarmer")
+  ticketsHandled Ticket[]        @relation("TicketOfficer")
+  messages       TicketMessage[]
+  alerts         Alert[]
+  notifications  Notification[]
+  healthChecks   HealthCheck[]
+
+  @@index([role, districtId])
+}
+
+model OtpCode {
+  id         String    @id @default(cuid())
+  phone      String
+  codeHash   String
+  expiresAt  DateTime
+  attempts   Int       @default(0)
+  consumedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([phone, createdAt])
+}
+
+model RefreshToken {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash    String    @unique
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  replacedById String?
+  createdAt    DateTime  @default(now())
+
+  @@index([userId])
+}
+
+// ---------- Reference data (seeded from packages/shared, editable by admins) ----------
+
+model District {
+  id         String  @id
+  /// JSON Labels, e.g. {"en":"Nagpur, Maharashtra","hi":"..."}
+  labels     String
+  lat        Float
+  lon        Float
+  rainMm     Float
+  tempKharif Float
+  tempRabi   Float
+  tempZaid   Float
+  soil       String
+  ph         Float
+  active     Boolean @default(true)
+
+  markets     Market[]
+  users       User[]
+  farms       Farm[]
+  tickets     Ticket[]
+  alerts      Alert[]
+  pestReports PestReport[]
+}
+
+model Market {
+  id         String   @id @default(cuid())
+  districtId String
+  district   District @relation(fields: [districtId], references: [id], onDelete: Cascade)
+  name       String
+  sortOrder  Int      @default(0)
+
+  @@unique([districtId, name])
+}
+
+model Crop {
+  id        String  @id
+  emoji     String
+  labels    String
+  /// JSON string[] of season ids
+  seasons   String
+  /// JSON string[] of soil ids
+  soils     String
+  phMin     Float
+  phMax     Float
+  waterMin  Float
+  waterMax  Float
+  tempMin   Float
+  tempMax   Float
+  nKgHa     Float
+  pKgHa     Float
+  kKgHa     Float
+  kc        Float
+  /// Days to harvest, e.g. "120–150"
+  duration  String
+  /// Quintal per acre
+  yield     Float
+  /// ₹ per quintal; null when the crop has no MSP
+  msp       Float?
+  /// Indicative market price, ₹ per quintal
+  price     Float
+  legume    Boolean @default(false)
+  active    Boolean @default(true)
+  sortOrder Int     @default(0)
+}
+
+model Soil {
+  id     String @id
+  labels String
+  /// Allowable depletion before irrigation, mm
+  taw    Float
+}
+
+model Symptom {
+  id     String @id
+  labels String
+}
+
+model Pest {
+  id         String @id
+  labels     String
+  /// JSON string[] of crop ids; "*" = any crop
+  crops      String
+  /// JSON string[] of symptom ids
+  symptoms   String
+  organic    String
+  chemical   String
+  prevention String
+
+  reports PestReport[]
+}
+
+model Fertiliser {
+  id     String @id
+  labels String
+  bagKg  Float
+  cost   Float
+  colour String
+}
+
+// ---------- Farms ----------
+
+model Farm {
+  id         String   @id @default(cuid())
+  ownerId    String
+  owner      User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name       String
+  districtId String
+  district   District @relation(fields: [districtId], references: [id])
+  village    String   @default("")
+  lat        Float?
+  lon        Float?
+  soil       String
+  /// none | partial | full
+  irrigation String
+  areaAcres  Float
+  /// kharif | rabi | zaid
+  season     String
+  crop       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  soilTests    SoilTest[]
+  tickets      Ticket[]
+  healthChecks HealthCheck[]
+  pestReports  PestReport[]
+
+  @@index([ownerId])
+  @@index([districtId])
+}
+
+/// One Soil Health Card reading. The latest one drives the advice; the history is charted.
+model SoilTest {
+  id        String   @id @default(cuid())
+  farmId    String
+  farm      Farm     @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  testedAt  DateTime
+  ph        Float
+  n         Float
+  p         Float
+  k         Float
+  /// shc (Soil Health Card lab) | self
+  source    String   @default("shc")
+  createdAt DateTime @default(now())
+
+  @@index([farmId, testedAt])
+}
+
+// ---------- External data cache ----------
+
+model WeatherCache {
+  districtId String   @id
+  source     String
+  fetchedAt  DateTime
+  /// JSON ForecastDay[]
+  payload    String
+}
+
+// ---------- Uploads and crop health ----------
+
+model Upload {
+  id        String   @id @default(cuid())
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  /// Path relative to the uploads directory
+  path      String
+  mime      String
+  size      Int
+  sha256    String
+  createdAt DateTime @default(now())
+
+  attachments  TicketAttachment[]
+  healthChecks HealthCheck[]
+}
+
+model HealthCheck {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  farmId    String?
+  farm      Farm?    @relation(fields: [farmId], references: [id], onDelete: SetNull)
+  uploadId  String?
+  upload    Upload?  @relation(fields: [uploadId], references: [id], onDelete: SetNull)
+  crop      String
+  /// Analyser id, e.g. "colour-heuristic"
+  analyser  String
+  /// JSON analyser output
+  result    String
+  /// JSON string[] of symptom ids
+  symptoms  String
+  createdAt DateTime @default(now())
+}
+
+/// A confirmed or suspected pest sighting. Feeds the officer heatmap.
+model PestReport {
+  id         String   @id @default(cuid())
+  districtId String
+  district   District @relation(fields: [districtId], references: [id])
+  farmId     String?
+  farm       Farm?    @relation(fields: [farmId], references: [id], onDelete: SetNull)
+  pestId     String
+  pest       Pest     @relation(fields: [pestId], references: [id])
+  lat        Float
+  lon        Float
+  /// diagnosis | officer | ticket
+  source     String
+  reportedAt DateTime @default(now())
+
+  @@index([districtId, reportedAt])
+}
+
+// ---------- Advisory desk ----------
+
+model Ticket {
+  id         String   @id @default(cuid())
+  farmerId   String
+  farmer     User     @relation("TicketFarmer", fields: [farmerId], references: [id], onDelete: Cascade)
+  officerId  String?
+  officer    User?    @relation("TicketOfficer", fields: [officerId], references: [id])
+  farmId     String?
+  farm       Farm?    @relation(fields: [farmId], references: [id], onDelete: SetNull)
+  districtId String
+  district   District @relation(fields: [districtId], references: [id])
+  crop       String?
+  subject    String
+  /// open | answered | closed
+  status     String   @default("open")
+  /// Issue category for officer charts: pest | disease | nutrient | water | market | other
+  category   String   @default("other")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  messages TicketMessage[]
+
+  @@index([districtId, status])
+  @@index([farmerId])
+}
+
+model TicketMessage {
+  id        String   @id @default(cuid())
+  ticketId  String
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  body      String
+  createdAt DateTime @default(now())
+
+  attachments TicketAttachment[]
+
+  @@index([ticketId, createdAt])
+}
+
+model TicketAttachment {
+  id        String        @id @default(cuid())
+  messageId String
+  message   TicketMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  uploadId  String
+  upload    Upload        @relation(fields: [uploadId], references: [id], onDelete: Cascade)
+}
+
+// ---------- Alerts and notifications ----------
+
+model Alert {
+  id         String    @id @default(cuid())
+  authorId   String
+  author     User      @relation(fields: [authorId], references: [id])
+  /// null = every district
+  districtId String?
+  district   District? @relation(fields: [districtId], references: [id])
+  /// null = every crop
+  cropId     String?
+  /// info | warn | bad
+  level      String    @default("warn")
+  /// JSON Labels
+  labels     String
+  createdAt  DateTime  @default(now())
+
+  @@index([districtId, createdAt])
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// alert | ticket_reply | ticket_status | ticket_new
+  type      String
+  refId     String?
+  /// JSON Labels
+  title     String
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId, readAt])
+}

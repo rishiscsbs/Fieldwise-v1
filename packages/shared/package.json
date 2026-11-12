@@ -1,0 +1,25 @@
+{
+  "name": "@fieldwise/shared",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Types, zod schemas, reference data, the agronomy engine and UI strings shared by web and API",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "i18next": "^23.16.8",
+    "vitest": "^2.1.9"
+  }
+}

@@ -1,4 +1,16 @@
-.DS_Store
 node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.env
+.env.local
+apps/api/prisma/*.db
+apps/api/prisma/*.db-journal
+apps/api/uploads/
+test-results/
+playwright-report/
+screenshots/
+.DS_Store
 .vscode/*
 !.vscode/extensions.json
+apps/api/prisma/test.db*
