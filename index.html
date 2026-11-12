@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fieldwise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="side">
+      <a class="brand" href="#overview">
+        <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--primary)"/><path d="M8 22c4-1 6-4 8-8s4-6 8-7M8 17c3-.6 5-2.4 6.5-5M12 25c4-.8 7-3 9-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+        <span><b>Fieldwise</b><small id="brandTag"></small></span>
+      </a>
+      <nav id="nav" aria-label="Main"></nav>
+      <div class="side-farm" id="sideFarm"></div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <label class="top-field">
+          <span class="sr-only">District</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          <select id="topDistrict"></select>
+        </label>
+        <div class="top-right">
+          <div class="seg" id="roleSeg" role="group" aria-label="View as" hidden>
+            <button data-role="farmer">Farmer</button><button data-role="officer">Officer</button>
+          </div>
+          <div class="seg" role="group" aria-label="Language">
+            <button data-lang="en">EN</button><button data-lang="hi">हिंदी</button>
+          </div>
+        </div>
+      </header>
+      <main id="page" class="page"></main>
+    </div>
+  </div>
+
+  <div id="tip" class="tip" hidden></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Load order matters: data and strings first, then helpers, then the app. -->
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
