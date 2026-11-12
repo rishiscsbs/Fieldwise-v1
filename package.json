@@ -14,6 +14,7 @@
   "scripts": {
     "predev": "npm run build -w @fieldwise/shared && npm run db:setup -w @fieldwise/api",
     "dev": "concurrently -k -n api,web -c green,yellow \"npm run dev -w @fieldwise/api\" \"npm run dev -w @fieldwise/web\"",
+    "prod": "npm run build && npm run db:setup -w @fieldwise/api && concurrently -k -n api,web -c green,yellow \"npm run start -w @fieldwise/api\" \"npm run preview -w @fieldwise/web\"",
     "build": "npm run build --workspaces --if-present",
     "typecheck": "npm run build -w @fieldwise/shared && npm run typecheck --workspaces --if-present",
     "lint": "eslint .",
@@ -21,7 +22,8 @@
     "format": "prettier --write .",
     "golden": "node scripts/capture-legacy-golden.mjs",
     "i18n:convert": "node scripts/convert-legacy-i18n.mjs",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "db:reset": "npm run db:reset -w @fieldwise/api"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
