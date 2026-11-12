@@ -13,7 +13,7 @@ import { useNotifications, useReference } from '../lib/queries';
 import { useActiveFarm } from '../lib/farm';
 import { connectLive, disconnectLive } from '../lib/socket';
 import { speak, stopSpeaking } from '../lib/speech';
-import { api } from '../lib/api';
+import { api, refreshSession } from '../lib/api';
 import { Icon } from '../components/Icon';
 import { Toggle } from '../components/Toggle';
 import { navFor } from './nav';
@@ -34,10 +34,15 @@ export function AppShell() {
   const [online, setOnline] = useState(() => navigator.onLine);
   useEffect(() => {
     const on = () => setOnline(navigator.onLine);
-    window.addEventListener('online', on);
+    // Back online after an offline start: swap the offline session for a real one.
+    const back = () => {
+      on();
+      if (!useAuth.getState().token) void refreshSession();
+    };
+    window.addEventListener('online', back);
     window.addEventListener('offline', on);
     return () => {
-      window.removeEventListener('online', on);
+      window.removeEventListener('online', back);
       window.removeEventListener('offline', on);
     };
   }, []);

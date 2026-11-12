@@ -15,10 +15,20 @@ export class ApiError extends Error {
 
 let refreshing: Promise<boolean> | null = null;
 
+/** Offline or server unreachable: keep the last user so cached advice still shows. */
+function keepOfflineSession(): false {
+  const u = lastUser.get();
+  if (u) useAuth.setState({ status: 'signedIn', token: null, user: u });
+  else useAuth.getState().clear();
+  return false;
+}
+
 /** Exchanges the refresh cookie for a new access token. Concurrent callers share one request. */
 export function refreshSession(): Promise<boolean> {
   refreshing ??= fetch('/api/auth/refresh', { method: 'POST', credentials: 'same-origin' })
     .then(async (r) => {
+      // 5xx: the server cannot be reached right now, which is not the same as being signed out.
+      if (r.status >= 500) return keepOfflineSession();
       // 204 = no valid session; that is the normal signed-out state, not an error.
       if (r.status !== 200) {
         useAuth.getState().clear();
@@ -27,13 +37,8 @@ export function refreshSession(): Promise<boolean> {
       useAuth.getState().setSession((await r.json()) as AuthSession);
       return true;
     })
-    .catch(() => {
-      // Network error (offline), not a rejected session: keep the last user so cached advice still shows.
-      const u = lastUser.get();
-      if (u) useAuth.setState({ status: 'signedIn', token: null, user: u });
-      else useAuth.getState().clear();
-      return false;
-    })
+    // Network error (offline), not a rejected session.
+    .catch(keepOfflineSession)
     .finally(() => {
       refreshing = null;
     });

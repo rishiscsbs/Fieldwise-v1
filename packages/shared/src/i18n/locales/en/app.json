@@ -161,8 +161,9 @@
   "nutrients": {
     "perHa": "kg per hectare",
     "levels": "Your soil",
-    "bagsOf": "{{count}} bags of {{kg}} kg",
-    "priceNote": "Prices are indicative subsidised rates per bag."
+    "priceNote": "Prices are indicative subsidised rates per bag.",
+    "bagsOf_one": "{{count}} bag of {{kg}} kg",
+    "bagsOf_other": "{{count}} bags of {{kg}} kg"
   },
   "health": {
     "upload": "Upload leaf photo",

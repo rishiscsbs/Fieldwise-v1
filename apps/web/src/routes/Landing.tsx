@@ -96,18 +96,19 @@ function Hero({ mode }: { mode: MotionMode }) {
             text={t('landing.heroTitle')}
             className="font-display text-4xl leading-[1.08] sm:text-6xl"
           />
+          {/* Visible from the first frame (it is the largest text, so a fade would delay LCP); it only slides. */}
           <m.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
+            initial={{ y: 12 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
             className="mt-5 max-w-xl text-lg text-fg"
           >
             {t('landing.heroLead')}
           </m.p>
           <m.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.6 }}
+            initial={{ y: 12 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
             className="mt-8 flex flex-wrap gap-3"
           >
             <Link to={signedIn ? '/app' : '/login'} className="btn-primary px-6 text-lg">

@@ -3,7 +3,7 @@
 //  - Page navigations: network first, falling back to the cached shell.
 //  - Advice and reference API reads: network first, cached copy when offline.
 // Never cached: sign-in, uploads, sockets, and anything that is not a GET.
-const VERSION = 'fw-v1';
+const VERSION = 'fw-v2';
 const SHELL = ['/', '/app', '/index.html', '/favicon.svg', '/manifest.webmanifest', '/icons/icon-192.png'];
 const API_READS = /^\/api\/(reference|farms|alerts|notifications|tickets|weather|mandi|public)/;
 
@@ -29,7 +29,15 @@ const networkFirst = async (request, fallbackUrl) => {
   const cache = await caches.open(VERSION);
   try {
     const res = await fetch(request);
-    if (res.ok) cache.put(request, res.clone());
+    if (res.ok) {
+      cache.put(request, res.clone());
+      return res;
+    }
+    // Server unreachable behind a proxy (5xx): treat like offline and use the cached copy if there is one.
+    if (res.status >= 500) {
+      const hit = await cache.match(request, { ignoreVary: true });
+      if (hit) return hit;
+    }
     return res;
   } catch {
     // Cached reads are keyed by URL only, so they are found even when the auth header differs.
@@ -66,7 +74,8 @@ self.addEventListener('fetch', (event) => {
   } else if (
     url.pathname.startsWith('/assets/') ||
     url.pathname.startsWith('/lite/') ||
-    url.pathname.startsWith('/icons/')
+    url.pathname.startsWith('/icons/') ||
+    SHELL.includes(url.pathname)
   ) {
     event.respondWith(cacheFirst(request));
   } else if (API_READS.test(url.pathname)) {
