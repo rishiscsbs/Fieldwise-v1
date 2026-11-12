@@ -148,8 +148,7 @@ test('the officer dashboard shows the district map, queue and charts', async () 
   await expect(page).toHaveURL(/\/app\/officer/);
 });
 
-// FIXME(phase 4): fails in the e2e run (times out); the admin screens themselves pass screenshot checks. Investigate next session.
-test.fixme('an admin edits a crop price and sees other districts', async ({ browser }) => {
+test('an admin edits a crop price and sees other districts', async ({ browser }) => {
   const admin = await newUser(browser, 'Admin');
   const { page } = admin;
   await expect(page).toHaveURL(/\/app\/admin/);

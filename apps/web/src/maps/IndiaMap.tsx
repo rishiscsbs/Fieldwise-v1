@@ -47,6 +47,30 @@ export function IndiaMap({
             strokeWidth={compact ? 0.6 : 0.8}
             strokeLinejoin="round"
           />
+          {/* Pulses sit in their own layer, outside the clickable pins, so a pin never keeps changing size. */}
+          <g aria-hidden="true" pointerEvents="none">
+            {!compact &&
+              pins
+                .filter((pin) => pin.highlight)
+                .map((pin) => {
+                  const [x, y] = p([pin.lon, pin.lat]);
+                  const r = pin.r ?? 6;
+                  return (
+                    <m.circle
+                      key={pin.id}
+                      cx={x}
+                      cy={y}
+                      r={r}
+                      fill="none"
+                      stroke="var(--accent)"
+                      strokeWidth={2}
+                      initial={{ r, opacity: 0.8 }}
+                      animate={{ r: r + 14, opacity: 0 }}
+                      transition={{ duration: 1.8, repeat: Infinity }}
+                    />
+                  );
+                })}
+          </g>
           {pins.map((pin, i) => {
             const [x, y] = p([pin.lon, pin.lat]);
             const r = pin.r ?? (compact ? 4 : 6);
@@ -69,19 +93,6 @@ export function IndiaMap({
                 onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onSelect?.(pin.id)}
                 className={onSelect ? 'cursor-pointer outline-none' : 'outline-none'}
               >
-                {pin.highlight && !compact && (
-                  <m.circle
-                    cx={x}
-                    cy={y}
-                    r={r}
-                    fill="none"
-                    stroke="var(--accent)"
-                    strokeWidth={2}
-                    initial={{ r, opacity: 0.8 }}
-                    animate={{ r: r + 14, opacity: 0 }}
-                    transition={{ duration: 1.8, repeat: Infinity }}
-                  />
-                )}
                 <m.circle
                   cx={x}
                   cy={y}
@@ -112,8 +123,8 @@ export function IndiaMap({
                     {pin.label}
                   </text>
                 )}
-                {/* Larger invisible hit target */}
-                {interactive && <circle cx={x} cy={y} r={Math.max(14, r + 6)} fill="transparent" />}
+                {/* Hit target: bigger than the dot even when hover scales it, so the button keeps a fixed size */}
+                {interactive && <circle cx={x} cy={y} r={Math.max(16, r * 1.25 + 6)} fill="transparent" />}
               </g>
             );
           })}

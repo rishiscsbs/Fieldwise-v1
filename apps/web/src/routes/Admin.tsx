@@ -35,6 +35,8 @@ const TABS = ['overview', 'users', 'districts', 'crops'] as const;
 type Tab = (typeof TABS)[number];
 const ROLES = ['farmer', 'officer', 'admin'] as const;
 const small = `${inputClass} min-h-10 text-sm`;
+// Filter selects size to their content so they sit beside the search box.
+const filterClass = inputClass.replace('w-full', 'w-auto');
 
 const errorText = (e: unknown, fallback: string) => (e instanceof ApiError ? e.message : fallback);
 
@@ -283,12 +285,7 @@ function Users() {
           <label className="sr-only" htmlFor="u-role">
             {t('admin.role')}
           </label>
-          <select
-            id="u-role"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            className={`${inputClass} w-auto`}
-          >
+          <select id="u-role" value={role} onChange={(e) => setRole(e.target.value)} className={filterClass}>
             <option value="">{t('admin.allRoles')}</option>
             {ROLES.map((r) => (
               <option key={r} value={r}>
@@ -303,7 +300,7 @@ function Users() {
             id="u-district"
             value={districtId}
             onChange={(e) => setDistrictId(e.target.value)}
-            className={`${inputClass} w-auto`}
+            className={filterClass}
           >
             <option value="">{t('admin.allDistricts')}</option>
             {ds.map((d) => (
