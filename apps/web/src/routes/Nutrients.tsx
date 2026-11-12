@@ -70,7 +70,7 @@ export function Nutrients() {
 
       <div className="grid gap-4 lg:grid-cols-5">
         <Card className="lg:col-span-3" title={t('breakdown', { ns: 'common' })} sub={t('nutrients.perHa')}>
-          <div className="overflow-x-auto">
+          <div className="relative overflow-x-auto">
             <table className="w-full min-w-max text-sm">
               <thead>
                 <tr className="border-b border-line text-left text-fg-muted">

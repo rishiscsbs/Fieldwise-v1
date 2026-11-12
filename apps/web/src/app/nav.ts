@@ -1,6 +1,7 @@
 import type { IconName } from '../components/Icon';
 import type { PublicUser } from '../lib/api-types';
 
+/** Groups with an empty name render without a heading. */
 export interface NavItem {
   key: string;
   path: string;
@@ -31,15 +32,27 @@ export const FARMER_NAV: { group: string; items: NavItem[] }[] = [
   { group: 'navGroup3', items: [{ key: 'desk', path: '/app/desk', icon: 'desk', label: 'nav2.desk' }] },
 ];
 
-/** Officers and admins get the desk now; their dashboards arrive in phase 4. */
-export const STAFF_NAV: { group: string; items: NavItem[] }[] = [
+/** Officers work their district; admins also manage users, districts and crops. */
+export const OFFICER_NAV: { group: string; items: NavItem[] }[] = [
   {
-    group: 'navGroup3',
+    group: '',
     items: [
+      { key: 'officer', path: '/app/officer', icon: 'overview', label: 'app:shell.officer' },
       { key: 'desk', path: '/app/desk', icon: 'desk', label: 'nav2.desk' },
-      { key: 'officer', path: '/app/officer', icon: 'officer', label: 'app:shell.officerSoon' },
     ],
   },
 ];
 
-export const navFor = (u: PublicUser | null) => (u && u.role !== 'farmer' ? STAFF_NAV : FARMER_NAV);
+export const ADMIN_NAV: { group: string; items: NavItem[] }[] = [
+  {
+    group: '',
+    items: [
+      { key: 'admin', path: '/app/admin', icon: 'officer', label: 'app:shell.admin' },
+      { key: 'officer', path: '/app/officer', icon: 'overview', label: 'app:shell.officer' },
+      { key: 'desk', path: '/app/desk', icon: 'desk', label: 'nav2.desk' },
+    ],
+  },
+];
+
+export const navFor = (u: PublicUser | null) =>
+  u?.role === 'admin' ? ADMIN_NAV : u?.role === 'officer' ? OFFICER_NAV : FARMER_NAV;

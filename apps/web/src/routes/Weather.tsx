@@ -80,7 +80,7 @@ export function Weather() {
       {w.fungalRisk && <Callout tone="warn" title={t('fungal', { ns: 'advice' })} />}
 
       <Card title={t('irrPlan', { ns: 'common' })} sub={t('asOf', { ns: 'common' })}>
-        <div className="overflow-x-auto">
+        <div className="relative overflow-x-auto">
           <table className="w-full min-w-max text-sm">
             <thead>
               <tr className="border-b border-line text-left text-fg-muted">

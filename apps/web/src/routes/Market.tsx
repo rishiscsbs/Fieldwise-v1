@@ -126,7 +126,7 @@ export function Market() {
       </Card>
 
       <Card title={t('market', { ns: 'common' })}>
-        <div className="overflow-x-auto">
+        <div className="relative overflow-x-auto">
           <table className="w-full min-w-max text-sm">
             <thead>
               <tr className="border-b border-line text-left text-fg-muted">

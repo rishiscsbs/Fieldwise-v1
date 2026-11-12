@@ -2,6 +2,10 @@
 // can invalidate exactly what changed.
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type {
+  AdminCropDto,
+  AdminDistrictDto,
+  AdminOverviewDto,
+  AdminUserDto,
   AlertDto,
   AuthSession,
   FarmDetailDto,
@@ -18,6 +22,9 @@ import type {
   TicketMessageDto,
   UploadDto,
   NotificationListDto,
+  OfficerMapDto,
+  OfficerSummaryDto,
+  PestPointsDto,
   WaterDto,
 } from './api-types';
 import { api } from './api';
@@ -276,5 +283,66 @@ export function useUpdateMe() {
     mutationFn: (body: { name?: string; lang?: string; districtId?: string }) =>
       api<AuthSession>('/me', { method: 'PATCH', body }),
     onSuccess: (s) => useAuth.getState().setSession(s),
+  });
+}
+
+// ---------- officer and admin ----------
+
+const staffQs = (o: Record<string, string | number | undefined>) => {
+  const q = new URLSearchParams();
+  for (const [k, v] of Object.entries(o)) if (v !== undefined && v !== '') q.set(k, String(v));
+  return q.toString() ? `?${q}` : '';
+};
+
+export const useOfficerSummary = (districtId: string | undefined, days: number) =>
+  useQuery({
+    queryKey: ['officer', 'summary', districtId ?? '', days],
+    queryFn: () => api<OfficerSummaryDto>(`/officer/summary${staffQs({ districtId, days })}`),
+    placeholderData: keepPreviousData,
+  });
+
+export const useOfficerMap = (districtId: string | undefined) =>
+  useQuery({
+    queryKey: ['officer', 'map', districtId ?? ''],
+    queryFn: () => api<OfficerMapDto>(`/officer/map${staffQs({ districtId })}`),
+    placeholderData: keepPreviousData,
+  });
+
+export const usePestPoints = (districtId: string | undefined, days: number, pestId?: string) =>
+  useQuery({
+    queryKey: ['officer', 'pests', districtId ?? '', days, pestId ?? ''],
+    queryFn: () => api<PestPointsDto>(`/officer/pests${staffQs({ districtId, days, pestId })}`),
+    placeholderData: keepPreviousData,
+  });
+
+export const useAdminOverview = () =>
+  useQuery({ queryKey: ['admin', 'overview'], queryFn: () => api<AdminOverviewDto>('/admin/overview') });
+
+export const useAdminUsers = (f: { role?: string; districtId?: string; q?: string }) =>
+  useQuery({
+    queryKey: ['admin', 'users', f],
+    queryFn: () => api<AdminUserDto[]>(`/admin/users${staffQs(f)}`),
+    placeholderData: keepPreviousData,
+  });
+
+export const useAdminDistricts = () =>
+  useQuery({ queryKey: ['admin', 'districts'], queryFn: () => api<AdminDistrictDto[]>('/admin/districts') });
+
+export const useAdminCrops = () =>
+  useQuery({ queryKey: ['admin', 'crops'], queryFn: () => api<AdminCropDto[]>('/admin/crops') });
+
+/** Admin writes refresh admin lists and the shared reference data. */
+export function useAdminMutation<B, R>(
+  path: (b: B) => string,
+  method: 'POST' | 'PATCH',
+  body: (b: B) => object,
+) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (b: B) => api<R>(path(b), { method, body: body(b) }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['admin'] });
+      void qc.invalidateQueries({ queryKey: qk.reference });
+    },
   });
 }

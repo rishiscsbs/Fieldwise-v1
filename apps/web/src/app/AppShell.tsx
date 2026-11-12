@@ -84,10 +84,12 @@ export function AppShell() {
   const nav = (
     <nav aria-label={t('shell.menu')} className="flex flex-col gap-6 p-4">
       {navFor(user).map((g) => (
-        <div key={g.group}>
-          <div className="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-fg-muted">
-            {t(g.group, { ns: 'common' })}
-          </div>
+        <div key={g.group || 'staff'}>
+          {g.group && (
+            <div className="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-fg-muted">
+              {t(g.group, { ns: 'common' })}
+            </div>
+          )}
           <ul className="flex flex-col gap-1">
             {g.items.map((i) => (
               <li key={i.key}>

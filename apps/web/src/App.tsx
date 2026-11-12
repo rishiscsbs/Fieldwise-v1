@@ -24,7 +24,8 @@ const Health = lazy(() => import('./routes/Health').then((m) => ({ default: m.He
 const Weather = lazy(() => import('./routes/Weather').then((m) => ({ default: m.Weather })));
 const Market = lazy(() => import('./routes/Market').then((m) => ({ default: m.Market })));
 const Desk = lazy(() => import('./routes/Desk').then((m) => ({ default: m.Desk })));
-const OfficerSoon = lazy(() => import('./routes/OfficerSoon').then((m) => ({ default: m.OfficerSoon })));
+const Officer = lazy(() => import('./routes/Officer').then((m) => ({ default: m.Officer })));
+const Admin = lazy(() => import('./routes/Admin').then((m) => ({ default: m.Admin })));
 
 function Splash() {
   const { t } = useTranslation();
@@ -48,12 +49,13 @@ function RequireAuth({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
-/** Farmers without a name or a field are sent to onboarding first. Staff land on the desk. */
+/** Farmers without a name or a field are sent to onboarding first. Officers land on their dashboard, admins on admin. */
 function Start() {
   const user = useAuth((s) => s.user);
   const { farms, isLoading } = useActiveFarm();
-  if (user?.role !== 'farmer') return <Navigate to="/app/desk" replace />;
-  if (isLoading) return <PageSkeleton />;
+  if (user?.role === 'admin') return <Navigate to="/app/admin" replace />;
+  if (user?.role === 'officer') return <Navigate to="/app/officer" replace />;
+  if (isLoading || !user) return <PageSkeleton />;
   if (!user.name || !farms.length) return <Navigate to="/app/welcome" replace />;
   return <Overview />;
 }
@@ -111,7 +113,8 @@ export function App() {
                 ['market', <Market key="m" />],
                 ['desk', <Desk key="d" />],
                 ['desk/:ticketId', <Desk key="dt" />],
-                ['officer', <OfficerSoon key="o" />],
+                ['officer', <Officer key="o" />],
+                ['admin', <Admin key="a" />],
               ] as const
             ).map(([path, el]) => (
               <Route key={path} path={path} element={<Suspense fallback={<PageSkeleton />}>{el}</Suspense>} />

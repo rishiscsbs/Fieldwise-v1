@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { m } from 'framer-motion';
 import { scaleBand, scaleLinear, scalePoint } from '@visx/scale';
 import { LinePath, AreaClosed } from '@visx/shape';
-import { curveMonotoneX } from '@visx/curve';
+import { curveLinear, curveMonotoneX } from '@visx/curve';
 import { SERIES, Tooltip, compact, useWidth, type TipRow } from './frame';
 
 const ease = [0.2, 0.8, 0.2, 1] as const;
@@ -375,6 +375,7 @@ export function Lines({
   reference,
   height = 240,
   area = false,
+  linear = false,
 }: {
   series: LineSeries[];
   xLabels: string[];
@@ -383,6 +384,8 @@ export function Lines({
   reference?: { value: number; label: string };
   height?: number;
   area?: boolean;
+  /** Straight segments and a marker per point; use for counts, where smoothing would invent values */
+  linear?: boolean;
 }) {
   const [ref, width] = useWidth<HTMLDivElement>();
   const [hover, setHover] = useState<number | null>(null);
@@ -484,12 +487,17 @@ export function Lines({
                   x={(_, i) => x(i)}
                   y={(v) => y(v)}
                   yScale={y}
-                  curve={curveMonotoneX}
+                  curve={linear ? curveLinear : curveMonotoneX}
                   fill={s.color}
                   fillOpacity={0.1}
                 />
               )}
-              <LinePath data={s.values} x={(_, i) => x(i)} y={(v) => y(v)} curve={curveMonotoneX}>
+              <LinePath
+                data={s.values}
+                x={(_, i) => x(i)}
+                y={(v) => y(v)}
+                curve={linear ? curveLinear : curveMonotoneX}
+              >
                 {({ path }) => (
                   <m.path
                     d={path(s.values) ?? ''}
@@ -504,6 +512,20 @@ export function Lines({
                   />
                 )}
               </LinePath>
+              {linear &&
+                s.values
+                  .slice(0, -1)
+                  .map((v, i) => (
+                    <circle
+                      key={i}
+                      cx={x(i)}
+                      cy={y(v)}
+                      r={4}
+                      fill={s.color}
+                      stroke="var(--surface)"
+                      strokeWidth={2}
+                    />
+                  ))}
               <circle
                 cx={x(n - 1)}
                 cy={y(s.values.at(-1) ?? 0)}

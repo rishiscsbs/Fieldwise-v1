@@ -15,3 +15,4 @@ export const REFERENCE: ReferenceData = {
   pests: PESTS,
   fertilisers: FERT,
 };
+export { INDIA_OUTLINE, INDIA_BOUNDS } from './india.js';

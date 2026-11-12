@@ -70,7 +70,8 @@ for (const [device, width, height] of WIDTHS) {
       await page.waitForTimeout(1400);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       if (overflow > 0) errors.push(`${device} ${lang} ${route}: page scrolls sideways by ${overflow}px`);
-      const slug = route.replace(/^\//, '').replace(/\//g, '_') || 'home';
+      // Windows file names cannot contain ? or =, so anything unusual becomes an underscore.
+      const slug = route.replace(/^\//, '').replace(/[^A-Za-z0-9_-]+/g, '_') || 'home';
       const name = `${OUT}/${as ? as + '-' : ''}${slug}-${device}-${lang}-${theme}.png`;
       await page.screenshot({ path: name, fullPage: true });
       console.log('saved', name);

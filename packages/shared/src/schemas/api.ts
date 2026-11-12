@@ -1,6 +1,6 @@
 // Response shapes for every API route. The API validates and serialises with these; the web app infers its types from them.
 import { z } from 'zod';
-import { Role, SeasonEnum } from './index.js';
+import { Phone, Role, SeasonEnum } from './index.js';
 
 // Extra languages are optional so this matches the Labels type, where a missing language falls back to English.
 export const LabelsSchema = z.object({ en: z.string() }).catchall(z.string().optional());
@@ -344,3 +344,186 @@ export interface ServerToClientEvents {
   'ticket:updated': (t: TicketDto) => void;
   'ticket:message': (m: TicketMessageDto) => void;
 }
+
+// ---------- officer dashboard ----------
+
+export const OfficerSummaryDto = z.object({
+  districtId: Id,
+  days: z.number(),
+  farmers: z.number(),
+  farms: z.number(),
+  areaAcres: z.number(),
+  tickets: z.object({ open: z.number(), answered: z.number(), closed: z.number() }),
+  /** Median hours from question to first officer reply, over answered questions in the window */
+  medianResponseHours: z.number().nullable(),
+  /** Hours the oldest open question has waited */
+  oldestOpenHours: z.number().nullable(),
+  pestReports: z.number(),
+  alertsSent: z.number(),
+  categories: z.array(z.object({ category: TicketCategoryEnum, count: z.number() })),
+  weekly: z.array(z.object({ weekStart: z.string(), opened: z.number(), answered: z.number() })),
+  topPests: z.array(z.object({ pestId: Id, count: z.number() })),
+  crops: z.array(z.object({ cropId: Id, farms: z.number() })),
+});
+export type OfficerSummaryDto = z.infer<typeof OfficerSummaryDto>;
+
+export const OfficerMapDto = z.object({
+  district: z.object({ id: Id, labels: LabelsSchema, lat: z.number(), lon: z.number() }),
+  farms: z.array(
+    z.object({
+      id: Id,
+      name: z.string(),
+      farmer: z.string(),
+      lat: z.number(),
+      lon: z.number(),
+      crop: z.string().nullable(),
+      areaAcres: z.number(),
+      openTickets: z.number(),
+    }),
+  ),
+  tickets: z.array(
+    z.object({
+      id: Id,
+      subject: z.string(),
+      category: TicketCategoryEnum,
+      farmer: z.string(),
+      lat: z.number(),
+      lon: z.number(),
+      createdAt: IsoDate,
+    }),
+  ),
+});
+export type OfficerMapDto = z.infer<typeof OfficerMapDto>;
+
+export const PestPointsDto = z.object({
+  districtId: Id,
+  days: z.number(),
+  reports: z.array(
+    z.object({ pestId: Id, lat: z.number(), lon: z.number(), reportedAt: IsoDate, source: z.string() }),
+  ),
+});
+export type PestPointsDto = z.infer<typeof PestPointsDto>;
+
+// ---------- admin ----------
+
+export const AdminOverviewDto = z.object({
+  users: z.object({ farmer: z.number(), officer: z.number(), admin: z.number() }),
+  districts: z.array(
+    z.object({
+      id: Id,
+      labels: LabelsSchema,
+      lat: z.number(),
+      lon: z.number(),
+      active: z.boolean(),
+      farmers: z.number(),
+      farms: z.number(),
+      openTickets: z.number(),
+      pestReports: z.number(),
+      officers: z.number(),
+    }),
+  ),
+});
+export type AdminOverviewDto = z.infer<typeof AdminOverviewDto>;
+
+export const AdminUserDto = z.object({
+  id: Id,
+  phone: z.string(),
+  name: z.string(),
+  role: Role,
+  districtId: z.string().nullable(),
+  lang: z.string(),
+  active: z.boolean(),
+  farms: z.number(),
+  createdAt: IsoDate,
+});
+export type AdminUserDto = z.infer<typeof AdminUserDto>;
+
+export const AdminUserCreate = z.object({
+  phone: Phone,
+  name: z.string().trim().min(1).max(80),
+  role: Role,
+  districtId: z.string().nullable(),
+});
+
+export const AdminUserPatch = z.object({
+  name: z.string().trim().min(1).max(80).optional(),
+  role: Role.optional(),
+  districtId: z.string().nullable().optional(),
+  active: z.boolean().optional(),
+});
+
+export const AdminDistrictDto = z.object({
+  id: Id,
+  labels: LabelsSchema,
+  lat: z.number(),
+  lon: z.number(),
+  rainMm: z.number(),
+  temp: z.object({ kharif: z.number(), rabi: z.number(), zaid: z.number() }),
+  soil: z.string(),
+  ph: z.number(),
+  active: z.boolean(),
+  markets: z.array(z.string()),
+});
+export type AdminDistrictDto = z.infer<typeof AdminDistrictDto>;
+
+export const AdminDistrictPatch = z.object({
+  labels: z
+    .object({ en: z.string().trim().min(1) })
+    .catchall(z.string())
+    .optional(),
+  rainMm: z.number().min(0).max(12000).optional(),
+  temp: z
+    .object({
+      kharif: z.number().min(-10).max(50),
+      rabi: z.number().min(-10).max(50),
+      zaid: z.number().min(-10).max(50),
+    })
+    .partial()
+    .optional(),
+  soil: z.string().optional(),
+  ph: z.number().min(3).max(11).optional(),
+  active: z.boolean().optional(),
+  markets: z.array(z.string().trim().min(1).max(60)).min(1).max(12).optional(),
+});
+
+export const AdminCropDto = CropSchema.extend({ active: z.boolean() });
+export type AdminCropDto = z.infer<typeof AdminCropDto>;
+
+/** Editable crop reference values. Ranges are [min, max]. */
+export const AdminCropPatch = z.object({
+  e: z.string().max(8).optional(),
+  n: z
+    .object({ en: z.string().trim().min(1) })
+    .catchall(z.string())
+    .optional(),
+  s: z.array(SeasonEnum).min(1).optional(),
+  soil: z.array(z.string()).min(1).optional(),
+  ph: z.tuple([z.number().min(3), z.number().max(11)]).optional(),
+  w: z.tuple([z.number().min(0), z.number().max(5000)]).optional(),
+  t: z.tuple([z.number().min(-10), z.number().max(50)]).optional(),
+  npk: z.tuple([z.number().min(0), z.number().min(0), z.number().min(0)]).optional(),
+  kc: z.number().min(0.1).max(2).optional(),
+  d: z.string().max(20).optional(),
+  y: z.number().min(0).max(2000).optional(),
+  msp: z.number().min(0).nullable().optional(),
+  p: z.number().min(0).optional(),
+  leg: z.union([z.literal(0), z.literal(1)]).optional(),
+  active: z.boolean().optional(),
+});
+export const AdminCropCreate = AdminCropPatch.required({
+  e: true,
+  n: true,
+  s: true,
+  soil: true,
+  ph: true,
+  w: true,
+  t: true,
+  npk: true,
+  kc: true,
+  d: true,
+  y: true,
+  p: true,
+  leg: true,
+}).extend({
+  id: z.string().regex(/^[a-z][a-z0-9-]{1,30}$/, 'Use lowercase letters, numbers and dashes'),
+});

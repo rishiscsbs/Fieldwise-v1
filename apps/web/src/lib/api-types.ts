@@ -1,5 +1,12 @@
 // Type-only re-exports of the API shapes, so importing them never pulls zod into the bundle.
 export type {
+  AdminCropDto,
+  AdminDistrictDto,
+  AdminOverviewDto,
+  AdminUserDto,
+  OfficerMapDto,
+  OfficerSummaryDto,
+  PestPointsDto,
   AlertDto,
   AuthSession,
   FarmDetailDto,

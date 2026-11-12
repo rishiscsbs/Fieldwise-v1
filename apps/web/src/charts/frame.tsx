@@ -61,7 +61,7 @@ export function ChartFrame({
           {chart}
         </div>
       ) : (
-        <div className="overflow-x-auto">{table}</div>
+        <div className="relative overflow-x-auto">{table}</div>
       )}
     </div>
   );
