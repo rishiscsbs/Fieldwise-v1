@@ -1,3 +1,5 @@
+// Crop health: big tactile symptom chips (the ones that match the likely pest light up one by one), a leaf
+// photo with a scanning beam while it is checked, and result cards that flip in.
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, m } from 'framer-motion';
@@ -10,6 +12,7 @@ import { useAnalyseLeaf, useDiagnose, useReference } from '../lib/queries';
 import type { HealthCheckDto } from '../lib/api-types';
 import { Button } from '../components/Button';
 import { Icon } from '../components/Icon';
+import { PrimaryAction } from '../components/signature/PrimaryAction';
 import {
   Badge,
   Callout,
@@ -23,6 +26,13 @@ import {
 } from '../components/ui';
 
 const REGION_COLOUR = { yellow: 'var(--warn)', brown: 'var(--bad)', white: 'var(--info)' } as const;
+// Full class names for Tailwind's scanner.
+const BRACKETS = [
+  'left-2 top-2 border-l-4 border-t-4',
+  'right-2 top-2 border-r-4 border-t-4',
+  'bottom-2 left-2 border-b-4 border-l-4',
+  'bottom-2 right-2 border-b-4 border-r-4',
+];
 
 export function Health() {
   const { t, label } = useFmt();
@@ -43,6 +53,8 @@ export function Health() {
 
   const top = diagnose.data?.matches[0];
   const topPest = ref.data?.pests.find((p) => p.id === top?.pestId);
+  // Chips the likely pest explains, in the order they were picked, so they light up in turn.
+  const matched = topPest ? symptoms.filter((s) => topPest.s.includes(s)) : [];
   useSay(
     topPest
       ? `${label(topPest.n)}. ${t('organicT', { ns: 'common' })}: ${label(topPest.o)} ${t('chemT', { ns: 'common' })}: ${label(topPest.ch)}`
@@ -104,34 +116,47 @@ export function Health() {
               </select>
             </Field>
           </div>
-          <div className="flex flex-wrap gap-2">
+          {topPest && matched.length > 0 && (
+            <p className="mb-2 text-sm font-semibold text-fg-muted">
+              {t('health.matched', { pest: label(topPest.n) })}
+            </p>
+          )}
+          <div className="flex flex-wrap gap-2.5">
             {ref.data.symptoms.map((s) => {
               const on = symptoms.includes(s.id);
+              const order = matched.indexOf(s.id);
               return (
                 <m.button
                   key={s.id}
                   type="button"
                   aria-pressed={on}
-                  whileTap={{ scale: 0.94 }}
+                  whileTap={{ scale: 0.92, y: 2 }}
+                  whileHover={{ y: -2 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 24 }}
                   onClick={() => toggle(s.id)}
-                  className={`inline-flex min-h-11 items-center gap-1.5 rounded-full border px-3 text-sm font-semibold transition-colors duration-1 ${on ? 'border-primary bg-primary text-primary-ink' : 'border-line bg-surface text-fg hover:bg-surface-2'}`}
+                  className={`relative inline-flex min-h-14 items-center gap-2 rounded-2xl border-2 px-4 text-base font-semibold shadow-1 transition-colors duration-1 ${on ? 'border-primary bg-primary text-primary-ink shadow-2' : 'border-line bg-surface text-fg hover:border-primary'}`}
                 >
-                  {on && <Icon name="check" size={14} />}
+                  {on && <Icon name="check" size={18} />}
                   {label(s.labels)}
+                  {/* A matched chip lights up: a glowing accent ring, one chip after another. */}
+                  {order >= 0 && (
+                    <m.span
+                      key={`${topPest?.id ?? ''}-${s.id}`}
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -inset-1.5 rounded-[1.25rem] border-[3px] border-accent shadow-[0_0_18px_var(--accent)]"
+                      initial={{ opacity: 0, scale: 1.15 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.3 + order * 0.28, type: 'spring', stiffness: 320, damping: 18 }}
+                    />
+                  )}
                 </m.button>
               );
             })}
           </div>
           <div className="mt-5 flex flex-wrap gap-2">
-            <Button
-              variant="primary"
-              magnetic
-              onClick={() => run()}
-              disabled={!symptoms.length}
-              busy={diagnose.isPending}
-            >
+            <PrimaryAction onClick={() => run()} disabled={!symptoms.length} busy={diagnose.isPending}>
               {t('diagnose', { ns: 'common' })}
-            </Button>
+            </PrimaryAction>
             <Button variant="quiet" onClick={() => setSymptoms([])} disabled={!symptoms.length}>
               {t('clear', { ns: 'common' })}
             </Button>
@@ -147,9 +172,32 @@ export function Health() {
           sub={t('photoHint', { ns: 'common' })}
           actions={<Badge tone="info">{t('health.notModel')}</Badge>}
         >
-          <label className="flex min-h-24 cursor-pointer flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed border-line p-4 text-center hover:bg-surface-2 focus-within:outline focus-within:outline-2 focus-within:outline-focus">
-            <Icon name="camera" size={28} className="text-fg-muted" />
+          <label className="group flex min-h-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-line bg-surface-2 p-4 text-center transition-colors duration-2 hover:border-primary focus-within:outline focus-within:outline-[3px] focus-within:outline-focus">
+            {/* A leaf in a camera frame (original drawing). */}
+            <svg
+              width="64"
+              height="56"
+              viewBox="0 0 64 56"
+              aria-hidden="true"
+              className="transition-transform duration-2 group-hover:-translate-y-0.5"
+            >
+              <path
+                d="M6 14V8a4 4 0 0 1 4-4h6M48 4h6a4 4 0 0 1 4 4v6M58 42v6a4 4 0 0 1-4 4h-6M16 52h-6a4 4 0 0 1-4-4v-6"
+                stroke="var(--text-muted)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                fill="none"
+              />
+              <path d="M18 40C18 22 32 12 48 12c0 18-12 30-30 28Z" fill="var(--leaf-500)" />
+              <path
+                d="M20 39 44 16M28 31l-1-8M34 25l6 1"
+                stroke="var(--leaf-100)"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
             <span className="font-semibold">{t('health.upload')}</span>
+            <span className="text-sm text-fg-muted">{t('health.dropTitle')}</span>
             <span className="text-sm text-fg-muted">{t('health.take')}</span>
             <input
               type="file"
@@ -174,12 +222,19 @@ export function Health() {
                       exit={{ opacity: 0 }}
                     >
                       <div className="absolute inset-0 bg-[linear-gradient(transparent_95%,color-mix(in_srgb,var(--accent)_30%,transparent)_95%)] bg-[length:100%_16px]" />
+                      {/* Corner brackets frame the leaf being read. */}
+                      {BRACKETS.map((c) => (
+                        <span key={c} className={`absolute h-6 w-6 rounded-sm border-accent ${c}`} />
+                      ))}
+                      {/* The beam: a bright line trailing a soft glow. */}
                       <m.div
-                        className="absolute inset-x-0 h-1 bg-accent shadow-[0_0_16px_4px_var(--accent)]"
+                        className="absolute inset-x-0 h-16 -translate-y-full bg-gradient-to-b from-transparent to-accent/40"
                         initial={{ top: '0%' }}
                         animate={{ top: ['0%', '100%', '0%'] }}
                         transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                      />
+                      >
+                        <span className="absolute inset-x-0 bottom-0 h-1 bg-accent shadow-[0_0_16px_4px_var(--accent)]" />
+                      </m.div>
                     </m.div>
                   )}
                 </AnimatePresence>
@@ -274,12 +329,14 @@ export function Health() {
                 {diagnose.data.matches.map((mt, i) => {
                   const p = ref.data!.pests.find((x) => x.id === mt.pestId)!;
                   return (
+                    // Cards flip in like turned-over field notes, one after another.
                     <m.article
                       key={mt.pestId}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.08 }}
-                      className={`flex flex-col gap-3 rounded-md border p-4 ${i === 0 ? 'border-primary' : 'border-line'}`}
+                      initial={{ opacity: 0, rotateY: -80 }}
+                      animate={{ opacity: 1, rotateY: 0 }}
+                      transition={{ delay: 0.1 + i * 0.15, type: 'spring', stiffness: 140, damping: 18 }}
+                      style={{ transformPerspective: 900, transformOrigin: 'left center' }}
+                      className={`flex flex-col gap-3 rounded-xl border-2 bg-surface p-4 shadow-1 ${i === 0 ? 'border-primary shadow-2' : 'border-line'}`}
                     >
                       <div>
                         <p className="text-sm text-fg-muted">

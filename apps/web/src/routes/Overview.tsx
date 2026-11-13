@@ -322,6 +322,7 @@ export function Overview() {
                   reference={
                     mandi.data.msp ? { value: mandi.data.msp, label: t('market.mspLine') } : undefined
                   }
+                  highlight={best?.bestMarket}
                 />
               }
               table={

@@ -1,13 +1,42 @@
+// Weather and irrigation: an animated sky banner for today's forecast (rain, heat shimmer or sun, from the same
+// effects as the overview), the week as illustrated day cards with a soil-water column each and a bouncing drop
+// on irrigation days, then the full irrigation table and the charts.
+import { m } from 'framer-motion';
 import { useSay } from '../stores/page';
 import { useActiveFarm } from '../lib/farm';
 import { useFmt } from '../lib/format';
-import { condition } from '../lib/weather';
+import { condition, type Condition } from '../lib/weather';
 import { useReference, useWater } from '../lib/queries';
 import { ChartFrame, DataTable, Legend, SERIES } from '../charts/frame';
 import { Columns, RangeBars } from '../charts/charts';
-import { MoistureGauge } from '../components/MoistureGauge';
-import { Sky } from '../components/Sky';
+import { MoistureGauge, WaterColumn } from '../components/MoistureGauge';
+import { SkyIcon } from '../components/SkyIcon';
+import { WeatherFx } from '../components/WeatherFx';
 import { Badge, Callout, Card, ErrorState, PageHeader, PageSkeleton, SourceBadge } from '../components/ui';
+
+/** A water drop that bounces gently: marks the days to irrigate. */
+function IrrigationDrop() {
+  return (
+    <m.svg
+      width="16"
+      height="20"
+      viewBox="0 0 16 20"
+      aria-hidden="true"
+      animate={{ y: [0, -4, 0] }}
+      transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+    >
+      <path d="M8 1C4 7 1 10 1 13.5a7 7 0 0 0 14 0C15 10 12 7 8 1Z" fill="var(--series-2)" />
+      <path
+        d="M5 13a3 3 0 0 0 3 3"
+        stroke="#fff"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        fill="none"
+        opacity=".8"
+      />
+    </m.svg>
+  );
+}
 
 export function Weather() {
   const { t, label, date, time } = useFmt();
@@ -45,16 +74,25 @@ export function Weather() {
         sub={t('weather_sub', { ns: 'common', c: label(crop.n) })}
       />
 
-      <Sky cond={cond}>
-        <div className="grid gap-4 p-4 sm:p-6 md:grid-cols-[1fr_auto]">
-          <div className="rounded-md bg-surface/90 p-4 text-fg shadow-1 backdrop-blur">
+      {/* The sky banner: season wash and today's weather effects behind solid data panels. */}
+      <section className="relative isolate overflow-hidden rounded-2xl border border-line bg-season-c shadow-glass">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-gradient-to-b from-season-c via-season-c to-surface"
+        />
+        <WeatherFx cond={cond} hot={today.tmax >= 36} morning={new Date().getHours() < 11} />
+        <div className="relative grid gap-4 p-4 sm:p-6 md:grid-cols-[1fr_auto]">
+          <div className="rounded-xl bg-surface p-5 text-fg shadow-2">
             <p className="text-sm text-fg-muted">
               {t('weather.today')} · {date(today.date, { weekday: 'long', day: 'numeric', month: 'long' })}
             </p>
-            <p className="font-display text-4xl">
-              {today.tmax}° <span className="text-2xl text-fg-muted">/ {today.tmin}°</span>
-            </p>
-            <p className="font-semibold">{t(`weather.cond.${cond}`)}</p>
+            <div className="mt-1 flex items-center gap-4">
+              <SkyIcon cond={cond} size={72} />
+              <p className="num-hero">
+                {today.tmax}° <span className="text-3xl text-fg-muted">/ {today.tmin}°</span>
+              </p>
+            </div>
+            <p className="mt-1 text-lg font-semibold">{t(`weather.cond.${cond}`)}</p>
             <p className="num mt-1 text-sm text-fg-muted">
               {t('rainP', { ns: 'common' })} {today.rp}% · {t('humT', { ns: 'common' })} {today.hum}% ·{' '}
               {t('windT', { ns: 'common' })} {today.wind} km/h
@@ -66,7 +104,7 @@ export function Weather() {
               />
             </div>
           </div>
-          <div className="rounded-md bg-surface/90 p-4 text-fg shadow-1 backdrop-blur">
+          <div className="rounded-xl bg-surface p-5 text-fg shadow-2">
             <p className="font-semibold">{t('weather.moisture')}</p>
             <p className="mb-2 text-sm text-fg-muted">
               {t('weather.moistureSub', { soil: label(soil?.labels) })}
@@ -74,10 +112,58 @@ export function Weather() {
             <MoistureGauge left={left} capacity={w.thresholdMm} label={t('weather.moisture')} />
           </div>
         </div>
-      </Sky>
+      </section>
 
       <Callout tone="info" title={`${lead}.`} />
       {w.fungalRisk && <Callout tone="warn" title={t('fungal', { ns: 'advice' })} />}
+
+      <Card title={t('weather.week')}>
+        <ol className="-mx-1 flex snap-x gap-3 overflow-x-auto px-1 pb-2 lg:grid lg:grid-cols-7 lg:overflow-visible">
+          {days.map((d, i) => {
+            const wd = w.days[i]!;
+            const c: Condition = condition(d);
+            const water = w.thresholdMm ? Math.max(0, w.thresholdMm - wd.def) / w.thresholdMm : 0;
+            return (
+              <m.li
+                key={d.date}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 + i * 0.06, duration: 0.4 }}
+                className={`relative flex min-w-[8.5rem] snap-start flex-col items-center gap-1.5 rounded-xl border p-3 text-center ${wd.irr ? 'border-series-2 bg-info-soft' : 'border-line bg-surface'}`}
+              >
+                <span className="font-semibold">
+                  {i === 0 ? t('weather.today') : date(d.date, { weekday: 'short' })}
+                </span>
+                <span className="text-xs text-fg-muted">
+                  {date(d.date, { day: 'numeric', month: 'short' })}
+                </span>
+                <SkyIcon cond={c} size={44} />
+                <span className="sr-only">{t(`weather.cond.${c}`)}</span>
+                <span className="num font-bold">
+                  {d.tmax}° <span className="font-normal text-fg-muted">{d.tmin}°</span>
+                </span>
+                <span className="num text-xs text-fg-muted">
+                  {t('rain', { ns: 'common' })} {d.rain} mm
+                </span>
+                <span className="flex items-center gap-2">
+                  <WaterColumn pct={water} delay={0.2 + i * 0.06} />
+                  <span className="num text-xs">
+                    {t('weather.waterLeft', { p: Math.round(water * 100) })}
+                  </span>
+                </span>
+                {wd.irr ? (
+                  <span className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-info">
+                    <IrrigationDrop />
+                    {t('weather.irrigateMm', { mm: wd.irr })}
+                  </span>
+                ) : (
+                  <span className="mt-1 text-sm text-fg-muted">{t('noirr', { ns: 'common' })}</span>
+                )}
+              </m.li>
+            );
+          })}
+        </ol>
+      </Card>
 
       <Card title={t('irrPlan', { ns: 'common' })} sub={t('asOf', { ns: 'common' })}>
         <div className="relative overflow-x-auto">

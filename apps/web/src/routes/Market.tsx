@@ -1,21 +1,17 @@
+// Market prices: a crop wheel, the best price today as a big number, and the trend chart with the best market
+// glowing and MSP drawn as a dashed threshold.
 import { useSearchParams } from 'react-router-dom';
+import { m } from 'framer-motion';
 import { useSay } from '../stores/page';
 import { useActiveFarm } from '../lib/farm';
 import { useFmt } from '../lib/format';
 import { useMandi, useReference } from '../lib/queries';
 import { ChartFrame, DataTable, Legend, SERIES } from '../charts/frame';
 import { Lines } from '../charts/charts';
-import {
-  Badge,
-  Callout,
-  Card,
-  ErrorState,
-  Field,
-  PageHeader,
-  PageSkeleton,
-  SourceBadge,
-  inputClass,
-} from '../components/ui';
+import { CountUp } from '../components/CountUp';
+import { Icon } from '../components/Icon';
+import { WheelPicker } from '../components/signature/WheelPicker';
+import { Badge, Callout, Card, ErrorState, PageHeader, PageSkeleton, SourceBadge } from '../components/ui';
 
 export function Market() {
   const { t, label, money, signed, date, time } = useFmt();
@@ -46,6 +42,7 @@ export function Market() {
     d.setDate(d.getDate() - (n - 1 - i));
     return date(d);
   });
+  const best = md.markets.find((m) => m.market === md.advice?.bestMarket);
   const adviceTone =
     md.advice?.key === 'belowMsp' || md.advice?.key === 'falling'
       ? 'warn'
@@ -55,26 +52,54 @@ export function Market() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader
-        title={lead || t('pt_market', { ns: 'common' })}
-        sub={t('mandi_sub', { ns: 'common' })}
-        actions={
-          <Field label={t('crop', { ns: 'common' })} htmlFor="m-crop">
-            <select
-              id="m-crop"
-              value={md.cropId}
-              onChange={(e) => setParams({ crop: e.target.value })}
-              className={inputClass}
-            >
-              {ref.data.crops.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {label(c.n)}
-                </option>
-              ))}
-            </select>
-          </Field>
-        }
-      />
+      <div className="grid items-end gap-4 md:grid-cols-[1fr_16rem]">
+        <PageHeader title={lead || t('pt_market', { ns: 'common' })} sub={t('mandi_sub', { ns: 'common' })} />
+        <WheelPicker
+          label={t('crop', { ns: 'common' })}
+          options={ref.data.crops.map((c) => ({ value: c.id, label: label(c.n).split(' (')[0]! }))}
+          value={md.cropId}
+          onChange={(v) => setParams({ crop: v })}
+          settle={350}
+          className="mb-6"
+        />
+      </div>
+
+      {best && (
+        <m.section
+          key={md.cropId}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="card relative flex flex-wrap items-end justify-between gap-4 overflow-hidden"
+        >
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-season-a via-season-b to-season-c"
+          />
+          <div>
+            <p className="text-sm font-semibold text-fg-muted">{t('market.bestToday')}</p>
+            <p className="num-hero">
+              <CountUp value={best.today} format={money} duration={1100} />
+            </p>
+            <p className="font-semibold">{t('market.at', { m: best.market })}</p>
+          </div>
+          <div className="flex flex-col items-end gap-1 text-right">
+            {best.change !== null && (
+              <span
+                className={`num inline-flex items-center gap-1 text-lg font-bold ${best.change >= 0 ? 'text-good' : 'text-bad'}`}
+              >
+                <Icon name="arrowRight" size={18} className={best.change >= 0 ? '-rotate-45' : 'rotate-45'} />
+                {signed(best.change)}%{' '}
+                <span className="text-sm font-normal text-fg-muted">{t('wk', { ns: 'common' })}</span>
+              </span>
+            )}
+            {md.msp !== null && (
+              <Badge tone={best.today >= md.msp ? 'good' : 'warn'}>
+                {best.today >= md.msp ? t('market.aboveMsp') : t('market.belowMsp')} · {money(md.msp)}
+              </Badge>
+            )}
+          </div>
+        </m.section>
+      )}
 
       <SourceBadge
         simulated={md.source.simulated}
@@ -110,6 +135,7 @@ export function Market() {
                   color: SERIES[i % 4]!,
                 }))}
                 reference={md.msp ? { value: md.msp, label: t('market.mspLine') } : undefined}
+                highlight={md.advice?.bestMarket}
               />
             }
             table={

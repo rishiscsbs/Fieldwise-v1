@@ -208,7 +208,9 @@
     "notModel": "Colour check, not a disease model",
     "suggested": "Signs suggested by the photo",
     "logged": "Saved to the district pest map",
-    "pick": "Pick the signs you see"
+    "pick": "Pick the signs you see",
+    "matched": "Signs that match {{pest}}",
+    "dropTitle": "Photograph one leaf in daylight"
   },
   "weather": {
     "moisture": "Soil water left",
@@ -223,12 +225,20 @@
     "today": "Today",
     "noSpray": "No good spray days this week",
     "conditions": "Conditions",
-    "noRain": "No rain expected this week"
+    "noRain": "No rain expected this week",
+    "week": "This week",
+    "waterLeft": "Soil water {{p}}%",
+    "irrigateMm": "Irrigate {{mm}} mm",
+    "dayCard": "{{day}}: {{cond}}, {{hi}}° / {{lo}}°, rain {{rain}} mm, soil water {{p}}%"
   },
   "market": {
     "best": "Best price",
     "mspLine": "MSP",
-    "changeWk": "{{ch}}% this week"
+    "changeWk": "{{ch}}% this week",
+    "bestToday": "Best price today",
+    "at": "at {{m}}",
+    "aboveMsp": "Above MSP",
+    "belowMsp": "Below MSP"
   },
   "desk": {
     "ask": "Ask a question",

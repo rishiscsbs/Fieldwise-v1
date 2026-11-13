@@ -1,7 +1,7 @@
 // The chart set. All charts size to their container, animate in once, show a tooltip on hover or focus,
 // and have a table view (via ChartFrame in the page). Marks follow the dataviz spec: bars <= 24px with a
 // 4px rounded data-end, 2px lines, >= 8px end dots with a surface ring, 1px recessive grid.
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { m } from 'framer-motion';
 import { scaleBand, scaleLinear, scalePoint } from '@visx/scale';
 import { LinePath, AreaClosed } from '@visx/shape';
@@ -376,6 +376,7 @@ export function Lines({
   height = 240,
   area = false,
   linear = false,
+  highlight,
 }: {
   series: LineSeries[];
   xLabels: string[];
@@ -386,7 +387,10 @@ export function Lines({
   area?: boolean;
   /** Straight segments and a marker per point; use for counts, where smoothing would invent values */
   linear?: boolean;
+  /** Label of the series to emphasise (e.g. the best market): drawn thicker with a soft glow, the rest dimmed. */
+  highlight?: string;
 }) {
+  const glowId = `${useId()}-glow`;
   const [ref, width] = useWidth<HTMLDivElement>();
   const [hover, setHover] = useState<number | null>(null);
   const n = xLabels.length;
@@ -441,6 +445,11 @@ export function Lines({
           onBlur={() => setHover(null)}
           className="outline-none focus-visible:ring-2 focus-visible:ring-focus"
         >
+          <defs>
+            <filter id={glowId} x="-10%" y="-50%" width="120%" height="200%">
+              <feGaussianBlur stdDeviation="4" />
+            </filter>
+          </defs>
           {y.ticks(4).map((t) => (
             <g key={t}>
               <line x1={pad.l} x2={width - pad.r} y1={y(t)} y2={y(t)} stroke={GRID} />
@@ -466,15 +475,17 @@ export function Lines({
           )}
           {reference && (
             <g>
+              {/* A dashed threshold (MSP): prices below it are a warning, so it reads as a line to clear. */}
               <line
                 x1={pad.l}
                 x2={width - pad.r}
                 y1={y(reference.value)}
                 y2={y(reference.value)}
                 stroke={INK_MUTED}
-                strokeDasharray="4 4"
+                strokeWidth={1.6}
+                strokeDasharray="7 5"
               />
-              <text x={pad.l + 4} y={y(reference.value) - 5} fontSize={12} fill={INK_MUTED}>
+              <text x={pad.l + 4} y={y(reference.value) - 6} fontSize={12} fontWeight={700} fill={INK_MUTED}>
                 {reference.label} {format(reference.value)}
               </text>
             </g>
@@ -498,19 +509,41 @@ export function Lines({
                 y={(v) => y(v)}
                 curve={linear ? curveLinear : curveMonotoneX}
               >
-                {({ path }) => (
-                  <m.path
-                    d={path(s.values) ?? ''}
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.9, delay: si * 0.1, ease }}
-                    fill="none"
-                    stroke={s.color}
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                )}
+                {({ path }) => {
+                  const d = path(s.values) ?? '';
+                  const hi = highlight === s.label;
+                  const dim = !!highlight && !hi;
+                  return (
+                    <>
+                      {hi && (
+                        <m.path
+                          d={d}
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: 1 }}
+                          transition={{ duration: 0.9, delay: si * 0.1, ease }}
+                          fill="none"
+                          stroke={s.color}
+                          strokeWidth={9}
+                          strokeOpacity={0.45}
+                          strokeLinecap="round"
+                          filter={`url(#${glowId})`}
+                        />
+                      )}
+                      <m.path
+                        d={d}
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ duration: 0.9, delay: si * 0.1, ease }}
+                        fill="none"
+                        stroke={s.color}
+                        strokeWidth={hi ? 3.5 : 2}
+                        strokeOpacity={dim ? 0.6 : 1}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </>
+                  );
+                }}
               </LinePath>
               {linear &&
                 s.values
