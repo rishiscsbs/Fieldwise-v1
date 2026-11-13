@@ -5,6 +5,7 @@ import { AnimatePresence, m, useIsPresent } from 'framer-motion';
 import type { ComponentProps } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type { PublicMetricsDto } from '@fieldwise/shared';
+import { useReference } from '../lib/queries';
 import { useFmt } from '../lib/format';
 import { api } from '../lib/api';
 import { useMotionMode } from '../lib/motion-mode';
@@ -15,6 +16,10 @@ import { SLIDES } from '../pitch/slides';
 import { usePitchSync } from '../pitch/sync';
 import { Icon } from '../components/Icon';
 import { CountUp } from '../components/CountUp';
+import { Wordmark } from '../components/signature/Wordmark';
+import { CropStrip } from '../components/signature/CropStrip';
+import { PrimaryAction } from '../components/signature/PrimaryAction';
+import { CROP_PHOTOS } from '../lib/crop-photos';
 
 const PitchWorld = lazy(() => import('../pitch/PitchWorld'));
 const ease = [0.2, 0.8, 0.2, 1] as const;
@@ -72,8 +77,19 @@ const SlidePanel = forwardRef<HTMLElement, ComponentProps<typeof m.section>>(fun
   return <m.section ref={ref} {...props} aria-hidden={!present || undefined} {...inert} />;
 });
 
+/** The impact slide's strip of crops in the pilot (a Flex Carousel; a plain row without full motion). */
+function ImpactStrip({ label, pickLabel }: { label: string; pickLabel: ReturnType<typeof useFmt>['label'] }) {
+  const q = useReference();
+  const items = (q.data?.crops ?? []).flatMap((c) => {
+    const src = CROP_PHOTOS[c.id];
+    return src ? [{ src, alt: pickLabel(c.n), title: pickLabel(c.n) }] : [];
+  });
+  if (!items.length) return null;
+  return <CropStrip items={items} label={label} className="-mx-6 mt-6 h-[260px] sm:-mx-10" />;
+}
+
 export function Pitch() {
-  const { t } = useFmt();
+  const { t, label } = useFmt();
   const mode = useMotionMode();
   const { index, setIndex } = usePitchSync('deck');
   const slide = SLIDES[index]!;
@@ -112,6 +128,7 @@ export function Pitch() {
 
   const points = t(`pitch.slides.${slide.id}.points`, { returnObjects: true }) as string[];
   const arch = slide.id === 'architecture';
+  const impact = slide.id === 'impact';
 
   return (
     <div className="fixed inset-0 overflow-hidden bg-ink text-fg">
@@ -144,8 +161,10 @@ export function Pitch() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16, transition: { duration: 0.2 } }}
             transition={{ duration: 0.5, ease }}
-            className={`max-h-full overflow-y-auto rounded-xl border border-line/60 bg-surface/90 p-6 shadow-3 backdrop-blur-md sm:p-10 ${arch ? 'w-full max-w-5xl' : 'max-w-2xl'}`}
+            className={`glass max-h-full overflow-y-auto bg-glass-strong p-6 shadow-3 sm:p-10 ${arch ? 'w-full max-w-5xl' : impact ? 'w-full max-w-4xl' : 'max-w-2xl'}`}
           >
+            {/* The brand moment: the wordmark opens the deck. */}
+            {index === 0 && <Wordmark size={104} className="mb-3 text-fg" />}
             <p className="mb-2 text-sm font-semibold uppercase tracking-[0.18em] text-primary">
               {t(`pitch.slides.${slide.id}.kicker`)}
             </p>
@@ -171,6 +190,7 @@ export function Pitch() {
                 <Architecture animate={mode !== 'reduced'} />
               </div>
             )}
+            {impact && <ImpactStrip label={t('pitch.impactStrip')} pickLabel={label} />}
             {slide.live && <LiveNumbers />}
           </SlidePanel>
         </AnimatePresence>
@@ -181,24 +201,22 @@ export function Pitch() {
         className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-gradient-to-t from-ink/70 to-transparent p-4 text-paper"
       >
         <div className="flex items-center gap-2">
-          <button
-            type="button"
+          <PrimaryAction
+            tone="accent"
             onClick={() => go(-1)}
             disabled={index === 0}
             aria-label={t('pitch.prev')}
-            className="grid h-11 w-11 place-items-center rounded-full bg-paper/15 hover:bg-paper/25 disabled:opacity-40"
           >
             <Icon name="arrowLeft" />
-          </button>
-          <button
-            type="button"
+          </PrimaryAction>
+          <PrimaryAction
+            tone="accent"
             onClick={() => go(1)}
             disabled={index === SLIDES.length - 1}
             aria-label={t('pitch.next')}
-            className="grid h-11 w-11 place-items-center rounded-full bg-paper/15 hover:bg-paper/25 disabled:opacity-40"
           >
             <Icon name="arrowRight" />
-          </button>
+          </PrimaryAction>
           <span className="num ml-2 text-sm" aria-live="polite">
             {t('pitch.slideOf', { n: index + 1, total: SLIDES.length })}
           </span>

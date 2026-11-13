@@ -273,7 +273,8 @@
       "info": "Information",
       "warn": "Warning",
       "bad": "Urgent"
-    }
+    },
+    "composer": "Write a reply"
   },
   "toast": {
     "newAlert": "New alert",
@@ -560,7 +561,9 @@
       "reset": "Reset",
       "waiting": "Open the deck at /pitch in another window. They stay in step automatically.",
       "connected": "Connected to the deck"
-    }
+    },
+    "start": "Start pitch",
+    "impactStrip": "Crops in the pilot"
   },
   "fx": {
     "position": "{{i}} of {{n}}"

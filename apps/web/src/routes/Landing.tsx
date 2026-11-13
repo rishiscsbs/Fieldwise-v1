@@ -582,6 +582,10 @@ function Story() {
       </main>
       <footer className="bg-ink px-4 py-8 text-center text-sm text-soil-100 sm:px-8">
         <p>{t('landing.footer')}</p>
+        <PrimaryAction to="/pitch" tone="accent" className="mt-4">
+          {t('pitch.start')}
+          <Icon name="arrowRight" size={16} />
+        </PrimaryAction>
         {mode !== 'full' && <p className="mt-2 opacity-80">{t('landing.stillNote')}</p>}
       </footer>
     </div>

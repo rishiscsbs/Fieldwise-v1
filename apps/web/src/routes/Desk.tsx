@@ -1,3 +1,5 @@
+// Advisory desk: questions read as a chat (avatars, bubbles, a composer), and every message leaves as a paper
+// plane. Farmers ask with the Specular "Send question"; officers broadcast with the Specular "Send alert".
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { AnimatePresence, m } from 'framer-motion';
@@ -7,7 +9,7 @@ import { toast } from '../stores/toast';
 import { useActiveFarm } from '../lib/farm';
 import { useFmt } from '../lib/format';
 import { shrinkPhoto } from '../lib/image';
-import { burst } from '../lib/effects';
+import { flyPlane } from '../lib/effects';
 import { ApiError } from '../lib/api';
 import {
   useAlerts,
@@ -23,6 +25,8 @@ import {
 import type { TicketDto, UploadDto } from '../lib/api-types';
 import { Button } from '../components/Button';
 import { Icon } from '../components/Icon';
+import { PrimaryAction } from '../components/signature/PrimaryAction';
+import { Kpi } from '../components/Kpi';
 import {
   Badge,
   Callout,
@@ -37,6 +41,24 @@ import {
 
 const STATUS_TONE = { open: 'warn', answered: 'good', closed: 'info' } as const;
 const CATEGORIES = ['pest', 'disease', 'nutrient', 'water', 'market', 'other'] as const;
+
+/** Initials in a circle: farmers in the season's primary colour, staff in the accent. */
+function Avatar({ name, staff }: { name: string; staff: boolean }) {
+  const initials = name
+    .split(' ')
+    .map((w) => w[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+  return (
+    <span
+      aria-hidden="true"
+      className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-sm font-bold ${staff ? 'bg-accent text-ink' : 'bg-primary text-primary-ink'}`}
+    >
+      {initials}
+    </span>
+  );
+}
 
 function StatusBadge({ status }: { status: TicketDto['status'] }) {
   const { t } = useFmt();
@@ -120,7 +142,7 @@ function AskForm({ onDone }: { onDone: (id: string) => void }) {
         farmId: farm?.id ?? null,
         uploadIds: photos.map((p) => p.id),
       });
-      void burst(btn);
+      flyPlane(btn);
       toast({ tone: 'good', title: t('sent', { ns: 'common' }) });
       setBody('');
       setPhotos([]);
@@ -171,10 +193,10 @@ function AskForm({ onDone }: { onDone: (id: string) => void }) {
         </Field>
       </div>
       <PhotoPicker photos={photos} setPhotos={setPhotos} />
-      <Button type="submit" variant="primary" magnetic busy={create.isPending} className="self-start">
+      <PrimaryAction type="submit" busy={create.isPending} className="self-start">
         <Icon name="send" size={18} />
         {t('send', { ns: 'common' })}
-      </Button>
+      </PrimaryAction>
     </form>
   );
 }
@@ -192,7 +214,7 @@ function AlertForm() {
     const btn = e.currentTarget.querySelector('button[type=submit]');
     try {
       await send.mutateAsync({ labels: hi.trim() ? { en, hi } : { en }, level, cropId: crop || null });
-      void burst(btn);
+      flyPlane(btn);
       toast({ tone: 'good', title: t('alertSent', { ns: 'common' }) });
       setEn('');
       setHi('');
@@ -249,10 +271,10 @@ function AlertForm() {
           </select>
         </Field>
       </div>
-      <Button type="submit" variant="primary" magnetic busy={send.isPending} className="self-start">
+      <PrimaryAction type="submit" busy={send.isPending} className="self-start">
         <Icon name="alert" size={18} />
         {t('sendAlert', { ns: 'common' })}
-      </Button>
+      </PrimaryAction>
     </form>
   );
 }
@@ -278,9 +300,10 @@ function Thread({ id }: { id: string }) {
   const isStaff = user.role !== 'farmer';
   const crop = ref.data?.crops.find((c) => c.id === tk.crop);
 
-  const submit = (e: FormEvent) => {
+  const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!body.trim()) return;
+    flyPlane(e.currentTarget.querySelector('button[type=submit]'));
     send.mutate({ body, uploadIds: photos.map((p) => p.id) });
     setBody('');
     setPhotos([]);
@@ -320,7 +343,7 @@ function Thread({ id }: { id: string }) {
       </div>
 
       <ol
-        className="flex max-h-[60vh] flex-col gap-3 overflow-y-auto pr-1"
+        className="flex max-h-[60vh] flex-col gap-4 overflow-y-auto rounded-xl bg-surface-2 p-3 sm:p-4"
         aria-label={t('desk.conversation')}
       >
         <AnimatePresence initial={false}>
@@ -330,31 +353,40 @@ function Thread({ id }: { id: string }) {
               <m.li
                 key={msg.id}
                 layout
-                initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                initial={{ opacity: 0, y: 14, scale: 0.96 }}
                 animate={{ opacity: msg.id.startsWith('temp-') ? 0.7 : 1, y: 0, scale: 1 }}
-                className={`max-w-[85%] rounded-lg p-3 ${mine ? 'self-end bg-accent-soft' : 'self-start bg-surface-2'}`}
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                className={`flex max-w-[88%] items-end gap-2 ${mine ? 'flex-row-reverse self-end' : 'self-start'}`}
               >
-                <p className="mb-1 text-xs font-semibold text-fg-muted">
-                  {mine ? t('desk.you') : msg.author.name} · {t(`role.${msg.author.role}`)}
-                </p>
-                <p className="whitespace-pre-wrap">{msg.body}</p>
-                {msg.attachments.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {msg.attachments.map((a) => (
-                      <a key={a.id} href={a.url} target="_blank" rel="noreferrer">
-                        <img
-                          src={a.url}
-                          alt=""
-                          className="h-24 w-24 rounded-md object-cover"
-                          loading="lazy"
-                        />
-                      </a>
-                    ))}
-                  </div>
-                )}
-                <time className="mt-1 block text-xs text-fg-muted" dateTime={msg.createdAt}>
-                  {time(msg.createdAt)}
-                </time>
+                <Avatar name={msg.author.name || '?'} staff={msg.author.role !== 'farmer'} />
+                <div
+                  className={`min-w-0 rounded-2xl p-3 shadow-1 ${mine ? 'rounded-br-md bg-primary text-primary-ink' : 'rounded-bl-md border border-line bg-surface'}`}
+                >
+                  <p className={`mb-1 text-xs font-semibold ${mine ? '' : 'text-fg-muted'}`}>
+                    {mine ? t('desk.you') : msg.author.name} · {t(`role.${msg.author.role}`)}
+                  </p>
+                  <p className="whitespace-pre-wrap">{msg.body}</p>
+                  {msg.attachments.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {msg.attachments.map((a) => (
+                        <a key={a.id} href={a.url} target="_blank" rel="noreferrer">
+                          <img
+                            src={a.url}
+                            alt=""
+                            className="h-24 w-24 rounded-md object-cover"
+                            loading="lazy"
+                          />
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                  <time
+                    className={`mt-1 block text-right text-xs ${mine ? '' : 'text-fg-muted'}`}
+                    dateTime={msg.createdAt}
+                  >
+                    {time(msg.createdAt)}
+                  </time>
+                </div>
               </m.li>
             );
           })}
@@ -362,17 +394,21 @@ function Thread({ id }: { id: string }) {
         <div ref={end} />
       </ol>
 
-      <form onSubmit={submit} className="flex flex-col gap-2 border-t border-line pt-4">
+      <form onSubmit={submit} className="flex flex-col gap-2">
         <label htmlFor="reply" className="sr-only">
-          {t('replyPh', { ns: 'common' })}
+          {t('desk.composer')}
         </label>
         <textarea
           id="reply"
           rows={2}
           value={body}
           onChange={(e) => setBody(e.target.value)}
+          onKeyDown={(e) => {
+            // Ctrl/Cmd + Enter sends, like most chat apps; plain Enter keeps a new line for longer answers.
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) e.currentTarget.form?.requestSubmit();
+          }}
           placeholder={t('replyPh', { ns: 'common' })}
-          className={`${inputClass} py-2`}
+          className={`${inputClass} rounded-2xl px-4 py-3`}
         />
         <div className="flex flex-wrap items-center justify-between gap-2">
           <PhotoPicker photos={photos} setPhotos={setPhotos} />
@@ -421,14 +457,17 @@ export function Desk() {
       />
 
       {isStaff && (
-        <dl className="grid grid-cols-3 gap-3">
-          {(['open', 'answered', 'closed'] as const).map((s) => (
-            <div key={s} className="card py-3">
-              <dt className="text-sm text-fg-muted">{t(`desk.status.${s}`)}</dt>
-              <dd className="num font-display text-3xl">{counts[s]}</dd>
-            </div>
+        <div className="grid grid-cols-3 gap-3 sm:gap-4">
+          {(['open', 'answered', 'closed'] as const).map((s, i) => (
+            <Kpi
+              key={s}
+              index={i}
+              icon={s === 'open' ? 'desk' : s === 'answered' ? 'check' : 'close'}
+              label={t(`desk.status.${s}`)}
+              value={counts[s]}
+            />
           ))}
-        </dl>
+        </div>
       )}
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">

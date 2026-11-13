@@ -106,7 +106,7 @@ function OfficerPage() {
         <div
           role="group"
           aria-label={t('officer.period')}
-          className="inline-flex rounded-md border border-line bg-surface p-0.5"
+          className="inline-flex rounded-lg border border-line bg-surface p-1 shadow-1"
         >
           {PERIODS.map((d) => (
             <button
@@ -114,9 +114,16 @@ function OfficerPage() {
               type="button"
               aria-pressed={days === d}
               onClick={() => setParam('days', String(d))}
-              className={`min-h-10 rounded-sm px-3 text-sm font-semibold ${days === d ? 'bg-surface-2 text-fg' : 'text-fg-muted'}`}
+              className={`relative min-h-10 rounded-md px-4 text-sm font-semibold transition-colors duration-1 ${days === d ? 'text-fg' : 'text-fg-muted hover:text-fg'}`}
             >
-              {t('officer.days', { n: d })}
+              {days === d && (
+                <m.span
+                  layoutId="officer-period"
+                  className="absolute inset-0 rounded-md bg-accent-soft"
+                  transition={{ type: 'spring', stiffness: 420, damping: 36 }}
+                />
+              )}
+              <span className="relative">{t('officer.days', { n: d })}</span>
             </button>
           ))}
         </div>

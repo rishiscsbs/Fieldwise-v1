@@ -19,6 +19,8 @@ import { ChartFrame, DataTable } from '../charts/frame';
 import { IndiaMap } from '../maps/IndiaMap';
 import { Button } from '../components/Button';
 import { Toggle } from '../components/Toggle';
+import { Kpi } from '../components/Kpi';
+import { CountUp } from '../components/CountUp';
 import {
   Badge,
   Callout,
@@ -34,6 +36,7 @@ import {
 const TABS = ['overview', 'users', 'districts', 'crops'] as const;
 type Tab = (typeof TABS)[number];
 const ROLES = ['farmer', 'officer', 'admin'] as const;
+const ROLE_ICON = { farmer: 'planner', officer: 'officer', admin: 'profile' } as const;
 const small = `${inputClass} min-h-10 text-sm`;
 // Filter selects size to their content so they sit beside the search box.
 const filterClass = inputClass.replace('w-full', 'w-auto');
@@ -57,14 +60,17 @@ function Overview() {
   ]);
   return (
     <div className="flex flex-col gap-4">
-      <dl className="grid grid-cols-3 gap-3">
-        {ROLES.map((r) => (
-          <div key={r} className="card py-3">
-            <dt className="text-sm text-fg-muted">{t(`role.${r}`)}</dt>
-            <dd className="num font-display text-3xl">{num(o.data!.users[r])}</dd>
-          </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {ROLES.map((r, i) => (
+          <Kpi
+            key={r}
+            index={i}
+            icon={ROLE_ICON[r]}
+            label={t(`role.${r}`)}
+            value={<CountUp value={o.data!.users[r]} format={(n) => num(n)} />}
+          />
         ))}
-      </dl>
+      </div>
       <Card title={t('admin.map')} sub={t('admin.mapSub')}>
         <ChartFrame
           label={t('admin.map')}

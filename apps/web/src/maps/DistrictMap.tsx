@@ -7,6 +7,7 @@ import type { OfficerMapDto, PestPointsDto } from '../lib/api-types';
 import { Tooltip, useWidth, type TipRow } from '../charts/frame';
 import { boundsOf, fit, lonKm, type LonLat } from './geo';
 import { IndiaMap } from './IndiaMap';
+import { useMotionMode } from '../lib/motion-mode';
 
 type Hover = { kind: 'farm' | 'ticket'; id: string } | null;
 
@@ -38,6 +39,8 @@ export function DistrictMap({
   const [ref, width] = useWidth<HTMLDivElement>();
   const canvas = useRef<HTMLCanvasElement>(null);
   const [hover, setHover] = useState<Hover>(null);
+  // Open questions pulse in full motion only.
+  const pulse = useMotionMode() === 'full';
 
   const bounds = useMemo(() => {
     const pts: LonLat[] = [
@@ -104,7 +107,10 @@ export function DistrictMap({
   const [cx, cy] = p([data.district.lon, data.district.lat]);
 
   return (
-    <div ref={ref} className="relative overflow-hidden rounded-md border border-line bg-surface-2">
+    <div
+      ref={ref}
+      className="relative overflow-hidden rounded-xl border border-line bg-gradient-to-br from-season-c to-surface-2"
+    >
       <canvas
         ref={canvas}
         aria-hidden="true"
@@ -112,6 +118,27 @@ export function DistrictMap({
         style={{ width: p.width, height: p.height }}
       />
       <svg width={p.width} height={p.height} role="img" aria-label={labels.map} className="relative">
+        {/* Faint ploughed furrows so the map reads as farmland, not a blank grid. */}
+        <defs>
+          <pattern
+            id="dm-furrows"
+            width="14"
+            height="14"
+            patternUnits="userSpaceOnUse"
+            patternTransform="rotate(-24)"
+          >
+            <line
+              x1="0"
+              y1="7"
+              x2="14"
+              y2="7"
+              stroke="var(--season-a)"
+              strokeOpacity="0.12"
+              strokeWidth="3"
+            />
+          </pattern>
+        </defs>
+        <rect width={p.width} height={p.height} fill="url(#dm-furrows)" aria-hidden="true" />
         {lons.map((x) => (
           <line
             key={`x${x}`}
@@ -120,6 +147,7 @@ export function DistrictMap({
             y1={0}
             y2={p.height}
             stroke="var(--border)"
+            strokeDasharray="2 5"
           />
         ))}
         {lats.map((y) => (
@@ -130,6 +158,7 @@ export function DistrictMap({
             y1={p([bounds[0], y])[1]}
             y2={p([bounds[0], y])[1]}
             stroke="var(--border)"
+            strokeDasharray="2 5"
           />
         ))}
         {lats
@@ -176,25 +205,28 @@ export function DistrictMap({
           data.farms.map((f, i) => {
             const [x, y] = p([f.lon, f.lat]);
             return (
-              <m.circle
-                key={f.id}
-                cx={x}
-                cy={y}
-                r={hover?.id === f.id ? 7 : 5}
-                fill="var(--series-1)"
-                stroke="var(--surface)"
-                strokeWidth={2}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: i * 0.02 }}
-                tabIndex={0}
-                aria-label={`${labels.farm}: ${f.name}, ${f.farmer}, ${labels.cropName(f.crop)}`}
-                onMouseEnter={() => setHover({ kind: 'farm', id: f.id })}
-                onMouseLeave={() => setHover(null)}
-                onFocus={() => setHover({ kind: 'farm', id: f.id })}
-                onBlur={() => setHover(null)}
-                className="outline-none focus-visible:stroke-focus"
-              />
+              <g key={f.id}>
+                {/* A soft halo makes each field read as a patch of crop, not a dot. */}
+                <circle cx={x} cy={y} r={11} fill="var(--series-1)" opacity={0.18} aria-hidden="true" />
+                <m.circle
+                  cx={x}
+                  cy={y}
+                  r={hover?.id === f.id ? 7 : 5}
+                  fill="var(--series-1)"
+                  stroke="var(--surface)"
+                  strokeWidth={2}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: i * 0.02 }}
+                  tabIndex={0}
+                  aria-label={`${labels.farm}: ${f.name}, ${f.farmer}, ${labels.cropName(f.crop)}`}
+                  onMouseEnter={() => setHover({ kind: 'farm', id: f.id })}
+                  onMouseLeave={() => setHover(null)}
+                  onFocus={() => setHover({ kind: 'farm', id: f.id })}
+                  onBlur={() => setHover(null)}
+                  className="outline-none focus-visible:stroke-focus"
+                />
+              </g>
             );
           })}
 
@@ -215,6 +247,19 @@ export function DistrictMap({
                 onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onTicket(tk.id)}
                 className="cursor-pointer outline-none"
               >
+                {pulse && (
+                  <m.circle
+                    cx={x}
+                    cy={y - 14}
+                    fill="none"
+                    stroke="var(--warn)"
+                    strokeWidth={2}
+                    initial={{ r: 11, opacity: 0.6 }}
+                    animate={{ r: 24, opacity: 0 }}
+                    transition={{ duration: 1.8, repeat: Infinity, ease: 'easeOut' }}
+                    aria-hidden="true"
+                  />
+                )}
                 <m.circle
                   cx={x}
                   cy={y - 14}
@@ -255,7 +300,7 @@ export function DistrictMap({
         </g>
       </svg>
 
-      <div className="absolute right-2 top-2 w-24 rounded-md bg-surface/90 p-1 shadow-1 sm:w-28">
+      <div className="absolute right-2 top-2 w-24 rounded-lg border border-glass-line bg-glass-strong p-1 shadow-glass sm:w-28">
         <IndiaMap
           compact
           maxHeight={130}
