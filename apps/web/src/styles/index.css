@@ -2,7 +2,9 @@
 @import '@fontsource/mukta/500.css';
 @import '@fontsource/mukta/600.css';
 @import '@fontsource/mukta/700.css';
-@import '@fontsource/rozha-one/400.css';
+@import '@fontsource/baloo-2/600.css';
+@import '@fontsource/baloo-2/700.css';
+@import '@fontsource/baloo-2/800.css';
 @import './tokens.css';
 
 @tailwind base;
@@ -16,6 +18,13 @@
   body {
     @apply bg-bg text-fg font-sans text-base antialiased;
     min-height: 100dvh;
+    /* Season changes without View Transitions (Lite, reduced motion, older browsers) still ease. */
+    transition: background-color var(--dur-3) var(--ease-out);
+  }
+  /* Baloo 2 reads best heavy; a font-* weight utility still overrides this. */
+  .font-display {
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
   h1,
   h2,
@@ -60,6 +69,29 @@
   .num {
     font-variant-numeric: tabular-nums;
   }
+  /* Frosted panel for chrome and hero moments. Numbers and tables go on .card (solid), not glass. */
+  .glass {
+    @apply rounded-xl border border-glass-line bg-glass-strong shadow-glass;
+  }
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass {
+      @apply bg-glass;
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+      backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+    }
+    html[data-lite] .glass {
+      @apply bg-glass-strong;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+  /* Monumental numbers for KPI tiles. */
+  .num-hero {
+    @apply font-display font-extrabold leading-none;
+    font-size: clamp(2.5rem, 1.6rem + 2.6vw, 3.75rem);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
 }
 
 @layer utilities {
@@ -71,6 +103,54 @@
     transform: scale(0);
     pointer-events: none;
     animation: ripple 600ms var(--ease-out);
+  }
+}
+
+/* The living field behind the app: soil grain and leaf veins tinted by the season, drifting very slowly.
+   Static in Lite mode, still for reduced motion. Sits behind everything and never behind data alone. */
+.field-bg {
+  position: fixed;
+  inset: -10%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 15% 0%, color-mix(in srgb, var(--season-c) 70%, transparent), transparent 70%),
+    radial-gradient(50% 40% at 100% 30%, color-mix(in srgb, var(--season-b) 14%, transparent), transparent 70%),
+    radial-gradient(70% 50% at 50% 110%, color-mix(in srgb, var(--season-a) 12%, transparent), transparent 70%);
+  background-color: var(--bg);
+  transition: background-color var(--dur-3) var(--ease-out);
+}
+.field-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--texture-ink);
+  -webkit-mask: url('/textures/field.svg') 0 0 / 420px 420px repeat;
+  mask: url('/textures/field.svg') 0 0 / 420px 420px repeat;
+  animation: field-drift 120s linear infinite;
+}
+html[data-lite] .field-bg::after {
+  animation: none;
+}
+@keyframes field-drift {
+  to {
+    transform: translate3d(-420px, -210px, 0);
+  }
+}
+
+/* Season sweep: the new palette grows as a circle from the control that changed it (src/lib/season.ts). */
+html[data-sweeping]::view-transition-old(root) {
+  animation: none;
+}
+html[data-sweeping]::view-transition-new(root) {
+  animation: season-sweep var(--dur-5) var(--ease-in-out);
+}
+@keyframes season-sweep {
+  from {
+    clip-path: circle(0 at var(--sweep-x) var(--sweep-y));
+  }
+  to {
+    clip-path: circle(150vmax at var(--sweep-x) var(--sweep-y));
   }
 }
 

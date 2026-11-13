@@ -18,6 +18,7 @@
     "build": "npm run build --workspaces --if-present",
     "typecheck": "npm run build -w @fieldwise/shared && npm run typecheck --workspaces --if-present",
     "lint": "eslint .",
+    "contrast": "node scripts/check-contrast.mjs",
     "test": "npm run test --workspaces --if-present",
     "format": "prettier --write .",
     "golden": "node scripts/capture-legacy-golden.mjs",

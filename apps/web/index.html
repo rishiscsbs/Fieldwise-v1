@@ -10,12 +10,16 @@
     <link rel="apple-touch-icon" href="/icons/icon-192.png" />
     <title>Fieldwise</title>
     <script>
-      // Set the theme before first paint to avoid a flash.
+      // Set the theme and season before first paint to avoid a flash.
       try {
         var s = JSON.parse(localStorage.getItem('fw-ui') || '{}').state || {};
         var dark = s.theme ? s.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
         document.documentElement.dataset.theme = dark ? 'dark' : 'light';
         if (s.lang) document.documentElement.lang = s.lang;
+        // Season colours: picked by hand, else by date (src/lib/season.ts refines it once the field loads).
+        var mo = new Date().getMonth();
+        document.documentElement.dataset.season =
+          s.season || (mo >= 5 && mo <= 8 ? 'kharif' : mo >= 9 || mo <= 1 ? 'rabi' : 'zaid');
       } catch (e) {}
     </script>
   </head>

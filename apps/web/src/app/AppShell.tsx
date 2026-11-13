@@ -11,6 +11,7 @@ import { usePage } from '../stores/page';
 import { useFmt } from '../lib/format';
 import { useNotifications, useReference } from '../lib/queries';
 import { useActiveFarm } from '../lib/farm';
+import { useFieldSeason } from '../lib/season';
 import { connectLive, disconnectLive } from '../lib/socket';
 import { speak, stopSpeaking } from '../lib/speech';
 import { api, refreshSession } from '../lib/api';
@@ -58,6 +59,13 @@ export function AppShell() {
   const [cmdOpen, setCmdOpen] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const dark = resolvedTheme(theme) === 'dark';
+  const setFieldSeason = useFieldSeason((s) => s.set);
+
+  // The colours follow the field being viewed (unless a season was picked by hand).
+  useEffect(() => {
+    setFieldSeason(farm?.season ?? null);
+    return () => setFieldSeason(null);
+  }, [farm?.season, setFieldSeason]);
 
   useEffect(() => {
     void connectLive(qc);

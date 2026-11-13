@@ -5,6 +5,8 @@ import { resolvedTheme, useUi } from './stores/ui';
 import { useAuth } from './stores/auth';
 import { refreshSession } from './lib/api';
 import { useActiveFarm } from './lib/farm';
+import { useSeasonTheme } from './lib/season';
+import { deviceIsLowEnd } from './lib/motion-mode';
 import { PageSkeleton } from './components/ui';
 import { Toasts } from './app/Toasts';
 import { CursorGlow } from './app/CursorGlow';
@@ -64,6 +66,12 @@ function Start() {
 
 export function App() {
   const theme = useUi((s) => s.theme);
+  const lite = useUi((s) => s.lite);
+  useSeasonTheme();
+  // CSS hooks for Lite mode (no glass blur, no drifting texture).
+  useEffect(() => {
+    document.documentElement.toggleAttribute('data-lite', lite || deviceIsLowEnd());
+  }, [lite]);
   useEffect(() => {
     document.documentElement.dataset.theme = resolvedTheme(theme);
   }, [theme]);

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import type { LangCode } from '@fieldwise/shared';
+import type { LangCode, Season } from '@fieldwise/shared';
 
 type Theme = 'light' | 'dark';
 
@@ -12,10 +12,13 @@ interface UiState {
   farmId: string | null;
   /** Lite mode: no 3D, fewer particles. Set automatically on low-end devices in phase 7, or by hand. */
   lite: boolean;
+  /** Season the colours follow when picked by hand; null = the active field's season, else today's. */
+  season: Season | null;
   setLang: (lang: LangCode) => void;
   setTheme: (theme: Theme) => void;
   setFarmId: (id: string | null) => void;
   setLite: (lite: boolean) => void;
+  setSeason: (season: Season | null) => void;
 }
 
 // localStorage can be missing or blocked (private mode, some WebViews). Fall back to memory.
@@ -42,10 +45,12 @@ export const useUi = create<UiState>()(
       theme: null,
       farmId: null,
       lite: false,
+      season: null,
       setLang: (lang) => set({ lang }),
       setTheme: (theme) => set({ theme }),
       setFarmId: (farmId) => set({ farmId }),
       setLite: (lite) => set({ lite }),
+      setSeason: (season) => set({ season }),
     }),
     { name: 'fw-ui', storage: safeStorage },
   ),

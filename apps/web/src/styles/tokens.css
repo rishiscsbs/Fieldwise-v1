@@ -40,7 +40,7 @@
 
   --good: #2f7a43;
   --good-soft: #e6f4df;
-  --warn: #a86410;
+  --warn: #93560a;
   --warn-soft: #fbefd9;
   --bad: #b3412e;
   --bad-soft: #f8e3de;
@@ -55,25 +55,45 @@
   --series-3: #d9a21b;
   --series-4: #ae4976;
 
+  /* Season wash: three hues for gradients, sky banners and the field texture. Never text. */
+  --season-a: #2f7a43;
+  --season-b: #d9a21b;
+  --season-c: #e6f4df;
+
+  /* Glass: frosted panels over the field texture. Text on glass is checked against the glass composited over
+     both the page background and the darkest texture tone (scripts/check-contrast.mjs). Data sits on solid
+     --surface, never on glass. */
+  --glass: rgb(255 255 255 / 0.72);
+  --glass-strong: rgb(255 255 255 / 0.86);
+  --glass-border: rgb(255 255 255 / 0.65);
+  --glass-blur: 18px;
+  --texture-ink: rgb(60 40 20 / 0.07);
+
   /* Shape and depth */
-  --r-sm: 6px;
-  --r-md: 10px;
-  --r-lg: 16px;
-  --r-xl: 24px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-2xl: 36px;
   --shadow-1: 0 1px 2px rgb(60 40 20 / 0.06), 0 2px 8px rgb(60 40 20 / 0.05);
   --shadow-2: 0 4px 12px rgb(60 40 20 / 0.1), 0 12px 32px rgb(60 40 20 / 0.08);
   --shadow-3: 0 12px 32px rgb(40 25 10 / 0.18), 0 32px 64px rgb(40 25 10 / 0.14);
+  /* Glass lift: a top highlight, a contact shadow and a long soft drop. */
+  --shadow-glass: inset 0 1px 0 rgb(255 255 255 / 0.6), 0 1px 2px rgb(40 25 10 / 0.06),
+    0 18px 48px -18px rgb(40 25 10 / 0.28);
 
   /* Motion */
   --dur-1: 120ms;
   --dur-2: 200ms;
   --dur-3: 320ms;
   --dur-4: 600ms;
+  --dur-5: 900ms;
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Type */
-  --font-display: 'Rozha One', 'Mukta', Georgia, serif;
+  --font-display: 'Baloo 2', 'Mukta', system-ui, sans-serif;
   --font-text: 'Mukta', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   color-scheme: light;
@@ -110,8 +130,150 @@
   --shadow-1: 0 1px 2px rgb(0 0 0 / 0.3), 0 2px 8px rgb(0 0 0 / 0.25);
   --shadow-2: 0 4px 12px rgb(0 0 0 / 0.35), 0 12px 32px rgb(0 0 0 / 0.3);
   --shadow-3: 0 12px 32px rgb(0 0 0 / 0.45), 0 32px 64px rgb(0 0 0 / 0.4);
+  --shadow-glass: inset 0 1px 0 rgb(255 255 255 / 0.07), 0 1px 2px rgb(0 0 0 / 0.3),
+    0 18px 48px -18px rgb(0 0 0 / 0.6);
+
+  --season-a: #7cc487;
+  --season-b: #e8b93a;
+  --season-c: #1c2e1f;
+  --glass: rgb(30 24 19 / 0.7);
+  --glass-strong: rgb(30 24 19 / 0.86);
+  --glass-border: rgb(255 255 255 / 0.08);
+  --texture-ink: rgb(255 240 220 / 0.05);
 
   color-scheme: dark;
+}
+
+/*
+ * Seasons. App.tsx sets data-season on <html> (and index.html does it before first paint). Each season block
+ * sets exactly the same properties in light and dark, so a light value can never leak into dark mode.
+ * Status colours and chart series stay fixed across seasons: they carry meaning, not mood.
+ */
+
+/* Kharif: deep monsoon greens and rain-slate blues. */
+:root[data-season='kharif'] {
+  --bg: #f2f6f1;
+  --surface: #ffffff;
+  --surface-2: #e5ede5;
+  --border: #d0ddd2;
+  --text: #13201a;
+  --text-muted: #4c5e55;
+  --primary: #1d6a44;
+  --primary-hover: #175838;
+  --primary-ink: #ffffff;
+  --accent: #6c9ec0;
+  --accent-soft: #dfeaf1;
+  --focus: #2f6a8a;
+  --season-a: #1d6a44;
+  --season-b: #3e7598;
+  --season-c: #cfe5d2;
+  --glass: rgb(250 253 250 / 0.72);
+  --glass-strong: rgb(250 253 250 / 0.88);
+  --texture-ink: rgb(20 60 40 / 0.07);
+}
+:root[data-theme='dark'][data-season='kharif'] {
+  --bg: #0c1511;
+  --surface: #141f1a;
+  --surface-2: #1c2a23;
+  --border: #2b3b33;
+  --text: #e7f0ea;
+  --text-muted: #a3b6ac;
+  --primary: #6cc793;
+  --primary-hover: #87d5a8;
+  --primary-ink: #07261a;
+  --accent: #7fb0cd;
+  --accent-soft: #182833;
+  --focus: #8db8cf;
+  --season-a: #3f9d6b;
+  --season-b: #4f84a6;
+  --season-c: #15281f;
+  --glass: rgb(20 31 26 / 0.72);
+  --glass-strong: rgb(20 31 26 / 0.88);
+  --texture-ink: rgb(200 240 220 / 0.05);
+}
+
+/* Rabi: mustard gold and cool morning tones. Gold is a fill; text and buttons use a deep mustard-brown. */
+:root[data-season='rabi'] {
+  --bg: #fbf8ee;
+  --surface: #ffffff;
+  --surface-2: #f4eedb;
+  --border: #e5dbc0;
+  --text: #1e1a0f;
+  --text-muted: #605641;
+  --primary: #7a5600;
+  --primary-hover: #664700;
+  --primary-ink: #ffffff;
+  --accent: #e0a815;
+  --accent-soft: #fbf0cd;
+  --focus: #43698a;
+  --season-a: #e0a815;
+  --season-b: #8db3cf;
+  --season-c: #f5e6b0;
+  --glass: rgb(255 253 246 / 0.72);
+  --glass-strong: rgb(255 253 246 / 0.88);
+  --texture-ink: rgb(90 65 0 / 0.07);
+}
+:root[data-theme='dark'][data-season='rabi'] {
+  --bg: #13110a;
+  --surface: #1d1a11;
+  --surface-2: #27231a;
+  --border: #3a3426;
+  --text: #f4eedc;
+  --text-muted: #bcb096;
+  --primary: #f0c24b;
+  --primary-hover: #f5d06e;
+  --primary-ink: #2a1e00;
+  --accent: #f0c24b;
+  --accent-soft: #3a2f12;
+  --focus: #9dbfd8;
+  --season-a: #c99a1c;
+  --season-b: #5b7f9c;
+  --season-c: #2a2412;
+  --glass: rgb(29 26 17 / 0.72);
+  --glass-strong: rgb(29 26 17 / 0.88);
+  --texture-ink: rgb(255 230 160 / 0.05);
+}
+
+/* Zaid: warm terracotta and dry-earth ochre. */
+:root[data-season='zaid'] {
+  --bg: #fbf4ec;
+  --surface: #ffffff;
+  --surface-2: #f5e8da;
+  --border: #e8d4c0;
+  --text: #22160f;
+  --text-muted: #694f3f;
+  --primary: #a3442a;
+  --primary-hover: #8b3922;
+  --primary-ink: #ffffff;
+  --accent: #c98a1e;
+  --accent-soft: #f8e9cf;
+  --focus: #3d6e8a;
+  --season-a: #c0583a;
+  --season-b: #d9a04a;
+  --season-c: #f2d6b8;
+  --glass: rgb(255 251 246 / 0.72);
+  --glass-strong: rgb(255 251 246 / 0.88);
+  --texture-ink: rgb(120 50 20 / 0.07);
+}
+:root[data-theme='dark'][data-season='zaid'] {
+  --bg: #150e0a;
+  --surface: #201611;
+  --surface-2: #2b1f18;
+  --border: #3e2e25;
+  --text: #f6ece3;
+  --text-muted: #c4ae9d;
+  --primary: #ee9a78;
+  --primary-hover: #f3b094;
+  --primary-ink: #2e0f04;
+  --accent: #e3b058;
+  --accent-soft: #362612;
+  --focus: #8db3c7;
+  --season-a: #b0533a;
+  --season-b: #b07e2e;
+  --season-c: #2c1c13;
+  --glass: rgb(32 22 17 / 0.72);
+  --glass-strong: rgb(32 22 17 / 0.88);
+  --texture-ink: rgb(255 210 180 / 0.05);
 }
 
 @media (prefers-reduced-motion: reduce) {

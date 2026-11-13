@@ -37,7 +37,14 @@
     "good": "Spray OK",
     "warn": "Pest watch",
     "bad": "Do not spray",
-    "info": "Irrigate"
+    "info": "Irrigate",
+    "seasons": "Seasons",
+    "seasonsLead": "Pick a season and its palette sweeps across the page.",
+    "signature": "Signature pieces",
+    "signatureLead": "These run in full motion only. Lite mode and reduced motion show the plain version.",
+    "glass": "Glass",
+    "glassBody": "Frosted panels for chrome and hero moments. Numbers stay on solid cards.",
+    "strip": "Crops we advise on"
   },
   "login": {
     "title": "Sign in",
@@ -513,5 +520,14 @@
       "waiting": "Open the deck at /pitch in another window. They stay in step automatically.",
       "connected": "Connected to the deck"
     }
+  },
+  "fx": {
+    "position": "{{i}} of {{n}}"
+  },
+  "season": {
+    "label": "Season",
+    "kharif": "Kharif",
+    "rabi": "Rabi",
+    "zaid": "Zaid"
   }
 }

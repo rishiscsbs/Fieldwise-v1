@@ -1,6 +1,13 @@
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { Season } from '@fieldwise/shared';
 import { PublicHeader } from '../components/PublicHeader';
+import { WheelPicker } from '../components/signature/WheelPicker';
+import { PrimaryAction } from '../components/signature/PrimaryAction';
+import { Wordmark } from '../components/signature/Wordmark';
+import { HeroImage } from '../components/signature/HeroImage';
+import { CropStrip } from '../components/signature/CropStrip';
+import { pickSeason, useSeason } from '../lib/season';
 
 const FAMILIES = ['soil', 'monsoon', 'mustard', 'leaf'] as const;
 const STEPS = [900, 700, 500, 300, 100] as const;
@@ -14,7 +21,12 @@ const SEMANTIC = [
   'primary',
   'accent',
   'focus',
+  'season-a',
+  'season-b',
+  'season-c',
 ] as const;
+const SEASONS: Season[] = ['kharif', 'rabi', 'zaid'];
+const STILLS = ['kharif', 'rabi', 'zaid', 'soil'] as const;
 const STATUS = [
   { k: 'good', icon: '✓' },
   { k: 'warn', icon: '!' },
@@ -39,6 +51,7 @@ const RADII = [
   ['md', 'rounded-md shadow-1'],
   ['lg', 'rounded-lg shadow-2'],
   ['xl', 'rounded-xl shadow-3'],
+  ['2xl', 'rounded-2xl shadow-glass'],
 ] as const;
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
@@ -61,8 +74,10 @@ function Swatch({ name, varName }: { name: string; varName: string }) {
 
 export function DesignSystem() {
   const { t } = useTranslation();
+  const season = useSeason();
   return (
     <>
+      <div className="field-bg" aria-hidden="true" />
       <PublicHeader />
       <main id="main" className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-8">
         <h1 className="font-display text-3xl sm:text-4xl">{t('design.title')}</h1>
@@ -83,8 +98,54 @@ export function DesignSystem() {
           </div>
         </Section>
 
+        <Section title={t('design.seasons')}>
+          <p className="mb-4 max-w-2xl text-fg-muted">{t('design.seasonsLead')}</p>
+          <div className="grid items-start gap-6 sm:grid-cols-[16rem_1fr]">
+            <WheelPicker
+              label={t('season.label')}
+              options={SEASONS.map((s) => ({ value: s, label: t(`season.${s}`) }))}
+              value={season}
+              onChange={(s, from) => pickSeason(s, from)}
+            />
+            <div className="glass p-5">
+              <h3 className="font-display text-2xl">{t('design.glass')}</h3>
+              <p className="mt-1 text-fg-muted">{t('design.glassBody')}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="badge bg-accent-soft text-fg">{t(`season.${season}`)}</span>
+                <a href="#main" className="font-semibold text-primary underline">
+                  {t('design.secondary')}
+                </a>
+              </div>
+            </div>
+          </div>
+        </Section>
+
+        <Section title={t('design.signature')}>
+          <p className="mb-4 max-w-2xl text-fg-muted">{t('design.signatureLead')}</p>
+          <div className="grid gap-6 lg:grid-cols-2">
+            <HeroImage src="/lite/kharif.jpg" className="h-64 rounded-xl" />
+            <div className="flex flex-col justify-center gap-6">
+              <Wordmark size={88} />
+              <div className="flex flex-wrap items-center gap-3">
+                <PrimaryAction size="lg">{t('design.primary')}</PrimaryAction>
+                <button className="btn-secondary">{t('design.secondary')}</button>
+              </div>
+            </div>
+          </div>
+          <CropStrip
+            className="mt-6"
+            height={360}
+            label={t('design.strip')}
+            items={STILLS.map((k) => ({
+              src: `/lite/${k}.jpg`,
+              alt: '',
+              title: k === 'soil' ? t('design.palette') : t(`season.${k}`),
+            }))}
+          />
+        </Section>
+
         <Section title={t('design.semantic')}>
-          <div className="grid grid-cols-3 gap-3 sm:grid-cols-5 lg:grid-cols-9">
+          <div className="grid grid-cols-3 gap-3 sm:grid-cols-6 lg:grid-cols-12">
             {SEMANTIC.map((s) => (
               <Swatch key={s} name={s} varName={s} />
             ))}

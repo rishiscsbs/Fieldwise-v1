@@ -3,7 +3,7 @@
 //  - Page navigations: network first, falling back to the cached shell.
 //  - Advice and reference API reads: network first, cached copy when offline.
 // Never cached: sign-in, uploads, sockets, and anything that is not a GET.
-const VERSION = 'fw-v2';
+const VERSION = 'fw-v3';
 const SHELL = ['/', '/app', '/index.html', '/favicon.svg', '/manifest.webmanifest', '/icons/icon-192.png'];
 const API_READS = /^\/api\/(reference|farms|alerts|notifications|tickets|weather|mandi|public)/;
 
@@ -74,6 +74,8 @@ self.addEventListener('fetch', (event) => {
   } else if (
     url.pathname.startsWith('/assets/') ||
     url.pathname.startsWith('/lite/') ||
+    url.pathname.startsWith('/photos/') ||
+    url.pathname.startsWith('/textures/') ||
     url.pathname.startsWith('/icons/') ||
     SHELL.includes(url.pathname)
   ) {

@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@fieldwise/shared": "2.0.0",
+    "@fontsource/baloo-2": "^5.3.0",
     "@fontsource/mukta": "^5.1.0",
-    "@fontsource/rozha-one": "^5.1.0",
     "@react-three/fiber": "^8.18.0",
     "@react-three/postprocessing": "^2.19.1",
     "@tanstack/react-query": "^5.107.1",
@@ -27,6 +27,7 @@
     "gsap": "^3.15.1",
     "i18next": "^23.16.8",
     "lenis": "^1.3.27",
+    "ogl": "^1.0.11",
     "postprocessing": "^6.39.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
