@@ -5,23 +5,32 @@ import { useUi } from '../stores/ui';
 
 export type MotionMode = 'full' | 'lite' | 'reduced';
 
-let lowEnd: boolean | null = null;
-
-/** Cheap capability check, run once: data saver, little memory or few cores, or no WebGL. */
-export function deviceIsLowEnd(): boolean {
-  if (lowEnd !== null) return lowEnd;
+/** Free check: data saver on, little memory or few cores. */
+export function weakHardware(): boolean {
   const n = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
-  let weak = !!n.connection?.saveData || (n.deviceMemory ?? 8) <= 2 || (n.hardwareConcurrency ?? 8) <= 2;
-  if (!weak) {
-    try {
-      const c = document.createElement('canvas');
-      weak = !(c.getContext('webgl2') || c.getContext('webgl'));
-    } catch {
-      weak = true;
-    }
+  return !!n.connection?.saveData || (n.deviceMemory ?? 8) <= 2 || (n.hardwareConcurrency ?? 8) <= 2;
+}
+
+let webgl: boolean | null = null;
+
+/**
+ * Whether WebGL works here, checked once. Creating a context is slow (more so with software rendering), so only
+ * call this where WebGL is about to be used, never on the way to a page's first paint.
+ */
+export function hasWebGL(): boolean {
+  if (webgl !== null) return webgl;
+  try {
+    const c = document.createElement('canvas');
+    webgl = !!(c.getContext('webgl2') || c.getContext('webgl'));
+  } catch {
+    webgl = false;
   }
-  lowEnd = weak;
-  return weak;
+  return webgl;
+}
+
+/** Weak hardware or no WebGL. For pages that mount 3D straight away (landing, pitch, planner's 3D view). */
+export function deviceIsLowEnd(): boolean {
+  return weakHardware() || !hasWebGL();
 }
 
 const reducedQuery = () => window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -70,5 +79,23 @@ export function useMotionMode(): MotionMode {
   }, [reduced, lite, setLite]);
   if (reduced) return 'reduced';
   if (lite || deviceIsLowEnd()) return 'lite';
+  return 'full';
+}
+
+/**
+ * Motion for 2D effects (weather, wheels, map pulses, the signature wrappers' layout): the same reduced and
+ * Lite rules, but without the WebGL check or the frame-rate probe, so it costs nothing on the way to first paint.
+ */
+export function useEffectsMode(): MotionMode {
+  const lite = useUi((s) => s.lite);
+  const [reduced, setReduced] = useState(() => reducedQuery().matches);
+  useEffect(() => {
+    const q = reducedQuery();
+    const on = () => setReduced(q.matches);
+    q.addEventListener('change', on);
+    return () => q.removeEventListener('change', on);
+  }, []);
+  if (reduced) return 'reduced';
+  if (lite || weakHardware()) return 'lite';
   return 'full';
 }

@@ -34,7 +34,13 @@ export function Market() {
   useSay(md?.advice ? `${lead}. ${t(md.advice.key, { ns: 'advice' })}` : undefined);
 
   if (mandi.isError) return <ErrorState onRetry={() => void mandi.refetch()} />;
-  if (!farm || !ref.data || !md || !crop) return <PageSkeleton cards={2} />;
+  if (!farm || !ref.data || !md || !crop)
+    return (
+      <div className="flex flex-col gap-6">
+        <PageHeader title={t('pt_market', { ns: 'common' })} sub={t('mandi_sub', { ns: 'common' })} />
+        <PageSkeleton cards={2} />
+      </div>
+    );
 
   const n = md.markets[0]?.series.length ?? 0;
   const xLabels = Array.from({ length: n }, (_, i) => {

@@ -13,6 +13,7 @@ import { Button } from '../components/Button';
 import { Callout, Field, inputClass } from '../components/ui';
 import { HeroImage } from '../components/signature/HeroImage';
 import { Wordmark } from '../components/signature/Wordmark';
+import { loginPhoto } from '../lib/photos';
 
 type Role = 'farmer' | 'officer' | 'admin';
 
@@ -97,10 +98,8 @@ export function Login() {
   const [demo, setDemo] = useState<DemoAccount[]>([]);
   const codeInput = useRef<HTMLInputElement>(null);
   const next = params.get('next') || '/app';
-  // The small photo for phones, where it is only a banner.
-  const [photo] = useState(() =>
-    window.innerWidth < 768 ? '/photos/login-800.jpg' : '/photos/login-1440.jpg',
-  );
+  // Sized to the screen: a small banner on phones.
+  const [photo] = useState(loginPhoto);
 
   useEffect(() => {
     api<{ enabled: boolean; accounts: DemoAccount[] }>('/dev/demo-accounts')
@@ -148,9 +147,12 @@ export function Login() {
     <>
       <div className="field-bg" aria-hidden="true" />
       <PublicHeader />
-      <main id="main" className="grid min-h-[calc(100dvh-4rem)] md:grid-cols-[1.05fr_1fr]">
+      <main
+        id="main"
+        className="grid min-h-[calc(100dvh-4rem)] grid-rows-[auto_1fr] md:grid-cols-[1.05fr_1fr] md:grid-rows-1"
+      >
         <section className="relative isolate flex h-56 items-end overflow-hidden sm:h-72 md:h-auto">
-          <HeroImage src={photo} className="absolute inset-0 -z-10" />
+          <HeroImage src={photo} priority className="absolute inset-0 -z-10" />
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 -z-[5] bg-gradient-to-t from-black/45 via-transparent to-transparent"

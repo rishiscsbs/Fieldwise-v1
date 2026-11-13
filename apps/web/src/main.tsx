@@ -6,6 +6,7 @@ import './styles/index.css';
 import './i18n';
 import { App } from './App';
 import { ApiError } from './lib/api';
+import { warmStart } from './lib/warm';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,6 +18,9 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+// Restore the session and fetch the first screen's data before React has even rendered (see lib/warm.ts).
+void warmStart(queryClient, location.pathname);
 
 // Motion features (incl. layout animations) load after first paint, keeping them out of the shell bundle.
 const motionFeatures = () => import('./lib/motion-features').then((m) => m.default);

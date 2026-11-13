@@ -20,7 +20,7 @@ import { Kpi } from '../components/Kpi';
 import { WeatherHero } from '../components/WeatherHero';
 import { EmptyState } from '../components/EmptyState';
 import { Icon } from '../components/Icon';
-import { Card, Callout, Empty, ErrorState, PageSkeleton, SourceBadge } from '../components/ui';
+import { Card, Callout, Empty, ErrorState, PageSkeleton, Skeleton, SourceBadge } from '../components/ui';
 
 export function Overview() {
   const f = useFmt();
@@ -67,8 +67,35 @@ export function Overview() {
       : undefined,
   );
 
+  // The greeting is the largest text and needs only the farmer's name, so it shows straight away; the farm line
+  // and the rest of the page fill in as their data arrives.
+  const header = (
+    <WeatherHero
+      title={t('overview.hello', { name: user.name.split(' ')[0] })}
+      sub={
+        farm && ref.data ? (
+          t('ctx', {
+            ns: 'common',
+            d: label(district?.labels),
+            s: short(season?.labels),
+            a: num(farm.areaAcres, 2),
+          })
+        ) : (
+          <Skeleton className="mt-2 h-4 w-64 max-w-full" />
+        )
+      }
+      today={water.data?.forecast.days[0]}
+    />
+  );
+
   if (recs.isError) return <ErrorState onRetry={() => void recs.refetch()} />;
-  if (!farm || !ref.data || recs.isLoading || !crop) return <PageSkeleton />;
+  if (!farm || !ref.data || recs.isLoading || !crop)
+    return (
+      <div className="flex flex-col gap-6">
+        {header}
+        <PageSkeleton />
+      </div>
+    );
 
   const top = recs.data!.list.slice(0, 8);
   const open = (tickets.data ?? []).filter((x) => x.status === 'open');
@@ -83,16 +110,7 @@ export function Overview() {
 
   return (
     <div className="flex flex-col gap-6">
-      <WeatherHero
-        title={t('overview.hello', { name: user.name.split(' ')[0] })}
-        sub={t('ctx', {
-          ns: 'common',
-          d: label(district?.labels),
-          s: short(season?.labels),
-          a: num(farm.areaAcres, 2),
-        })}
-        today={days[0]}
-      />
+      {header}
 
       {recs.data!.usingDefaults && (
         <Callout tone="info" title={t('defaults')}>

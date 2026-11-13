@@ -1,7 +1,7 @@
 // The Fieldwise wordmark for brand moments (landing hero, login, pitch title): letters turn into dashed vector
 // paths under the cursor (Tech Text). Never for body text or ordinary headings. The fallback is the same word
 // set in the display face, so nothing shifts when the canvas takes over.
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSeason } from '../../lib/season';
 import { useUi } from '../../stores/ui';
@@ -32,13 +32,21 @@ export function Wordmark({ size = 120, align = 'left', className = '' }: Props) 
   // Shrink to the container: Baloo 2 at weight 800 averages about 0.56 em per letter.
   const wrap = useRef<HTMLSpanElement>(null);
   const [fit, setFit] = useState(size);
-  useEffect(() => {
+  // Measured before the first paint, so the word never shows big and then shrinks (that would shift the page).
+  // One direct read here (it forces a layout, so only once); after that the observer hands over the width, which
+  // costs nothing. Only the width matters, so the height change from a new fit does not trigger another round.
+  useLayoutEffect(() => {
     const el = wrap.current;
     if (!el) return;
-    const measure = () =>
-      setFit(Math.max(24, Math.min(size, Math.floor(el.clientWidth / (word.length * 0.56)))));
-    measure();
-    const ro = new ResizeObserver(measure);
+    const fitFor = (width: number) => Math.max(24, Math.min(size, Math.floor(width / (word.length * 0.56))));
+    setFit(fitFor(el.clientWidth));
+    let lastWidth = el.clientWidth;
+    const ro = new ResizeObserver(([entry]) => {
+      const width = Math.round(entry?.contentRect.width ?? lastWidth);
+      if (width === lastWidth) return;
+      lastWidth = width;
+      setFit(fitFor(width));
+    });
     ro.observe(el);
     return () => ro.disconnect();
   }, [size, word]);

@@ -5,6 +5,7 @@
 import { lazy, Suspense, useEffect, useId, useRef, useState } from 'react';
 import { inputClass } from '../ui';
 import { useRich } from './rich';
+import { useEffectsMode } from '../../lib/motion-mode';
 
 const OptionWheel = lazy(() => import('../reactbits/OptionWheel'));
 
@@ -38,6 +39,9 @@ export function WheelPicker<V extends string>({
   settle = 0,
   className = '',
 }: Props<V>) {
+  // The wheel's box is laid out whenever motion is allowed, so nothing shifts when the wheel itself loads
+  // (on the first interaction, see rich.ts); until then the box shows the current choice.
+  const full = useEffectsMode() === 'full';
   const rich = useRich();
   const id = useId();
   const box = useRef<HTMLDivElement>(null);
@@ -80,7 +84,7 @@ export function WheelPicker<V extends string>({
       <label htmlFor={id} className="text-sm font-semibold text-fg-muted">
         {label}
       </label>
-      {rich ? (
+      {full ? (
         <div
           ref={box}
           className="relative overflow-hidden rounded-xl border border-line bg-surface shadow-1 has-[:focus-visible]:outline has-[:focus-visible]:outline-[3px] has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus"
@@ -93,35 +97,41 @@ export function WheelPicker<V extends string>({
             className="pointer-events-none absolute inset-x-2 top-1/2 h-12 -translate-y-1/2 rounded-lg bg-accent-soft"
           />
           <div aria-hidden="true" className="absolute inset-0">
-            <Suspense
-              fallback={
-                <div className="grid h-full place-items-center font-display text-2xl text-primary">
-                  {options[index]?.label}
-                </div>
-              }
-            >
-              <OptionWheel
-                items={options.map((o) => o.label)}
-                defaultSelected={index}
-                selected={index}
-                focusable={false}
-                ariaLabel={label}
-                onChange={(i) => {
-                  const next = options[i];
-                  if (next && next.value !== shown) change(next.value, box.current);
-                }}
-                textColor="var(--text-muted)"
-                activeColor="var(--primary)"
-                fontSize={1.5}
-                spacing={1.6}
-                tilt={14}
-                blur={0.6}
-                fade={0.32}
-                minOpacity={0.15}
-                inset={24}
-                className="font-display"
-              />
-            </Suspense>
+            {rich ? (
+              <Suspense
+                fallback={
+                  <div className="grid h-full place-items-center font-display text-2xl text-primary">
+                    {options[index]?.label}
+                  </div>
+                }
+              >
+                <OptionWheel
+                  items={options.map((o) => o.label)}
+                  defaultSelected={index}
+                  selected={index}
+                  focusable={false}
+                  ariaLabel={label}
+                  onChange={(i) => {
+                    const next = options[i];
+                    if (next && next.value !== shown) change(next.value, box.current);
+                  }}
+                  textColor="var(--text-muted)"
+                  activeColor="var(--primary)"
+                  fontSize={1.5}
+                  spacing={1.6}
+                  tilt={14}
+                  blur={0.6}
+                  fade={0.32}
+                  minOpacity={0.15}
+                  inset={24}
+                  className="font-display"
+                />
+              </Suspense>
+            ) : (
+              <div className="grid h-full place-items-center font-display text-2xl text-primary">
+                {options[index]?.label}
+              </div>
+            )}
           </div>
         </div>
       ) : (

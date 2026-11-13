@@ -57,7 +57,8 @@ export function ChartFrame({
         </div>
       </div>
       {view === 'chart' ? (
-        <div role="img" aria-label={label}>
+        // A figure, not an img: bars and points inside can take focus, and an img would hide them.
+        <div role="figure" aria-label={label}>
           {chart}
         </div>
       ) : (

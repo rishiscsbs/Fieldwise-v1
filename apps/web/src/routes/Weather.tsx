@@ -59,7 +59,14 @@ export function Weather() {
   );
 
   if (water.isError) return <ErrorState onRetry={() => void water.refetch()} />;
-  if (!farm || !ref.data || !w || !crop) return <PageSkeleton cards={3} />;
+  // The title is fixed text, so it shows at once (it is the largest text on a phone); data fills in below.
+  if (!farm || !ref.data || !w || !crop)
+    return (
+      <div className="flex flex-col gap-6">
+        <PageHeader title={t('pt_weather', { ns: 'common' })} />
+        <PageSkeleton cards={3} />
+      </div>
+    );
 
   const days = w.forecast.days;
   const today = days[0]!;

@@ -23,6 +23,7 @@ import { Wordmark } from '../components/signature/Wordmark';
 import { CropStrip } from '../components/signature/CropStrip';
 import { PrimaryAction } from '../components/signature/PrimaryAction';
 import { CROP_PHOTOS } from '../lib/crop-photos';
+import { heroPhoto } from '../lib/photos';
 import { useFieldSeason } from '../lib/season';
 import { StillCapture } from '../landing/StillCapture';
 
@@ -81,10 +82,8 @@ const panel = 'glass bg-glass-strong p-6 sm:p-8';
 function Hero({ mode }: { mode: MotionMode }) {
   const { t } = useFmt();
   const signedIn = useAuth((s) => s.status === 'signedIn');
-  // One photo per page load: the small one for phones, so the hero paints fast on a cheap connection.
-  const [photo] = useState(() =>
-    window.innerWidth < 800 ? '/photos/hero-960.jpg' : '/photos/hero-1920.jpg',
-  );
+  // One photo per page load, sized to the screen, so the hero paints fast on a cheap connection.
+  const [photo] = useState(heroPhoto);
   return (
     <section
       id="hero"

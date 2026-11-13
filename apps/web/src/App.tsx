@@ -6,13 +6,33 @@ import { useAuth } from './stores/auth';
 import { refreshSession } from './lib/api';
 import { useActiveFarm } from './lib/farm';
 import { useSeasonTheme } from './lib/season';
-import { deviceIsLowEnd } from './lib/motion-mode';
+import { weakHardware } from './lib/motion-mode';
 import { PageSkeleton } from './components/ui';
 import { Toasts } from './app/Toasts';
 import { CursorGlow } from './app/CursorGlow';
+import { preloadPagePhoto } from './lib/photos';
 
 // Every page is its own chunk; only the shell ships up front.
 const AppShell = lazy(() => import('./app/AppShell').then((m) => ({ default: m.AppShell })));
+
+// Opening /app straight away (a bookmark, the installed PWA) waits on a chain of round trips: restore the
+// session, then load the app shell, then the page. Start fetching both chunks now, alongside the session check.
+// The lazy() factories above and below get the same cached module promise, so nothing loads twice.
+const PREFETCH: [RegExp, () => Promise<unknown>][] = [
+  [/^\/app\/?$/, () => import('./routes/Overview')],
+  [/^\/app\/planner/, () => import('./routes/Planner')],
+  [/^\/app\/nutrients/, () => import('./routes/Nutrients')],
+  [/^\/app\/health/, () => import('./routes/Health')],
+  [/^\/app\/weather/, () => import('./routes/Weather')],
+  [/^\/app\/market/, () => import('./routes/Market')],
+  [/^\/app\/desk/, () => import('./routes/Desk')],
+  [/^\/app\/officer/, () => import('./routes/Officer')],
+];
+if (typeof window !== 'undefined') preloadPagePhoto(location.pathname);
+if (typeof window !== 'undefined' && location.pathname.startsWith('/app')) {
+  void import('./app/AppShell');
+  PREFETCH.find(([re]) => re.test(location.pathname))?.[1]();
+}
 const Landing = lazy(() => import('./routes/Landing').then((m) => ({ default: m.Landing })));
 const Pitch = lazy(() => import('./routes/Pitch').then((m) => ({ default: m.Pitch })));
 const Presenter = lazy(() => import('./routes/Presenter').then((m) => ({ default: m.Presenter })));
@@ -59,8 +79,11 @@ function Start() {
   const { farms, isLoading } = useActiveFarm();
   if (user?.role === 'admin') return <Navigate to="/app/admin" replace />;
   if (user?.role === 'officer') return <Navigate to="/app/officer" replace />;
-  if (isLoading || !user) return <PageSkeleton />;
-  if (!user.name || !farms.length) return <Navigate to="/app/welcome" replace />;
+  if (!user) return <PageSkeleton />;
+  if (!user.name) return <Navigate to="/app/welcome" replace />;
+  // A farmer with a name almost always has a field: show the overview (its greeting paints at once) while the
+  // farm list loads, and only send them to onboarding if it turns out to be empty.
+  if (!isLoading && !farms.length) return <Navigate to="/app/welcome" replace />;
   return <Overview />;
 }
 
@@ -70,7 +93,7 @@ export function App() {
   useSeasonTheme();
   // CSS hooks for Lite mode (no glass blur, no drifting texture).
   useEffect(() => {
-    document.documentElement.toggleAttribute('data-lite', lite || deviceIsLowEnd());
+    document.documentElement.toggleAttribute('data-lite', lite || weakHardware());
   }, [lite]);
   useEffect(() => {
     document.documentElement.dataset.theme = resolvedTheme(theme);

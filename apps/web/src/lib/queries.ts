@@ -48,10 +48,21 @@ export const qk = {
 
 const MIN = 60_000;
 
-export const useReference = () =>
-  useQuery({ queryKey: qk.reference, queryFn: () => api<ReferenceDto>('/reference'), staleTime: 30 * MIN });
+// Query options shared by the hooks below and by the warm start (lib/warm.ts), so both fetch the same way.
+export const referenceQuery = {
+  queryKey: qk.reference,
+  queryFn: () => api<ReferenceDto>('/reference'),
+  staleTime: 30 * MIN,
+};
+export const farmsQuery = { queryKey: qk.farms, queryFn: () => api<FarmDto[]>('/farms') };
+export const recsQuery = (id: string) => ({
+  queryKey: qk.recs(id),
+  queryFn: () => api<RecommendationsDto>(`/farms/${id}/recommendations`),
+});
 
-export const useFarms = () => useQuery({ queryKey: qk.farms, queryFn: () => api<FarmDto[]>('/farms') });
+export const useReference = () => useQuery(referenceQuery);
+
+export const useFarms = () => useQuery(farmsQuery);
 
 export const useFarm = (id: string | undefined) =>
   useQuery({ queryKey: qk.farm(id ?? ''), queryFn: () => api<FarmDetailDto>(`/farms/${id}`), enabled: !!id });
@@ -59,36 +70,31 @@ export const useFarm = (id: string | undefined) =>
 const q = (crop?: string) => (crop ? `?crop=${encodeURIComponent(crop)}` : '');
 
 export const useRecommendations = (id: string | undefined) =>
-  useQuery({
-    queryKey: qk.recs(id ?? ''),
-    queryFn: () => api<RecommendationsDto>(`/farms/${id}/recommendations`),
-    enabled: !!id,
-  });
+  useQuery({ ...recsQuery(id ?? ''), enabled: !!id });
+
+export const fertQuery = (id: string, crop?: string) => ({
+  queryKey: qk.fert(id, crop),
+  queryFn: () => api<FertiliserDto>(`/farms/${id}/fertiliser${q(crop)}`),
+});
+export const waterQuery = (id: string, crop?: string) => ({
+  queryKey: qk.water(id, crop),
+  queryFn: () => api<WaterDto>(`/farms/${id}/water${q(crop)}`),
+  staleTime: 10 * MIN,
+});
+export const mandiQuery = (id: string, crop?: string) => ({
+  queryKey: qk.mandi(id, crop),
+  queryFn: () => api<MandiDto>(`/farms/${id}/mandi${q(crop)}`),
+  staleTime: 10 * MIN,
+});
 
 export const useFertiliser = (id: string | undefined, crop?: string) =>
-  useQuery({
-    queryKey: qk.fert(id ?? '', crop),
-    queryFn: () => api<FertiliserDto>(`/farms/${id}/fertiliser${q(crop)}`),
-    enabled: !!id,
-    placeholderData: keepPreviousData,
-  });
+  useQuery({ ...fertQuery(id ?? '', crop), enabled: !!id, placeholderData: keepPreviousData });
 
 export const useWater = (id: string | undefined, crop?: string) =>
-  useQuery({
-    queryKey: qk.water(id ?? '', crop),
-    queryFn: () => api<WaterDto>(`/farms/${id}/water${q(crop)}`),
-    enabled: !!id,
-    staleTime: 10 * MIN,
-  });
+  useQuery({ ...waterQuery(id ?? '', crop), enabled: !!id });
 
 export const useMandi = (id: string | undefined, crop?: string) =>
-  useQuery({
-    queryKey: qk.mandi(id ?? '', crop),
-    queryFn: () => api<MandiDto>(`/farms/${id}/mandi${q(crop)}`),
-    enabled: !!id,
-    staleTime: 10 * MIN,
-    placeholderData: keepPreviousData,
-  });
+  useQuery({ ...mandiQuery(id ?? '', crop), enabled: !!id, placeholderData: keepPreviousData });
 
 export const useTickets = () =>
   useQuery({ queryKey: qk.tickets, queryFn: () => api<TicketDto[]>('/tickets') });

@@ -1,8 +1,8 @@
 // Weather you can feel behind a header: light rain streaks when rain is due, a faint heat shimmer on a hot day,
 // a soft sun glow on a clear morning. Decorative (aria-hidden), drawn in season colours, and switched off in
 // Lite mode and for reduced motion (a still glow is all that remains). Rain pauses when off screen.
-import { useEffect, useRef } from 'react';
-import { useMotionMode } from '../lib/motion-mode';
+import { useEffect, useRef, useState } from 'react';
+import { useEffectsMode } from '../lib/motion-mode';
 import type { Condition } from '../lib/weather';
 
 interface Props {
@@ -77,8 +77,16 @@ function Rain({ heavy }: { heavy: boolean }) {
 }
 
 export function WeatherFx({ cond, hot = false, morning = false }: Props) {
-  const full = useMotionMode() === 'full';
+  const full = useEffectsMode() === 'full';
   const raining = cond === 'showers' || cond === 'heavy';
+  // The weather waits until the page has painted and settled, so it never competes with first load.
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1200));
+    const id = idle(() => setReady(true), { timeout: 2500 });
+    return () => (window.cancelIdleCallback ?? window.clearTimeout)(id);
+  }, []);
+  if (!ready) return null;
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
       {cond === 'clear' && (

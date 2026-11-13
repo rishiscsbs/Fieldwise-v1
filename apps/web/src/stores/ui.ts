@@ -16,12 +16,15 @@ interface UiState {
   season: Season | null;
   /** Sound effects (the reply chime). Off by default. */
   sound: boolean;
+  /** The field shown last time, so a fresh start can fetch its advice early (lib/warm.ts). */
+  lastFarmId: string | null;
   setLang: (lang: LangCode) => void;
   setTheme: (theme: Theme) => void;
   setFarmId: (id: string | null) => void;
   setLite: (lite: boolean) => void;
   setSeason: (season: Season | null) => void;
   setSound: (sound: boolean) => void;
+  setLastFarmId: (id: string | null) => void;
 }
 
 // localStorage can be missing or blocked (private mode, some WebViews). Fall back to memory.
@@ -50,12 +53,14 @@ export const useUi = create<UiState>()(
       lite: false,
       season: null,
       sound: false,
+      lastFarmId: null,
       setLang: (lang) => set({ lang }),
       setTheme: (theme) => set({ theme }),
       setFarmId: (farmId) => set({ farmId }),
       setLite: (lite) => set({ lite }),
       setSeason: (season) => set({ season }),
       setSound: (sound) => set({ sound }),
+      setLastFarmId: (lastFarmId) => set({ lastFarmId }),
     }),
     { name: 'fw-ui', storage: safeStorage },
   ),

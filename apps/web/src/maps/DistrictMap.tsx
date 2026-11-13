@@ -7,7 +7,7 @@ import type { OfficerMapDto, PestPointsDto } from '../lib/api-types';
 import { Tooltip, useWidth, type TipRow } from '../charts/frame';
 import { boundsOf, fit, lonKm, type LonLat } from './geo';
 import { IndiaMap } from './IndiaMap';
-import { useMotionMode } from '../lib/motion-mode';
+import { useEffectsMode } from '../lib/motion-mode';
 
 type Hover = { kind: 'farm' | 'ticket'; id: string } | null;
 
@@ -40,7 +40,7 @@ export function DistrictMap({
   const canvas = useRef<HTMLCanvasElement>(null);
   const [hover, setHover] = useState<Hover>(null);
   // Open questions pulse in full motion only.
-  const pulse = useMotionMode() === 'full';
+  const pulse = useEffectsMode() === 'full';
 
   const bounds = useMemo(() => {
     const pts: LonLat[] = [
@@ -117,7 +117,8 @@ export function DistrictMap({
         className="absolute left-0 top-0"
         style={{ width: p.width, height: p.height }}
       />
-      <svg width={p.width} height={p.height} role="img" aria-label={labels.map} className="relative">
+      {/* A labelled group, not an img: the farm and question markers inside take focus. */}
+      <svg width={p.width} height={p.height} role="group" aria-label={labels.map} className="relative">
         {/* Faint ploughed furrows so the map reads as farmland, not a blank grid. */}
         <defs>
           <pattern
@@ -219,6 +220,7 @@ export function DistrictMap({
                   animate={{ opacity: 1 }}
                   transition={{ delay: i * 0.02 }}
                   tabIndex={0}
+                  role="img"
                   aria-label={`${labels.farm}: ${f.name}, ${f.farmer}, ${labels.cropName(f.crop)}`}
                   onMouseEnter={() => setHover({ kind: 'farm', id: f.id })}
                   onMouseLeave={() => setHover(null)}

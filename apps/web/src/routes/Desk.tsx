@@ -9,7 +9,7 @@ import { toast } from '../stores/toast';
 import { useActiveFarm } from '../lib/farm';
 import { useFmt } from '../lib/format';
 import { shrinkPhoto } from '../lib/image';
-import { flyPlane } from '../lib/effects';
+import { flyPlane } from '../lib/delight';
 import { ApiError } from '../lib/api';
 import {
   useAlerts,

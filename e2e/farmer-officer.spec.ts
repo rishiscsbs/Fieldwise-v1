@@ -135,7 +135,8 @@ test('the officer dashboard shows the district map, queue and charts', async () 
   await page.goto('/app');
   await expect(page).toHaveURL(/\/app\/officer/);
   await expect(page.getByRole('heading', { name: 'District dashboard' })).toBeVisible();
-  await expect(page.getByRole('img', { name: /District map: Nagpur/ })).toBeVisible();
+  // A labelled group (not an img): the farm and question markers inside take focus.
+  await expect(page.getByRole('group', { name: /District map: Nagpur/ })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Question queue' })).toBeVisible();
   // Every chart has a table view.
   await page

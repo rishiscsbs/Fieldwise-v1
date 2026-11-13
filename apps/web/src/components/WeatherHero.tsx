@@ -38,8 +38,9 @@ export function WeatherHero({
             {greeting} · {date(new Date(), { weekday: 'long', day: 'numeric', month: 'long' })}
           </p>
           <m.h1
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
+            // Visible from the first frame: it is the largest text, so a fade would delay LCP. It only slides.
+            initial={{ y: 8 }}
+            animate={{ y: 0 }}
             className="mt-1 font-display text-4xl leading-tight sm:text-5xl"
           >
             {title}

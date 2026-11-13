@@ -23,11 +23,13 @@ interface Props {
 }
 
 export function CropStrip({ items, label, height, onSelect, className = '' }: Props) {
-  const rich = useRich();
+  const rich = useRich({ webgl: true });
   const { t } = useTranslation('app');
   const row = (
+    // Focusable, so the row can be scrolled with the arrow keys.
     <ul
       aria-label={label}
+      tabIndex={0}
       className="flex h-full snap-x snap-mandatory items-center gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:thin]"
     >
       {items.map((it, i) => (

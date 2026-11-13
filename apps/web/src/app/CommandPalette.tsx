@@ -7,7 +7,8 @@ import { resolvedTheme, useUi } from '../stores/ui';
 import { useReference } from '../lib/queries';
 import { useFmt } from '../lib/format';
 import { Icon, type IconName } from '../components/Icon';
-import { haptic, makeItRain } from '../lib/effects';
+import { haptic } from '../lib/effects';
+import { makeItRain } from '../lib/delight';
 import { toast } from '../stores/toast';
 import { navFor } from './nav';
 

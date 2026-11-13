@@ -42,7 +42,8 @@ export function IndiaMap({
   return (
     <div ref={ref} className="relative">
       {p && (
-        <svg width={width} height={p.height} role="img" aria-label={label}>
+        <svg width={width} height={p.height} role="group" aria-label={label}>
+          {/* A labelled group, not an img: the district pins inside are buttons. */}
           <path
             d={ringsPath(INDIA_OUTLINE as LonLat[][], p)}
             fill={fill}

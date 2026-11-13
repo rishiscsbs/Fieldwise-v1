@@ -20,7 +20,8 @@ interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type' | '
   onClick?: (event: MouseEvent<HTMLElement>) => void;
 }
 
-const SIZE = { md: '', lg: 'min-h-12 px-6 text-lg' } as const;
+// The plain version matches the Specular button's size, so the swap on first interaction moves nothing.
+const SIZE = { md: 'px-7', lg: 'min-h-[3.4rem] px-[38px] text-lg' } as const;
 // Full class names for Tailwind's scanner.
 const TONE = {
   primary: 'btn-primary',
@@ -38,7 +39,7 @@ export function PrimaryAction({
   onClick,
   ...rest
 }: Props) {
-  const rich = useRich();
+  const rich = useRich({ webgl: true });
   const navigate = useNavigate();
 
   const plain = to ? (

@@ -13,11 +13,13 @@ interface Props {
   src: string;
   /** Empty for decorative photos (the usual case: the hero text says what matters). */
   alt?: string;
+  /** High fetch priority, for a photo that is the page's largest paint (login). */
+  priority?: boolean;
   className?: string;
 }
 
-export function HeroImage({ src, alt = '', className = '' }: Props) {
-  const rich = useRich();
+export function HeroImage({ src, alt = '', className = '', priority = false }: Props) {
+  const rich = useRich({ webgl: true });
   return (
     // The caller positions it (absolute inset-0 behind a hero, or relative with a height).
     <div className={`isolate overflow-hidden ${className}`}>
@@ -25,7 +27,7 @@ export function HeroImage({ src, alt = '', className = '' }: Props) {
         src={src}
         alt={alt}
         decoding="async"
-        {...HIGH_PRIORITY}
+        {...(priority ? HIGH_PRIORITY : {})}
         className="absolute inset-0 h-full w-full object-cover"
       />
       {rich && (

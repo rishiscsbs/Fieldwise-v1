@@ -27,6 +27,7 @@
     "db:reset": "npm run db:reset -w @fieldwise/api"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
     "@eslint/js": "^9.39.5",
     "@playwright/test": "1.48.2",
     "@types/node": "^20.19.43",

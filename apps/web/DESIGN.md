@@ -173,6 +173,21 @@ of them carries meaning on its own: the text always says what happened.
 | Empty states | No alerts, no questions, an empty officer queue | `EmptyState` with a sleepy scarecrow or a waiting bird, plus a next action |
 | Monsoon | Type "monsoon" (or मानसून) in the command palette | `makeItRain(5000)`: rain across the whole app for five seconds |
 
+## Performance rules
+
+- **The largest text paints at once.** Page titles and the overview greeting never fade in from opacity 0 (slide
+  only) and render before their page's data; the data fills in below with skeletons.
+- **Effects wait.** Weather effects mount after the browser is idle; WebGL pieces load only in full motion.
+- **The first screen starts early.** `lib/warm.ts` restores the session and fetches the farm list, reference data
+  and the last viewed field's advice before React renders; `App.tsx` prefetches the app shell and the page chunk.
+- **Photos are sized to the screen** (`lib/photos.ts`). Only a photo that is the page's largest paint (login) is
+  preloaded at high priority; the landing hero loads at normal priority so it never competes with the wordmark.
+- **Nothing extra before the largest paint.** Fonts are not preloaded: text paints in the fallback face first
+  (`font-display: swap`), and every byte fetched early delays the first paint on a slow connection.
+- **Signature pieces wait for the first interaction** (pointer, touch, key or scroll; `rich.ts`): the plain
+  version paints first and is laid out at the same size, so the swap moves nothing.
+- Keep rarely used effects out of the shell: `lib/effects.ts` is in it, `lib/delight.ts` is not.
+
 ## Voice
 
 Plain, short, sentence case. Buttons say what they do ("Send question", "Save farm"). Every string exists in English

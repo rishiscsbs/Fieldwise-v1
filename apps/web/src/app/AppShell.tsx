@@ -64,6 +64,9 @@ export function AppShell() {
 
   // The colours follow the field being viewed (unless a season was picked by hand).
   useEffect(() => {
+    if (farm?.id) useUi.getState().setLastFarmId(farm.id);
+  }, [farm?.id]);
+  useEffect(() => {
     setFieldSeason(farm?.season ?? null);
     return () => setFieldSeason(null);
   }, [farm?.season, setFieldSeason]);
@@ -95,6 +98,8 @@ export function AppShell() {
     disconnectLive();
     qc.clear();
     useAuth.getState().clear();
+    // Forget the remembered field, so the next person on this phone does not get it prefetched.
+    useUi.getState().setLastFarmId(null);
     navigate('/login');
   }, [qc, navigate]);
 
