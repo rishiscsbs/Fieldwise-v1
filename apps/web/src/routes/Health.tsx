@@ -7,7 +7,7 @@ import { useSay } from '../stores/page';
 import { useActiveFarm } from '../lib/farm';
 import { useFmt } from '../lib/format';
 import { shrinkPhoto } from '../lib/image';
-import { prefersReducedMotion } from '../lib/effects';
+import { haptic, prefersReducedMotion } from '../lib/effects';
 import { useAnalyseLeaf, useDiagnose, useReference } from '../lib/queries';
 import type { HealthCheckDto } from '../lib/api-types';
 import { Button } from '../components/Button';
@@ -68,6 +68,7 @@ export function Health() {
     setSymptoms((cur) => (cur.includes(s) ? cur.filter((x) => x !== s) : [...cur, s]));
   const run = (list = symptoms) => {
     if (!list.length) return;
+    haptic(10);
     diagnose.mutate(
       { crop: cropId, symptoms: list, farmId: farm.id },
       {

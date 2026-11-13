@@ -14,11 +14,14 @@ interface UiState {
   lite: boolean;
   /** Season the colours follow when picked by hand; null = the active field's season, else today's. */
   season: Season | null;
+  /** Sound effects (the reply chime). Off by default. */
+  sound: boolean;
   setLang: (lang: LangCode) => void;
   setTheme: (theme: Theme) => void;
   setFarmId: (id: string | null) => void;
   setLite: (lite: boolean) => void;
   setSeason: (season: Season | null) => void;
+  setSound: (sound: boolean) => void;
 }
 
 // localStorage can be missing or blocked (private mode, some WebViews). Fall back to memory.
@@ -46,11 +49,13 @@ export const useUi = create<UiState>()(
       farmId: null,
       lite: false,
       season: null,
+      sound: false,
       setLang: (lang) => set({ lang }),
       setTheme: (theme) => set({ theme }),
       setFarmId: (farmId) => set({ farmId }),
       setLite: (lite) => set({ lite }),
       setSeason: (season) => set({ season }),
+      setSound: (sound) => set({ sound }),
     }),
     { name: 'fw-ui', storage: safeStorage },
   ),

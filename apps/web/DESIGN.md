@@ -158,6 +158,21 @@ the component only in full motion and supply the fallback. Restraint is what mak
 - Each `PrimaryAction` and `HeroImage` owns a WebGL context: never put them in lists.
 - `CropStrip` does not capture the vertical wheel, so it never traps page scroll.
 
+## Delight
+
+Small moments that reward an action. All are skipped in Lite mode and for reduced motion unless noted, and none
+of them carries meaning on its own: the text always says what happened.
+
+| Moment | Where | How |
+|---|---|---|
+| Seed to plant | Onboarding (`Growth`) | Seed when the name is in, sprout at the soil card, full plant in grain on finish |
+| Crop burst | "Grow this" | `burst(from, CROP_BURST[crop])`: golden grains for wheat, white puffs for cotton, red for tomato… |
+| Paper plane | Every question, reply and alert | `flyPlane(button)` (Web Animations API) |
+| Reply chime | A farmer receives an officer's reply | `chime()` in `lib/sound.ts`, WebAudio, **off by default** (menu → Sounds) |
+| Haptics | Grow this, send, check my crop, a reply arriving, finishing onboarding | `haptic()`; Android browsers that support it; never for reduced motion |
+| Empty states | No alerts, no questions, an empty officer queue | `EmptyState` with a sleepy scarecrow or a waiting bird, plus a next action |
+| Monsoon | Type "monsoon" (or मानसून) in the command palette | `makeItRain(5000)`: rain across the whole app for five seconds |
+
 ## Voice
 
 Plain, short, sentence case. Buttons say what they do ("Send question", "Save farm"). Every string exists in English

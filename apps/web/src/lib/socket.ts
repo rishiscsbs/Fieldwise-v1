@@ -7,7 +7,8 @@ import { toast } from '../stores/toast';
 import { useAuth } from '../stores/auth';
 import i18n from '../i18n';
 import { pick } from '@fieldwise/shared';
-import { burst } from './effects';
+import { burst, haptic } from './effects';
+import { chime } from './sound';
 
 let socket: Socket | null = null;
 
@@ -43,8 +44,12 @@ export async function connectLive(qc: QueryClient): Promise<void> {
   s.on('ticket:updated', ticketChanged);
   s.on('ticket:message', (msg: TicketMessageDto) => {
     ticketChanged(msg);
-    // A farmer getting an answer is worth a small celebration.
-    if (useAuth.getState().user?.role === 'farmer' && msg.author.role !== 'farmer') void burst();
+    // A farmer getting an answer is worth a small celebration, a soft chime (if sounds are on) and a buzz.
+    if (useAuth.getState().user?.role === 'farmer' && msg.author.role !== 'farmer') {
+      void burst();
+      chime();
+      haptic([10, 60, 10]);
+    }
   });
 }
 

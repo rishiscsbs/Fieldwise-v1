@@ -27,6 +27,7 @@ import { Button } from '../components/Button';
 import { Icon } from '../components/Icon';
 import { PrimaryAction } from '../components/signature/PrimaryAction';
 import { Kpi } from '../components/Kpi';
+import { EmptyState } from '../components/EmptyState';
 import {
   Badge,
   Callout,
@@ -516,7 +517,32 @@ export function Desk() {
                 ))}
               </div>
             ) : !list.length ? (
-              <Empty>{t('noQ', { ns: 'common' })}</Empty>
+              filter !== 'all' && tickets.data?.length ? (
+                <EmptyState
+                  art="bird"
+                  action={
+                    <Button variant="secondary" onClick={() => setFilter('all')}>
+                      {t('empty.showAll')}
+                    </Button>
+                  }
+                >
+                  {t('empty.filtered')}
+                </EmptyState>
+              ) : (
+                <EmptyState
+                  art="bird"
+                  action={
+                    !isStaff && !asking ? (
+                      <Button variant="secondary" onClick={() => setParams({ ask: '1' })}>
+                        <Icon name="plus" size={18} />
+                        {t('desk.ask')}
+                      </Button>
+                    ) : undefined
+                  }
+                >
+                  {isStaff ? t('noQ', { ns: 'common' }) : t('empty.questions')}
+                </EmptyState>
+              )
             ) : (
               <ul className="flex flex-col gap-1">
                 {list.map((x) => (
@@ -563,7 +589,18 @@ export function Desk() {
         {alerts.isLoading ? (
           <PageSkeleton cards={1} />
         ) : !alerts.data?.length ? (
-          <Empty>{t('noAlerts', { ns: 'common' })}</Empty>
+          <EmptyState
+            art="scarecrow"
+            action={
+              isStaff ? undefined : (
+                <Link to="/app/health" className="btn-secondary">
+                  {t('diagnose', { ns: 'common' })}
+                </Link>
+              )
+            }
+          >
+            {t('empty.alerts')}
+          </EmptyState>
         ) : (
           <ul className="grid gap-3 md:grid-cols-2">
             {alerts.data.slice(0, 6).map((a) => (

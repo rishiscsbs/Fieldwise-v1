@@ -12,6 +12,7 @@ import { useFmt } from '../lib/format';
 import { useNotifications, useReference } from '../lib/queries';
 import { useActiveFarm } from '../lib/farm';
 import { useFieldSeason } from '../lib/season';
+import { chime } from '../lib/sound';
 import { connectLive, disconnectLive } from '../lib/socket';
 import { speak, stopSpeaking } from '../lib/speech';
 import { api, refreshSession } from '../lib/api';
@@ -31,7 +32,7 @@ function FrozenOutlet() {
 export function AppShell() {
   const { t, label, lang } = useFmt();
   const user = useAuth((s) => s.user);
-  const { setLang, theme, setTheme, setFarmId, lite, setLite } = useUi();
+  const { setLang, theme, setTheme, setFarmId, lite, setLite, sound, setSound } = useUi();
   const [online, setOnline] = useState(() => navigator.onLine);
   useEffect(() => {
     const on = () => setOnline(navigator.onLine);
@@ -182,6 +183,18 @@ export function AppShell() {
       <div className="mb-3 flex items-center justify-between gap-2 text-sm" title={t('shell.liteHint')}>
         <span>{t('shell.lite')}</span>
         <Toggle checked={lite} onChange={setLite} label={t('shell.lite')} />
+      </div>
+      <div className="mb-3 flex items-center justify-between gap-2 text-sm" title={t('shell.soundHint')}>
+        <span>{t('shell.sound')}</span>
+        <Toggle
+          checked={sound}
+          onChange={(v) => {
+            setSound(v);
+            // Play it once on the way in, so the switch says what it does.
+            if (v) setTimeout(chime, 0);
+          }}
+          label={t('shell.sound')}
+        />
       </div>
       <button type="button" className="btn-secondary w-full" onClick={signOut}>
         <Icon name="logout" size={18} />

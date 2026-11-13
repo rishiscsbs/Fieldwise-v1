@@ -7,6 +7,8 @@ import { resolvedTheme, useUi } from '../stores/ui';
 import { useReference } from '../lib/queries';
 import { useFmt } from '../lib/format';
 import { Icon, type IconName } from '../components/Icon';
+import { haptic, makeItRain } from '../lib/effects';
+import { toast } from '../stores/toast';
 import { navFor } from './nav';
 
 interface Cmd {
@@ -88,6 +90,17 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
     }
   }, [open]);
   useEffect(() => setActive(0), [query]);
+  // Easter egg: typing "monsoon" (or मानसून) makes it rain across the whole app for five seconds.
+  useEffect(() => {
+    const q = query.trim().toLowerCase();
+    if (q !== 'monsoon' && q !== 'मानसून') return;
+    // Clear first, so a re-render (onClose is a new function each time) cannot set it off twice.
+    setQuery('');
+    onClose();
+    haptic([20, 80, 20, 80, 40]);
+    makeItRain(5000);
+    toast({ tone: 'info', title: t('cmd.monsoon') });
+  }, [query, onClose, t]);
 
   const run = (c: Cmd | undefined) => {
     if (!c) return;

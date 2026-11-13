@@ -18,6 +18,7 @@ import { Columns, HBars, Lines, RangeBars } from '../charts/charts';
 import { CountUp } from '../components/CountUp';
 import { Kpi } from '../components/Kpi';
 import { WeatherHero } from '../components/WeatherHero';
+import { EmptyState } from '../components/EmptyState';
 import { Icon } from '../components/Icon';
 import { Card, Callout, Empty, ErrorState, PageSkeleton, SourceBadge } from '../components/ui';
 
@@ -192,7 +193,16 @@ export function Overview() {
           }
         >
           {!alerts.data?.length ? (
-            <Empty>{t('noAlerts', { ns: 'common' })}</Empty>
+            <EmptyState
+              art="scarecrow"
+              action={
+                <Link to="/app/health" className="btn-secondary">
+                  {t('diagnose', { ns: 'common' })}
+                </Link>
+              }
+            >
+              {t('empty.alerts')}
+            </EmptyState>
           ) : (
             <ul className="flex flex-col gap-3">
               {alerts.data.slice(0, 3).map((a, i) => (
@@ -357,7 +367,16 @@ export function Overview() {
           }
         >
           {!open.length ? (
-            <Empty>{t('noOpen', { ns: 'common' })}</Empty>
+            <EmptyState
+              art="bird"
+              action={
+                <Link to="/app/desk?ask=1" className="btn-secondary">
+                  {t('desk.ask')}
+                </Link>
+              }
+            >
+              {t('empty.questions')}
+            </EmptyState>
           ) : (
             <ul className="flex flex-col divide-y divide-line">
               {open.slice(0, 4).map((x) => (

@@ -81,7 +81,18 @@
     "farmName": "Field name",
     "farmNameDefault": "Main field",
     "village": "Village",
-    "save": "Start using Fieldwise"
+    "save": "Start using Fieldwise",
+    "steps": {
+      "you": "You",
+      "field": "Your field",
+      "soil": "Soil card"
+    },
+    "next": "Next",
+    "back": "Back",
+    "skip": "Skip for now",
+    "soilLead": "From your Soil Health Card. Skip if you do not have one yet; you can add it later.",
+    "stepOf": "Step {{n}} of {{total}}",
+    "growing": "Your field is planted"
   },
   "shell": {
     "menu": "Menu",
@@ -95,7 +106,9 @@
     "officer": "District dashboard",
     "admin": "Administration",
     "lite": "Lite mode",
-    "liteHint": "Less animation, no 3D. Turns on by itself on slow phones."
+    "liteHint": "Less animation, no 3D. Turns on by itself on slow phones.",
+    "sound": "Sounds",
+    "soundHint": "A soft chime when an officer replies"
   },
   "notif": {
     "title": "Notifications",
@@ -114,7 +127,8 @@
     "none": "Nothing matches",
     "toggleTheme": "Switch light or dark",
     "toggleLang": "हिन्दी में बदलें",
-    "ask": "Ask an expert"
+    "ask": "Ask an expert",
+    "monsoon": "The monsoon has arrived!"
   },
   "view": {
     "chart": "Chart",
@@ -573,5 +587,12 @@
     "kharif": "Kharif",
     "rabi": "Rabi",
     "zaid": "Zaid"
+  },
+  "empty": {
+    "alerts": "All quiet in the fields. No alerts right now.",
+    "questions": "No questions yet. Ask anything about your crop, soil, water or prices.",
+    "queue": "No one is waiting. Share a tip or alert with your district.",
+    "filtered": "Nothing here with this filter.",
+    "showAll": "Show all"
   }
 }

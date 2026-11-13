@@ -11,6 +11,7 @@ import { DistrictMap } from '../maps/DistrictMap';
 import { CountUp } from '../components/CountUp';
 import { Kpi } from '../components/Kpi';
 import { Icon } from '../components/Icon';
+import { EmptyState } from '../components/EmptyState';
 import {
   Badge,
   Card,
@@ -257,7 +258,17 @@ function OfficerPage() {
 
         <Card title={t('officer.queue')} sub={t('officer.queueSub')}>
           {!queue.length ? (
-            <Empty>{t('officer.emptyQueue')}</Empty>
+            <EmptyState
+              art="bird"
+              action={
+                <Link to="/app/desk" className="btn-secondary">
+                  <Icon name="alert" size={18} />
+                  {t('sendAlert', { ns: 'common' })}
+                </Link>
+              }
+            >
+              {t('empty.queue')}
+            </EmptyState>
           ) : (
             <ol className="flex flex-col gap-2">
               {queue.map((x, i) => (
