@@ -59,6 +59,9 @@
   --season-a: #2f7a43;
   --season-b: #d9a21b;
   --season-c: #e6f4df;
+  /* A deep seasonal band for closing calls to action; paper text, accent buttons. Same in light and dark. */
+  --band: #163a20;
+  --band-ink: #fbf8f2;
 
   /* Glass: frosted panels over the field texture. Text on glass is checked against the glass composited over
      both the page background and the darkest texture tone (scripts/check-contrast.mjs). Data sits on solid
@@ -152,6 +155,7 @@
 
 /* Kharif: deep monsoon greens and rain-slate blues. */
 :root[data-season='kharif'] {
+  --band: #0f2b20;
   --bg: #f2f6f1;
   --surface: #ffffff;
   --surface-2: #e5ede5;
@@ -172,6 +176,7 @@
   --texture-ink: rgb(20 60 40 / 0.07);
 }
 :root[data-theme='dark'][data-season='kharif'] {
+  --band: #0f2b20;
   --bg: #0c1511;
   --surface: #141f1a;
   --surface-2: #1c2a23;
@@ -194,6 +199,7 @@
 
 /* Rabi: mustard gold and cool morning tones. Gold is a fill; text and buttons use a deep mustard-brown. */
 :root[data-season='rabi'] {
+  --band: #33270a;
   --bg: #fbf8ee;
   --surface: #ffffff;
   --surface-2: #f4eedb;
@@ -214,6 +220,7 @@
   --texture-ink: rgb(90 65 0 / 0.07);
 }
 :root[data-theme='dark'][data-season='rabi'] {
+  --band: #33270a;
   --bg: #13110a;
   --surface: #1d1a11;
   --surface-2: #27231a;
@@ -236,6 +243,7 @@
 
 /* Zaid: warm terracotta and dry-earth ochre. */
 :root[data-season='zaid'] {
+  --band: #3b1a10;
   --bg: #fbf4ec;
   --surface: #ffffff;
   --surface-2: #f5e8da;
@@ -256,6 +264,7 @@
   --texture-ink: rgb(120 50 20 / 0.07);
 }
 :root[data-theme='dark'][data-season='zaid'] {
+  --band: #3b1a10;
   --bg: #150e0a;
   --surface: #201611;
   --surface-2: #2b1f18;

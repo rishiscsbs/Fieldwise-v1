@@ -58,6 +58,7 @@ export default {
         info: { DEFAULT: c('info'), soft: c('info-soft') },
         series: { 1: c('series-1'), 2: c('series-2'), 3: c('series-3'), 4: c('series-4') },
         season: { a: c('season-a'), b: c('season-b'), c: c('season-c') },
+        band: { DEFAULT: c('band'), ink: c('band-ink') },
         // Glass tokens already carry their alpha, so they are plain var()s (no opacity modifier).
         glass: { DEFAULT: v('glass'), strong: v('glass-strong'), line: v('glass-border') },
       },

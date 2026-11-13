@@ -1,5 +1,6 @@
-// The landing page: a scroll story over a 3D farm (Full), still frames (Lite) or a calm stacked page
-// (reduced motion). All copy is translated; all numbers come from the live API.
+// The landing page: a Grid Distortion hero with the Tech Text wordmark, a crop strip, then the scroll story
+// over a 3D farm (Full), still frames (Lite) or a calm stacked page (reduced motion). The page colours follow
+// the season panels as the story scrolls. All copy is translated; all numbers come from the live API.
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { m, useInView } from 'framer-motion';
@@ -17,6 +18,12 @@ import { IndiaMap } from '../maps/IndiaMap';
 import { Stage, STILLS, Still } from '../landing/Stage';
 import { useScrollStory } from '../landing/useScrollStory';
 import { SEASON_IDS } from '../landing/story';
+import { HeroImage } from '../components/signature/HeroImage';
+import { Wordmark } from '../components/signature/Wordmark';
+import { CropStrip } from '../components/signature/CropStrip';
+import { PrimaryAction } from '../components/signature/PrimaryAction';
+import { CROP_PHOTOS } from '../lib/crop-photos';
+import { useFieldSeason } from '../lib/season';
 import { StillCapture } from '../landing/StillCapture';
 
 const ease = [0.2, 0.8, 0.2, 1] as const;
@@ -68,58 +75,53 @@ function Kicker({ children }: { children: ReactNode }) {
   return <p className="mb-2 text-sm font-semibold uppercase tracking-[0.18em] text-primary">{children}</p>;
 }
 
-/** A readable panel floating over the 3D stage. */
-const panel = 'rounded-xl border border-line/60 bg-surface/85 p-6 shadow-2 backdrop-blur-md sm:p-8';
+/** A readable panel floating over the 3D stage or a photo: strong glass, which passes AA over anything. */
+const panel = 'glass bg-glass-strong p-6 sm:p-8';
 
 function Hero({ mode }: { mode: MotionMode }) {
   const { t } = useFmt();
   const signedIn = useAuth((s) => s.status === 'signedIn');
+  // One photo per page load: the small one for phones, so the hero paints fast on a cheap connection.
+  const [photo] = useState(() =>
+    window.innerWidth < 800 ? '/photos/hero-960.jpg' : '/photos/hero-1920.jpg',
+  );
   return (
-    <section id="hero" className="relative flex min-h-[100svh] items-end pb-16 pt-28 sm:items-center sm:pb-0">
-      {mode === 'reduced' && (
-        <Still src={STILLS.kharif} className="absolute inset-0 -z-10 h-full w-full object-cover" />
-      )}
+    <section
+      id="hero"
+      className="relative isolate flex min-h-[100svh] items-end overflow-hidden pb-8 pt-24 sm:items-center sm:pb-16"
+    >
+      <HeroImage src={photo} className="absolute inset-0 -z-10" />
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-[5] bg-gradient-to-t from-bg via-bg/40 to-transparent sm:bg-gradient-to-r sm:from-bg/90 sm:via-bg/50"
+        className="pointer-events-none absolute inset-0 -z-[5] bg-gradient-to-t from-black/50 via-black/10 to-black/25"
       />
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-8">
-        <div className="max-w-2xl">
-          <m.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary"
-          >
+        {/* Visible from the first frame (it holds the largest text, so a fade would delay LCP); it only slides. */}
+        <m.div
+          initial={{ y: 16 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.7, ease }}
+          className="glass max-w-xl bg-glass-strong p-6 sm:p-9"
+        >
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
             {t('landing.heroKicker')}
-          </m.p>
+          </p>
+          <Wordmark size={112} className="mt-2 text-fg" />
           <Kinetic
             text={t('landing.heroTitle')}
-            className="font-display text-4xl leading-[1.08] sm:text-6xl"
+            className="font-display text-2xl leading-tight sm:text-4xl"
           />
-          {/* Visible from the first frame (it is the largest text, so a fade would delay LCP); it only slides. */}
-          <m.p
-            initial={{ y: 12 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="mt-5 max-w-xl text-lg text-fg"
-          >
-            {t('landing.heroLead')}
-          </m.p>
-          <m.div
-            initial={{ y: 12 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="mt-8 flex flex-wrap gap-3"
-          >
-            <Link to={signedIn ? '/app' : '/login'} className="btn-primary px-6 text-lg">
+          <p className="mt-4 text-base text-fg sm:text-lg">{t('landing.heroLead')}</p>
+          <div className="mt-7 flex flex-wrap items-center gap-3">
+            <PrimaryAction to={signedIn ? '/app' : '/login'} size="lg">
               {t('landing.open')}
               <Icon name="arrowRight" size={18} />
-            </Link>
-            <a href="#seasons" className="btn-secondary px-6 text-lg">
+            </PrimaryAction>
+            <a href="#crops" className="btn-secondary px-6 text-lg">
               {t('landing.how')}
             </a>
-          </m.div>
-        </div>
+          </div>
+        </m.div>
       </div>
       {mode !== 'reduced' && (
         <m.div
@@ -127,10 +129,38 @@ function Hero({ mode }: { mode: MotionMode }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: [0, 8, 0] }}
           transition={{ delay: 1.6, y: { repeat: Infinity, duration: 2 } }}
-          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 text-sm text-fg-muted sm:block"
+          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 rounded-full bg-black/35 px-3 py-1 text-sm text-white sm:block"
         >
           {t('landing.scroll')} ↓
         </m.div>
+      )}
+    </section>
+  );
+}
+
+/** The crops Fieldwise advises on, as a Flex Carousel strip (a plain scrolling row in Lite and reduced motion). */
+function Crops() {
+  const { t, label } = useFmt();
+  const reference = useReference();
+  const items = (reference.data?.crops ?? []).flatMap((c) => {
+    const src = CROP_PHOTOS[c.id];
+    if (!src) return [];
+    const name = label(c.n);
+    return [{ src, alt: name, title: name, subtitle: c.s.map((x) => t(`season.${x}`)).join(' · ') }];
+  });
+  return (
+    <section id="crops" className="relative bg-bg py-20 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-8">
+        <Reveal className="max-w-2xl">
+          <Kicker>{t('landing.cropsKicker')}</Kicker>
+          <h2 className="font-display text-3xl sm:text-5xl">{t('landing.cropsTitle')}</h2>
+          <p className="mt-4 text-lg text-fg-muted">{t('landing.cropsBody')}</p>
+        </Reveal>
+      </div>
+      {items.length ? (
+        <CropStrip items={items} label={t('landing.cropsTitle')} className="mt-8 h-[380px] sm:h-[480px]" />
+      ) : (
+        <div className="mt-8 h-[380px] sm:h-[480px]" aria-hidden="true" />
       )}
     </section>
   );
@@ -425,7 +455,7 @@ function Numbers() {
               transition={{ delay: i * 0.08, duration: 0.5 }}
               className="border-t-2 border-primary pt-3"
             >
-              <dd className="num font-display text-5xl sm:text-6xl">
+              <dd className="num-hero">
                 {seen ? <CountUp value={v} format={(n) => num(n)} duration={1400} /> : '0'}
               </dd>
               <dt className="mt-1 text-lg text-fg-muted">{t(`landing.numbers.${k}`)}</dt>
@@ -476,20 +506,39 @@ function Cta() {
   const { t } = useFmt();
   const signedIn = useAuth((s) => s.status === 'signedIn');
   return (
-    <section className="bg-leaf-900 py-24 text-paper">
+    <section className="bg-band py-24 text-band-ink">
       <Reveal className="mx-auto max-w-3xl px-4 text-center sm:px-8">
         <h2 className="font-display text-4xl sm:text-6xl">{t('landing.ctaTitle')}</h2>
-        <p className="mx-auto mt-4 max-w-xl text-lg text-leaf-100">{t('landing.ctaBody')}</p>
-        <Link
-          to={signedIn ? '/app' : '/login'}
-          className="btn mt-8 bg-mustard-500 px-8 text-lg text-ink hover:bg-mustard-300"
-        >
+        <p className="mx-auto mt-4 max-w-xl text-lg">{t('landing.ctaBody')}</p>
+        <PrimaryAction to={signedIn ? '/app' : '/login'} tone="accent" size="lg" className="mt-8">
           {t('landing.open')}
           <Icon name="arrowRight" size={18} />
-        </Link>
+        </PrimaryAction>
       </Reveal>
     </section>
   );
+}
+
+/**
+ * While the season panels are on screen, the page palette follows them (Kharif green, Rabi gold, Zaid
+ * terracotta). Off the panels, and on leaving the page, it returns to the season for today's date. A season
+ * picked by hand elsewhere still wins. The calm stacked page (reduced motion) leaves the colours alone.
+ */
+function useSeasonFollowsStory(mode: MotionMode, panel: number) {
+  const [inSeasons, setInSeasons] = useState(false);
+  useEffect(() => {
+    const el = document.getElementById('seasons');
+    if (mode === 'reduced' || !el) return;
+    const io = new IntersectionObserver(([e]) => setInSeasons(!!e?.isIntersecting), {
+      rootMargin: '-40% 0px',
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [mode]);
+  useEffect(() => {
+    useFieldSeason.getState().set(inSeasons ? (SEASON_IDS[panel] ?? null) : null);
+  }, [inSeasons, panel]);
+  useEffect(() => () => useFieldSeason.getState().set(null), []);
 }
 
 export function Landing() {
@@ -508,6 +557,7 @@ function Story() {
   const signedIn = useAuth((s) => s.status === 'signedIn');
   const [season, setSeason] = useState(0);
   useEffect(() => setSeason(panel), [panel]);
+  useSeasonFollowsStory(mode, panel);
 
   return (
     <div ref={root} className="relative isolate">
@@ -521,6 +571,7 @@ function Story() {
       </div>
       <main id="main">
         <Hero mode={mode} />
+        <Crops />
         <Seasons mode={mode} panel={panel} />
         <Soil mode={mode} />
         <Water />

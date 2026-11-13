@@ -1,41 +1,84 @@
 // The primary call to action on a screen: a Specular glass button whose rim catches the light. Use it for one
 // or two actions per screen ("Grow this", "Send question"); everything else stays a plain Button. Each one owns
 // a WebGL context, so never put them in lists. Lite and reduced motion get the regular primary Button.
-import { lazy, Suspense, type ButtonHTMLAttributes } from 'react';
+// Pass `to` for an action that navigates: it renders a link (client-side routed) with the same look.
+import { lazy, Suspense, type ButtonHTMLAttributes, type MouseEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../Button';
 import { useRich } from './rich';
 
 const Specular = lazy(() => import('../reactbits/SpecularButton'));
 
-interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
+interface Props extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'onClick'> {
   type?: 'button' | 'submit';
   busy?: boolean;
   size?: 'md' | 'lg';
+  /** Navigate here instead of acting in place. */
+  to?: string;
+  /** `accent` (mustard-style fill, ink text) for dark bands where the primary colour would sink. */
+  tone?: 'primary' | 'accent';
+  onClick?: (event: MouseEvent<HTMLElement>) => void;
 }
 
-export function PrimaryAction({ busy, size = 'md', className = '', disabled, children, ...rest }: Props) {
+const SIZE = { md: '', lg: 'min-h-12 px-6 text-lg' } as const;
+// Full class names for Tailwind's scanner.
+const TONE = {
+  primary: 'btn-primary',
+  accent: 'btn bg-accent text-ink hover:brightness-105',
+} as const;
+
+export function PrimaryAction({
+  busy,
+  size = 'md',
+  to,
+  tone = 'primary',
+  className = '',
+  disabled,
+  children,
+  onClick,
+  ...rest
+}: Props) {
   const rich = useRich();
-  const plain = (
+  const navigate = useNavigate();
+
+  const plain = to ? (
+    <Link to={to} onClick={onClick} className={`${TONE[tone]} ${SIZE[size]} ${className}`}>
+      {children}
+    </Link>
+  ) : tone === 'primary' ? (
     <Button
       variant="primary"
       magnetic
       busy={busy}
       disabled={disabled}
-      className={`${size === 'lg' ? 'min-h-12 px-6 text-lg' : ''} ${className}`}
+      onClick={onClick}
+      className={`${SIZE[size]} ${className}`}
       {...rest}
     >
       {children}
     </Button>
+  ) : (
+    <button
+      type="button"
+      disabled={disabled || busy}
+      onClick={onClick}
+      className={`${TONE.accent} ${SIZE[size]} ${className}`}
+      {...rest}
+    >
+      {children}
+    </button>
   );
   if (!rich) return plain;
+
   return (
     <Suspense fallback={plain}>
       <Specular
+        href={to}
         size={size}
         radius={size === 'lg' ? 16 : 12}
-        tint="var(--primary)"
+        tint={tone === 'accent' ? 'var(--accent)' : 'var(--primary)'}
         tintOpacity={1}
-        textColor="var(--primary-ink)"
+        textColor={tone === 'accent' ? 'var(--ink)' : 'var(--primary-ink)'}
         lineColor="#ffffff"
         baseColor="#ffffff"
         idleIntensity={0.45}
@@ -43,6 +86,14 @@ export function PrimaryAction({ busy, size = 'md', className = '', disabled, chi
         disabled={disabled || busy}
         aria-busy={busy || undefined}
         className={`min-h-11 font-semibold shadow-2 ${className}`}
+        onClick={(e) => {
+          onClick?.(e);
+          // Links route client-side, but keep new-tab and modified clicks native.
+          if (to && !e.defaultPrevented && !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)) {
+            e.preventDefault();
+            navigate(to);
+          }
+        }}
         {...rest}
       >
         {busy && (

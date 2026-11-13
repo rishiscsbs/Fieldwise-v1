@@ -2,7 +2,7 @@
 // marked "Fieldwise:"; the `!` assertions satisfy the repo's noUncheckedIndexedAccess. Import through
 // components/signature, which lazy-loads this file and supplies the Lite and reduced-motion fallbacks.
 
-import { useEffect, useRef, type ButtonHTMLAttributes, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useRef, type ButtonHTMLAttributes, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 
 const SIZES: Record<SpecularButtonSize, string> = {
   sm: 'px-5 py-2.5 text-[0.875rem]',
@@ -18,7 +18,11 @@ const TAU = Math.PI * 2;
 
 export type SpecularButtonSize = 'sm' | 'md' | 'lg';
 
-export interface SpecularButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'type'> {
+export interface SpecularButtonProps
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'type' | 'onClick'> {
+  /** Fieldwise: render a link (same look) when the action navigates. */
+  href?: string;
+  onClick?: (event: MouseEvent<HTMLElement>) => void;
   children?: ReactNode;
   size?: SpecularButtonSize;
   radius?: number;
@@ -242,9 +246,10 @@ const SpecularButton = ({
   className = '',
   type = 'button',
   style,
+  href,
   ...rest
 }: SpecularButtonProps) => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLButtonElement & HTMLAnchorElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wakeRef = useRef<(() => void) | null>(null);
   const settings: Settings = {
@@ -482,31 +487,39 @@ const SpecularButton = ({
     wakeRef.current?.();
   });
 
-  return (
-    <button
-      ref={buttonRef}
-      type={type}
-      disabled={disabled}
-      onClick={onClick}
-      className={`${BUTTON} ${SIZES[size] ?? SIZES.lg}${className ? ` ${className}` : ''}`}
-      style={
-        {
-          '--sb-radius': `${radius}px`,
-          '--sb-tint': tint,
-          '--sb-tint-opacity': tintOpacity,
-          '--sb-blur': `${blur}px`,
-          '--sb-text-color': textColor,
-          ...style
-        } as CSSProperties
-      }
-      {...rest}
-    >
+  const shared = {
+    className: `${BUTTON} ${SIZES[size] ?? SIZES.lg}${className ? ` ${className}` : ''}`,
+    style: {
+      '--sb-radius': `${radius}px`,
+      '--sb-tint': tint,
+      '--sb-tint-opacity': tintOpacity,
+      '--sb-blur': `${blur}px`,
+      '--sb-text-color': textColor,
+      ...style
+    } as CSSProperties
+  };
+  const inner = (
+    <>
       <canvas
         ref={canvasRef}
         className="pointer-events-none absolute -inset-6 z-[1] block h-[calc(100%+48px)] w-[calc(100%+48px)]"
         aria-hidden="true"
       />
       <span className="relative z-[2] inline-flex items-center gap-[inherit]">{children}</span>
+    </>
+  );
+  // Fieldwise: links share the look; button-only attributes stay on the button.
+  if (href) {
+    const { id, title, 'aria-label': ariaLabel, 'aria-describedby': describedBy } = rest;
+    return (
+      <a ref={buttonRef} href={href} onClick={onClick} id={id} title={title} aria-label={ariaLabel} aria-describedby={describedBy} {...shared}>
+        {inner}
+      </a>
+    );
+  }
+  return (
+    <button ref={buttonRef} type={type} disabled={disabled} onClick={onClick} {...shared} {...rest}>
+      {inner}
     </button>
   );
 };

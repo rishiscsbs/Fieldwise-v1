@@ -123,7 +123,7 @@ export function DesignSystem() {
         <Section title={t('design.signature')}>
           <p className="mb-4 max-w-2xl text-fg-muted">{t('design.signatureLead')}</p>
           <div className="grid gap-6 lg:grid-cols-2">
-            <HeroImage src="/lite/kharif.jpg" className="h-64 rounded-xl" />
+            <HeroImage src="/photos/hero-960.jpg" className="relative h-64 rounded-xl" />
             <div className="flex flex-col justify-center gap-6">
               <Wordmark size={88} />
               <div className="flex flex-wrap items-center gap-3">

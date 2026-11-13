@@ -16,13 +16,13 @@ export interface StripItem {
 interface Props {
   items: StripItem[];
   label: string;
-  /** Height of the whole strip in px, captions included. */
+  /** Height of the whole strip in px, captions included. Or size it with height classes instead. */
   height?: number;
   onSelect?: (index: number) => void;
   className?: string;
 }
 
-export function CropStrip({ items, label, height = 420, onSelect, className = '' }: Props) {
+export function CropStrip({ items, label, height, onSelect, className = '' }: Props) {
   const rich = useRich();
   const { t } = useTranslation('app');
   const row = (
@@ -66,7 +66,7 @@ export function CropStrip({ items, label, height = 420, onSelect, className = ''
     </ul>
   );
   return (
-    <div className={className} style={{ height }}>
+    <div className={className} style={height ? { height } : undefined}>
       {rich ? (
         <Suspense fallback={row}>
           <FlexCarousel

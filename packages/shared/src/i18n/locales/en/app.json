@@ -65,6 +65,13 @@
       "farmer": "Farmer",
       "officer": "Extension officer",
       "admin": "Admin"
+    },
+    "tagline": "Good advice for every field, in your language.",
+    "demoPick": "Tap a role to try Fieldwise.",
+    "roleNote": {
+      "farmer": "Plans crops, fertiliser and water",
+      "officer": "Answers questions and sends alerts",
+      "admin": "Manages crops, prices and districts"
     }
   },
   "onboard": {
@@ -406,7 +413,10 @@
     "ctaTitle": "Bring the extension officer to every phone",
     "ctaBody": "Farmers ask, officers answer and alert, and the advice keeps working when the network does not.",
     "footer": "Smart India Hackathon prototype. Agronomic figures are indicative. Mandi prices are simulated unless an Agmarknet key is configured.",
-    "stillNote": "Showing still images: reduced motion or Lite mode is on."
+    "stillNote": "Showing still images: reduced motion or Lite mode is on.",
+    "cropsKicker": "What we advise on",
+    "cropsTitle": "Crops for every season",
+    "cropsBody": "Fieldwise scores each crop against your soil, water and weather, then plans its fertiliser, irrigation and sale."
   },
   "pitch": {
     "title": "Fieldwise pitch",

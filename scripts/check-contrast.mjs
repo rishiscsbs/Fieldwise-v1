@@ -107,6 +107,8 @@ for (const theme of THEMES) {
     checks.push(['primary-ink', 'primary-hover', col('primary-ink'), col('primary-hover'), 4.5]);
     checks.push(['text', 'accent-soft', col('text'), col('accent-soft'), 4.5]);
     checks.push(['ink', 'accent', parse(resolve(t, t.ink)), col('accent'), 4.5]);
+    checks.push(['band-ink', 'band', col('band-ink'), col('band'), 4.5]);
+    checks.push(['accent fill', 'band', col('accent'), col('band'), 3]);
     for (const s of ['good', 'warn', 'bad', 'info']) {
       checks.push([s, 'surface', col(s), surfaces.surface, 4.5]);
       checks.push([s, 'bg', col(s), bg, 4.5]);

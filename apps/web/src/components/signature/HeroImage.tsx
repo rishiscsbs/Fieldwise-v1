@@ -19,7 +19,8 @@ interface Props {
 export function HeroImage({ src, alt = '', className = '' }: Props) {
   const rich = useRich();
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    // The caller positions it (absolute inset-0 behind a hero, or relative with a height).
+    <div className={`isolate overflow-hidden ${className}`}>
       <img
         src={src}
         alt={alt}

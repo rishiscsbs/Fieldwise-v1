@@ -32,7 +32,7 @@ let sweepFrom: { x: number; y: number } | null = null;
 /** Picks a season by hand. Pass the element that triggered it so the colour sweep starts there. */
 export function pickSeason(season: Season | null, from?: Element | null) {
   const r = from?.getBoundingClientRect();
-  sweepFrom = r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null;
+  sweepFrom = r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : { x: window.innerWidth / 2, y: 0 };
   useUi.getState().setSeason(season);
 }
 
@@ -40,13 +40,19 @@ function apply(season: Season) {
   const root = document.documentElement;
   if (root.dataset.season === season) return;
   const doc = document as ViewTransitionDoc;
+  // Only a season picked by hand sweeps; the field loading or the landing story scrolling just fades.
   const calm =
-    prefersReducedMotion() || useUi.getState().lite || !doc.startViewTransition || !root.dataset.season;
+    !sweepFrom ||
+    prefersReducedMotion() ||
+    useUi.getState().lite ||
+    !doc.startViewTransition ||
+    !root.dataset.season;
   if (calm) {
+    sweepFrom = null;
     root.dataset.season = season;
     return;
   }
-  const { x, y } = sweepFrom ?? { x: window.innerWidth / 2, y: 0 };
+  const { x, y } = sweepFrom!;
   sweepFrom = null;
   root.style.setProperty('--sweep-x', `${x}px`);
   root.style.setProperty('--sweep-y', `${y}px`);
