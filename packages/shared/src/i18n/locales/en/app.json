@@ -133,7 +133,13 @@
   "addCard": "Add Soil Health Card",
   "overview": {
     "hello": "Namaste, {{name}}",
-    "chosen": "Crop you are growing"
+    "chosen": "Crop you are growing",
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "evening": "Good evening",
+    "hot": "Hot day",
+    "rainChance": "{{p}}% chance of rain",
+    "range": "Low {{lo}}° · high {{hi}}°"
   },
   "farm": {
     "title": "Field details",
@@ -170,14 +176,29 @@
     "outOfSeason": "Not this season",
     "view3d": "Show 3D view",
     "hide3d": "Hide 3D view",
-    "hint3d": "Drag or use the left and right arrow keys to turn it. The bars show the same scores as the list."
+    "hint3d": "Drag or use the left and right arrow keys to turn it. The bars show the same scores as the list.",
+    "seasonPick": "Plan for season",
+    "viewAs": "Show crops as",
+    "gallery": "Gallery",
+    "list": "List",
+    "galleryLabel": "Crops for this season",
+    "scoreLine": "Score {{s}} of 100",
+    "seasonSaved": "Now planning for {{s}}"
   },
   "nutrients": {
     "perHa": "kg per hectare",
     "levels": "Your soil",
     "priceNote": "Prices are indicative subsidised rates per bag.",
     "bagsOf_one": "{{count}} bag of {{kg}} kg",
-    "bagsOf_other": "{{count}} bags of {{kg}} kg"
+    "bagsOf_other": "{{count}} bags of {{kg}} kg",
+    "cart": "Your fertiliser cart",
+    "cartAlt": "{{u}} bags of urea, {{d}} of DAP and {{m}} of MOP",
+    "more": "+{{n}} more",
+    "stage": {
+      "sow": "At sowing",
+      "early": "Day 25–30",
+      "late": "Day 45–60"
+    }
   },
   "health": {
     "upload": "Upload leaf photo",

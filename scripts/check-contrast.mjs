@@ -90,6 +90,8 @@ for (const theme of THEMES) {
       bg,
       surface: col('surface'),
       'surface-2': col('surface-2'),
+      // The overview weather header sits on the season wash.
+      'season-c': col('season-c'),
       'glass/bg': over(col('glass'), bg),
       'glass/texture': over(col('glass'), textured),
       'glass-strong/black': over(col('glass-strong'), BLACK),

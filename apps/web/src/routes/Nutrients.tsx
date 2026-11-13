@@ -1,3 +1,5 @@
+// Nutrient plan: a crop wheel, the per-nutrient breakdown, sacks that drop into a cart as the bag counts load
+// (with the total counting up), and the application schedule drawn as a growing crop.
 import { useSearchParams } from 'react-router-dom';
 import { m } from 'framer-motion';
 import { useSay } from '../stores/page';
@@ -5,16 +7,10 @@ import { useActiveFarm } from '../lib/farm';
 import { useFmt } from '../lib/format';
 import { useFertiliser, useReference } from '../lib/queries';
 import { CountUp } from '../components/CountUp';
-import {
-  Callout,
-  Card,
-  ErrorState,
-  Field,
-  LevelBadge,
-  PageHeader,
-  PageSkeleton,
-  inputClass,
-} from '../components/ui';
+import { SackCart } from '../components/SackCart';
+import { FeedTimeline } from '../components/FeedTimeline';
+import { WheelPicker } from '../components/signature/WheelPicker';
+import { Callout, Card, ErrorState, LevelBadge, PageHeader, PageSkeleton } from '../components/ui';
 
 const NUTRIENTS = ['N', 'P₂O₅', 'K₂O'];
 
@@ -46,30 +42,29 @@ export function Nutrients() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader
-        title={t('fert_lead', { ns: 'common', c: label(c.n), a: num(f.areaAcres, 2) })}
-        sub={t('fert_sub', { ns: 'common' })}
-        actions={
-          <Field label={t('crop', { ns: 'common' })} htmlFor="n-crop">
-            <select
-              id="n-crop"
-              value={f.cropId}
-              onChange={(e) => setParams({ crop: e.target.value })}
-              className={inputClass}
-            >
-              {ref.data.crops.map((x) => (
-                <option key={x.id} value={x.id}>
-                  {label(x.n)}
-                </option>
-              ))}
-            </select>
-          </Field>
-        }
-      />
+      <div className="grid items-end gap-4 md:grid-cols-[1fr_16rem]">
+        <PageHeader
+          title={t('fert_lead', { ns: 'common', c: label(c.n), a: num(f.areaAcres, 2) })}
+          sub={t('fert_sub', { ns: 'common' })}
+        />
+        <WheelPicker
+          label={t('crop', { ns: 'common' })}
+          options={ref.data.crops.map((x) => ({ value: x.id, label: label(x.n).split(' (')[0]! }))}
+          value={f.cropId}
+          onChange={(v) => setParams({ crop: v })}
+          settle={350}
+          height={168}
+          className="mb-6"
+        />
+      </div>
       {f.usingDefaults && <Callout tone="info" title={t('defaults')} />}
 
       <div className="grid gap-4 lg:grid-cols-5">
-        <Card className="lg:col-span-3" title={t('breakdown', { ns: 'common' })} sub={t('nutrients.perHa')}>
+        <Card
+          className="self-start lg:col-span-3"
+          title={t('breakdown', { ns: 'common' })}
+          sub={t('nutrients.perHa')}
+        >
           <div className="relative overflow-x-auto">
             <table className="w-full min-w-max text-sm">
               <thead>
@@ -115,7 +110,18 @@ export function Nutrients() {
           title={t('products', { ns: 'common' })}
           sub={t('nutrients.priceNote')}
         >
-          <ul className="flex flex-col gap-3">
+          <SackCart
+            key={f.cropId}
+            label={`${t('nutrients.cart')}: ${t('nutrients.cartAlt', { u: f.bags.urea, d: f.bags.dap, m: f.bags.mop })}`}
+            moreLabel={(n) => t('nutrients.more', { n })}
+            groups={(['urea', 'dap', 'mop'] as const).map((k) => ({
+              id: k,
+              code: k.toUpperCase(),
+              colour: ref.data!.fertilisers.find((x) => x.id === k)!.colour,
+              bags: f.bags[k],
+            }))}
+          />
+          <ul className="mt-2 flex flex-col gap-3">
             {(['urea', 'dap', 'mop'] as const).map((k, i) => {
               const fe = ref.data!.fertilisers.find((x) => x.id === k)!;
               const bags = f.bags[k];
@@ -128,18 +134,11 @@ export function Nutrients() {
                   className="flex items-center gap-3"
                 >
                   {/* Bags drawn in the product's real colour; the count is also written out */}
-                  <div className="flex w-24 shrink-0 flex-wrap gap-0.5" aria-hidden="true">
-                    {Array.from({ length: Math.min(bags, 12) }, (_, b) => (
-                      <m.span
-                        key={b}
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.2 + b * 0.04, type: 'spring', stiffness: 500, damping: 22 }}
-                        className="h-5 w-3.5 rounded-sm border border-line"
-                        style={{ background: fe.colour }}
-                      />
-                    ))}
-                  </div>
+                  <span
+                    aria-hidden="true"
+                    className="h-7 w-5 shrink-0 rounded-sm border border-line"
+                    style={{ background: fe.colour }}
+                  />
                   <div className="min-w-0 flex-1">
                     <div className="font-semibold">{label(fe.labels)}</div>
                     <div className="text-sm text-fg-muted">
@@ -154,31 +153,22 @@ export function Nutrients() {
           </ul>
           <div className="mt-4 flex items-baseline justify-between border-t border-line pt-3">
             <span className="font-semibold">{t('cost', { ns: 'common' })}</span>
-            <span className="num font-display text-3xl">
-              <CountUp value={f.cost} format={money} />
+            <span className="num-hero">
+              <CountUp key={f.cropId} value={f.cost} format={money} duration={1200} />
             </span>
           </div>
         </Card>
       </div>
 
       <Card title={t('schedule', { ns: 'common' })}>
-        <ol className="relative flex flex-col gap-4 border-l-2 border-line pl-6">
-          {f.schedule.map((s, i) => (
-            <m.li
-              key={s.key}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 + i * 0.1 }}
-              className="relative"
-            >
-              <span
-                aria-hidden="true"
-                className="absolute -left-[33px] top-1 grid h-4 w-4 place-items-center rounded-full border-2 border-surface bg-primary"
-              />
-              {t(s.key, { ns: 'advice', ...(s.args as Record<string, number>) })}
-            </m.li>
-          ))}
-        </ol>
+        <FeedTimeline
+          key={f.cropId}
+          stageLabel={(st) => t(`nutrients.stage.${st}`)}
+          items={f.schedule.map((s) => ({
+            key: s.key,
+            text: t(s.key, { ns: 'advice', ...(s.args as Record<string, number>) }),
+          }))}
+        />
         <p className="mt-4 rounded-md bg-good-soft p-3 text-sm">{t('organic', { ns: 'advice' })}</p>
       </Card>
     </div>

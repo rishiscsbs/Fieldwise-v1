@@ -192,6 +192,8 @@ export function AppShell() {
 
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-[260px_1fr]">
+      {/* The living field behind every screen; chrome is glass over it, data stays on solid cards. */}
+      <div className="field-bg" aria-hidden="true" />
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-2 focus:z-50 focus:rounded-md focus:bg-surface focus:px-3 focus:py-2"
@@ -200,7 +202,7 @@ export function AppShell() {
       </a>
 
       {/* Desktop sidebar */}
-      <div className="hidden border-r border-line bg-surface lg:block">
+      <div className="hidden border-r border-glass-line bg-glass-strong lg:block">
         <aside className="sticky top-0 flex h-dvh flex-col">
           <div className="flex h-16 items-center px-6">{brand}</div>
           <div className="flex-1 overflow-y-auto">{nav}</div>
@@ -248,7 +250,7 @@ export function AppShell() {
       </AnimatePresence>
 
       <div className="min-w-0">
-        <header className="sticky top-0 z-30 border-b border-line bg-bg/85 backdrop-blur">
+        <header className="sticky top-0 z-30 border-b border-glass-line bg-glass-strong shadow-1 backdrop-blur-glass">
           <div className="flex h-16 items-center gap-2 px-4 sm:px-6">
             <button
               type="button"

@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { m } from 'framer-motion';
 import { useAuth } from '../stores/auth';
 import { useSay } from '../stores/page';
 import { useActiveFarm } from '../lib/farm';
@@ -16,8 +17,9 @@ import { ChartFrame, DataTable, Legend, SERIES } from '../charts/frame';
 import { Columns, HBars, Lines, RangeBars } from '../charts/charts';
 import { CountUp } from '../components/CountUp';
 import { Kpi } from '../components/Kpi';
+import { WeatherHero } from '../components/WeatherHero';
 import { Icon } from '../components/Icon';
-import { Card, Callout, Empty, ErrorState, PageHeader, PageSkeleton, SourceBadge } from '../components/ui';
+import { Card, Callout, Empty, ErrorState, PageSkeleton, SourceBadge } from '../components/ui';
 
 export function Overview() {
   const f = useFmt();
@@ -80,7 +82,7 @@ export function Overview() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader
+      <WeatherHero
         title={t('overview.hello', { name: user.name.split(' ')[0] })}
         sub={t('ctx', {
           ns: 'common',
@@ -88,6 +90,7 @@ export function Overview() {
           s: short(season?.labels),
           a: num(farm.areaAcres, 2),
         })}
+        today={days[0]}
       />
 
       {recs.data!.usingDefaults && (
@@ -101,6 +104,7 @@ export function Overview() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Kpi
           index={0}
+          size="text"
           icon="planner"
           label={t('kpi_crop', { ns: 'common' })}
           value={
@@ -191,15 +195,21 @@ export function Overview() {
             <Empty>{t('noAlerts', { ns: 'common' })}</Empty>
           ) : (
             <ul className="flex flex-col gap-3">
-              {alerts.data.slice(0, 3).map((a) => (
-                <li key={a.id}>
+              {alerts.data.slice(0, 3).map((a, i) => (
+                // Alerts slide in from the right edge, one after another.
+                <m.li
+                  key={a.id}
+                  initial={{ opacity: 0, x: 48 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.25 + i * 0.12, type: 'spring', stiffness: 260, damping: 26 }}
+                >
                   <Callout tone={a.level === 'bad' ? 'bad' : a.level === 'warn' ? 'warn' : 'info'}>
                     <p className="text-base">{label(a.labels)}</p>
                     <time className="text-xs text-fg-muted" dateTime={a.createdAt}>
                       {f.time(a.createdAt)} · {a.author.name}
                     </time>
                   </Callout>
-                </li>
+                </m.li>
               ))}
             </ul>
           )}

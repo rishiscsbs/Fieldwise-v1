@@ -115,8 +115,16 @@
   pointer-events: none;
   background:
     radial-gradient(60% 50% at 15% 0%, color-mix(in srgb, var(--season-c) 70%, transparent), transparent 70%),
-    radial-gradient(50% 40% at 100% 30%, color-mix(in srgb, var(--season-b) 14%, transparent), transparent 70%),
-    radial-gradient(70% 50% at 50% 110%, color-mix(in srgb, var(--season-a) 12%, transparent), transparent 70%);
+    radial-gradient(
+      50% 40% at 100% 30%,
+      color-mix(in srgb, var(--season-b) 14%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      70% 50% at 50% 110%,
+      color-mix(in srgb, var(--season-a) 12%, transparent),
+      transparent 70%
+    );
   background-color: var(--bg);
   transition: background-color var(--dur-3) var(--ease-out);
 }
@@ -169,6 +177,16 @@ html[data-sweeping]::view-transition-new(root) {
   50% {
     transform: scale(1.08);
     opacity: 1;
+  }
+}
+/* Heat shimmer: faint warm bands rising and wavering (WeatherFx). */
+@keyframes heat {
+  0%,
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+  50% {
+    transform: translateY(-10px) scaleY(1.05);
   }
 }
 @keyframes drift {

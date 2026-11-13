@@ -2,7 +2,7 @@
 // control: in full motion it is visually hidden under the wheel and carries focus, keyboard and screen-reader
 // use, while the wheel follows its value and adds drag, scroll and tap. Lite and reduced motion show the
 // <select> itself.
-import { lazy, Suspense, useId, useRef } from 'react';
+import { lazy, Suspense, useEffect, useId, useRef, useState } from 'react';
 import { inputClass } from '../ui';
 import { useRich } from './rich';
 
@@ -19,6 +19,11 @@ interface Props<V extends string> {
   value: V;
   /** `from` is the control, so season changes can sweep colour out from it. */
   onChange: (value: V, from: Element | null) => void;
+  /**
+   * Wait this long after the last change before calling onChange, so spinning past several rows sends one
+   * change, not one per row. The wheel and the select show the pending value straight away.
+   */
+  settle?: number;
   /** Wheel height in px; about three rows show at the default font size. */
   height?: number;
   className?: string;
@@ -30,21 +35,36 @@ export function WheelPicker<V extends string>({
   value,
   onChange,
   height = 168,
+  settle = 0,
   className = '',
 }: Props<V>) {
   const rich = useRich();
   const id = useId();
   const box = useRef<HTMLDivElement>(null);
+  const [pending, setPending] = useState<V | null>(null);
+  const timer = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => () => clearTimeout(timer.current), []);
+  const shown = pending ?? value;
   const index = Math.max(
     0,
-    options.findIndex((o) => o.value === value),
+    options.findIndex((o) => o.value === shown),
   );
+
+  const change = (v: V, from: Element | null) => {
+    clearTimeout(timer.current);
+    if (!settle) return onChange(v, from);
+    setPending(v);
+    timer.current = setTimeout(() => {
+      setPending(null);
+      if (v !== value) onChange(v, from);
+    }, settle);
+  };
 
   const select = (hidden: boolean) => (
     <select
       id={id}
-      value={value}
-      onChange={(e) => onChange(e.target.value as V, box.current ?? e.currentTarget)}
+      value={shown}
+      onChange={(e) => change(e.target.value as V, box.current ?? e.currentTarget)}
       className={hidden ? 'peer sr-only' : inputClass}
     >
       {options.map((o) => (
@@ -88,7 +108,7 @@ export function WheelPicker<V extends string>({
                 ariaLabel={label}
                 onChange={(i) => {
                   const next = options[i];
-                  if (next && next.value !== value) onChange(next.value, box.current);
+                  if (next && next.value !== shown) change(next.value, box.current);
                 }}
                 textColor="var(--text-muted)"
                 activeColor="var(--primary)"

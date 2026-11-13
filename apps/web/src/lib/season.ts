@@ -36,9 +36,21 @@ export function pickSeason(season: Season | null, from?: Element | null) {
   useUi.getState().setSeason(season);
 }
 
+/**
+ * The next season change sweeps out from this element, without pinning the season by hand. For controls
+ * that change the field's own season (the planner wheel).
+ */
+export function sweepFromHere(from: Element | null) {
+  const r = from?.getBoundingClientRect();
+  sweepFrom = r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : { x: window.innerWidth / 2, y: 0 };
+}
+
 function apply(season: Season) {
   const root = document.documentElement;
-  if (root.dataset.season === season) return;
+  if (root.dataset.season === season) {
+    sweepFrom = null;
+    return;
+  }
   const doc = document as ViewTransitionDoc;
   // Only a season picked by hand sweeps; the field loading or the landing story scrolling just fades.
   const calm =
